@@ -3,8 +3,8 @@ import { Map, Marker, Popup, TileLayer, Polyline, Circle } from "react-leaflet";
 
   
 function Maps() {
-  var position = [25.8, -80.3];
-  var zoomLevel = 12;
+  var position = [25.763, -80.195];
+  var zoomLevel = 17;
   return (
     <div id="maps">
       <Map center={position} zoom={zoomLevel} >
