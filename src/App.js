@@ -3,29 +3,31 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Maps from './Screens/Maps'
 import home from './Screens/home.js';
+import aboutPage from './Screens/aboutPage.js';
 import Navigation from './Compononents/Navigation.js';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
+import form from './Screens/form.js'
 
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <React.Fragment>
         <Navigation />
         <Router basename="/">
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Maps />
             </Route>
-            <Route path="/about">
-              <About />
+            <Route path="/about" component={aboutPage}>
+              <aboutPage />
             </Route>
-            <Route path="/users">
+            <Route path="/users" component={form}>
               <Users />
             </Route>
           </Switch>  
         </Router>
-      </div>
+        </React.Fragment>
   );
 }
 }

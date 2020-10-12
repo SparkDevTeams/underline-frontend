@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-router-dom';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
 
-class form extends React.Component {
+class aboutPage extends React.Component {
   render() {
     return (
         <div className="App">
@@ -11,4 +11,4 @@ class form extends React.Component {
     );
     }
 }
-export default form;
+export default aboutPage;
