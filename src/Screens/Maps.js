@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import {  withRouter } from 'react-router-dom';
 import { Map, Marker, Popup, TileLayer, Polyline, Circle, Polygon, Rectangle } from "react-leaflet";
 
   
@@ -22,4 +23,4 @@ function Maps() {
   );
 }
 
-export default Maps;
+export default withRouter(Maps);
