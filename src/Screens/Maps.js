@@ -26,11 +26,11 @@ function Maps(props) {
 		setSelected(id);
 	};
 
-	var position = [25.763, -80.195];
+	var position = [25.764, -80.1954];
 	var zoomLevel = 17;
 	return (
 		<div id="maps">
-			<Map center={position} zoom={zoomLevel}>
+			<Map center={position} zoom={zoomLevel} doubleClickZoom={false}>
 				<link
 					rel="stylesheet"
 					href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
@@ -63,14 +63,14 @@ function Maps(props) {
 					url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
 					attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 					id=""
-					accessToken=""
+          accessToken=""
 				/>
 				<Polygon
 					positions={[
 						[25.7664, -80.1957],
 						[25.7664, -80.1954],
 						[25.7625, -80.1952],
-						[25.7625, -80.1955],
+						[25.7625, -80.1956],
 					]}
 					color="blue"
 				/>
