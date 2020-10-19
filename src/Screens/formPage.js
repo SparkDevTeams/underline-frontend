@@ -4,16 +4,44 @@ import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row, Col
 
 export const formPage = () => (
         <React.Fragment>
-              <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                  </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-              </Card>
+          <Container>
+            <Form className="mx-auto">
+              <Form.Group controlId="formName">
+                <Form.Label>Name :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  />
+              </Form.Group>
+              <Form.Group controlId="formEmail">
+                <Form.Label>Email :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                />
+              </Form.Group>
+              <Form.Group controlId="formPhone">
+                <Form.Label>Phone :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone"
+                  placeholder="Phone"
+                  />
+              </Form.Group>
+              <Form.Group controlId="formBlog">
+                <Form.Label>Blog :</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="blog"
+                  placeholder="Blog URL"
+                  />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Container>
         </React.Fragment>
 )

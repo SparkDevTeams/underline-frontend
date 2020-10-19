@@ -13,6 +13,7 @@ import {
 import { Sidebar, Tab } from "react-leaflet-sidetabs";
 import { FiHome, FiChevronRight, FiSearch, FiSettings } from "react-icons/fi";
 import { popup } from "leaflet";
+import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row, Col, Card} from 'react-bootstrap';
 
 function Maps(props) {
   const [collapsed, setCollapsed] = useState(true);
@@ -55,7 +56,45 @@ function Maps(props) {
             <p>No place like home!</p>
           </Tab>
           <Tab id="search" header="Search" icon={<FiSearch />}>
-            <p>The noblest search is the search for excellence!</p>
+			<Container>
+				<Form className="mx-auto">
+				<Form.Group controlId="formName">
+					<Form.Label>Name :</Form.Label>
+					<Form.Control
+					type="text"
+					name="name"
+					placeholder="Full Name"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formEmail">
+					<Form.Label>Email :</Form.Label>
+					<Form.Control
+					type="text"
+					name="email"
+					placeholder="Email"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formPhone">
+					<Form.Label>Phone :</Form.Label>
+					<Form.Control
+					type="text"
+					name="phone"
+					placeholder="Phone"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formBlog">
+					<Form.Label>Blog :</Form.Label>
+					<Form.Control
+					type="text"
+					name="blog"
+					placeholder="Blog URL"
+					/>
+				</Form.Group>
+				<Button variant="primary" type="submit">
+					Submit
+				</Button>
+			</Form>
+			</Container>
           </Tab>
           <Tab
             id="settings"
@@ -79,7 +118,11 @@ function Maps(props) {
             [25.7625, -80.1952],
             [25.7625, -80.1955],
           ]}
-          color="blue"
+		  //color="blue"
+		  fillColor='green'
+    		weight={2}
+        	opacity={.01} //Outline color
+        	fillOpacity={0.4}
         />
         {locations.map((location) => (
           <Marker position={location.position}></Marker>
