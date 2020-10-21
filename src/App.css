@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -12,8 +13,16 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-
+.error {
+  border: 2px solid #FF6565;
+}
+.error-message {
+  color: #FF6565;
+  padding: .5em .2em;
+  height: 1em;
+  position: absolute;
+  font-size: .8em;
+}
 
 .App-link {
   color: #61dafb;

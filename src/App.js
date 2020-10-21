@@ -6,6 +6,8 @@ import { aboutPage } from './Screens/aboutPage.js';
 import Navigation from './Compononents/Navigation.js';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
 import { formPage } from './Screens/formPage.js'
+import axios from "axios";
+
 
 
 class App extends React.Component {
@@ -26,6 +28,10 @@ class App extends React.Component {
         </Router>
         </React.Fragment>
   );
+}
+componentDidMount(){
+  axios.get('https://sparkdev-underline.herokuapp.com/users/find?email=<test@mail.com>')
+  .then(res=> console.log(res.data))
 }
 }
 
