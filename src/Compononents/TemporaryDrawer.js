@@ -9,6 +9,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Control from 'react-leaflet-control';
+import { BiRightArrow } from "react-icons/bi";
+import { BiUpArrow } from "react-icons/bi";
+import {Form, FormControl, Container} from "react-bootstrap";
 
 
 const useStyles = makeStyles({
@@ -46,31 +49,54 @@ const TemporaryDrawer = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? "Inbox" : "Mail"}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? "Inbox" : "Mail"}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      
+      <Container className="formContainer">
+				<Form className="mx-auto">
+				<Form.Group controlId="formName">
+					<Form.Label>Name :</Form.Label>
+					<Form.Control
+					type="text"
+					name="name"
+					placeholder="Full Name"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formEmail">
+					<Form.Label>Email :</Form.Label>
+					<Form.Control
+					type="text"
+					name="email"
+					placeholder="Email"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formPhone">
+					<Form.Label>Phone :</Form.Label>
+					<Form.Control
+					type="text"
+					name="phone"
+					placeholder="Phone"
+					/>
+				</Form.Group>
+				<Form.Group controlId="formBlog">
+					<Form.Label>Blog :</Form.Label>
+					<Form.Control
+					type="text"
+					name="blog"
+					placeholder="Blog URL"
+					/>
+				</Form.Group>
+				<Button variant="primary" type="submit">
+					Submit
+				</Button>
+			</Form>
+			</Container>
     </div>
   );
 
   return (
     <div>
-      {['left', 'right', 'top', 'bottom'].map((anchor) => (
+      {['left', 'bottom'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          {anchor === 'left' ? <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiRightArrow />}</Button> : <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiUpArrow />}</Button>}
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>
