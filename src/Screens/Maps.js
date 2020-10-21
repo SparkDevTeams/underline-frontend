@@ -14,6 +14,8 @@ import { Sidebar, Tab } from "react-leaflet-sidetabs";
 import { FiHome, FiChevronRight, FiSearch, FiSettings } from "react-icons/fi";
 import { popup } from "leaflet";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row, Col, Card} from 'react-bootstrap';
+import TemporaryDrawer from '../Compononents/TemporaryDrawer'
+import Control from 'react-leaflet-control';
 
 function Maps(props) {
   const [collapsed, setCollapsed] = useState(true);
@@ -127,6 +129,10 @@ function Maps(props) {
         {locations.map((location) => (
           <Marker position={location.position}></Marker>
         ))}
+
+        <Control position="topleft" >
+          <TemporaryDrawer />
+        </Control>
       </Map>
     </div>
   );
