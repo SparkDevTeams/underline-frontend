@@ -13,7 +13,17 @@ import {
 import { Sidebar, Tab } from "react-leaflet-sidetabs";
 import { FiHome, FiChevronRight, FiSearch, FiSettings } from "react-icons/fi";
 import { popup } from "leaflet";
+import L from "leaflet";
 
+
+
+
+function GetIcon(_iconSize, typeIcon) {
+  return L.icon({
+    iconUrl: require("../Images/" + typeIcon + ".png"),
+    iconSize: [_iconSize]
+  })
+}
 function Maps(props) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
@@ -27,10 +37,12 @@ function Maps(props) {
     setSelected(id);
   };
 
+  
+
   const locations = [
-    { name: "icon1", position: [25.76321, -80.195200] },
-    { name: "icon2", position: [25.76421, -80.195300] },
-    { name: "icon2", position: [25.76521, -80.195410] },
+    { name: "icon1", position: [25.76321, -80.1952], "typeIcon":"Restrooms" },
+    { name: "icon2", position: [25.76421, -80.1953],"typeIcon":"food" },
+    { name: "icon2", position: [25.76521, -80.19541],"typeIcon":"athletic" },
   ];
 
   var position = [25.763, -80.195];
@@ -82,7 +94,10 @@ function Maps(props) {
           color="blue"
         />
         {locations.map((location) => (
-          <Marker position={location.position}></Marker>
+          <Marker icon = {GetIcon(40, location.typeIcon)} position={location.position}>
+
+            
+          </Marker>
         ))}
       </Map>
     </div>
