@@ -57,68 +57,6 @@ function Maps(props) {
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
         />
-        <Sidebar
-          id="sidebar"
-          position="right"
-          collapsed={collapsed}
-          closeIcon={<FiChevronRight />}
-          selected={selected}
-          onOpen={onOpen}
-          onClose={onClose}
-        >
-          <Tab id="home" header="Home" icon={<FiHome />}>
-            <p>No place like home!</p>
-          </Tab>
-          <Tab id="search" header="Search" icon={<FiSearch />}>
-			<Container>
-				<Form className="mx-auto">
-				<Form.Group controlId="formName">
-					<Form.Label>Name :</Form.Label>
-					<Form.Control
-					type="text"
-					name="name"
-					placeholder="Full Name"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formEmail">
-					<Form.Label>Email :</Form.Label>
-					<Form.Control
-					type="text"
-					name="email"
-					placeholder="Email"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formPhone">
-					<Form.Label>Phone :</Form.Label>
-					<Form.Control
-					type="text"
-					name="phone"
-					placeholder="Phone"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formBlog">
-					<Form.Label>Blog :</Form.Label>
-					<Form.Control
-					type="text"
-					name="blog"
-					placeholder="Blog URL"
-					/>
-				</Form.Group>
-				<Button variant="primary" type="submit">
-					Submit
-				</Button>
-			</Form>
-			</Container>
-          </Tab>
-          <Tab
-            id="settings"
-            header="Settings"
-            anchor="bottom"
-            icon={<FiSettings />}
-          >
-            <p>We don't want privacy so much as privacy settings!</p>
-          </Tab>
-        </Sidebar>
         <TileLayer
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
