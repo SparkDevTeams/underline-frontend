@@ -71,6 +71,10 @@ navbar--------------------------------------------------------------------------
 .navfont{
 	color:#ffffff;
 }
+.navbar a{
+	font-family: "LLCircularWeb-Black";
+	font-size: 1.3rem;
+}
 a, a:hover,a:visited, a:focus {
     text-decoration:none;
 }
