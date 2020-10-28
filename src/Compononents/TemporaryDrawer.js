@@ -26,10 +26,8 @@ const useStyles = makeStyles({
 const TemporaryDrawer = () => {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    top: false,
     left: false,
     bottom: false,
-    right: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -40,16 +38,8 @@ const TemporaryDrawer = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const list = (anchor) => (
-    <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-      })}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      
+  const formDrawer = (anchor) => (
+    <div>
       <Container className="formContainer">
 				<Form className="mx-auto">
 				<Form.Group controlId="formName">
@@ -84,7 +74,7 @@ const TemporaryDrawer = () => {
 					placeholder="Blog URL"
 					/>
 				</Form.Group>
-				<Button variant="primary" type="submit">
+				<Button variant="primary" type="submit" id="formSubmit">
 					Submit
 				</Button>
 			</Form>
@@ -98,7 +88,7 @@ const TemporaryDrawer = () => {
         <React.Fragment key={anchor}>
           {anchor === 'left' ? <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiRightArrow />}</Button> : <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiUpArrow />}</Button>}
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
+            {formDrawer(anchor)}
           </Drawer>
         </React.Fragment>
       ))}
