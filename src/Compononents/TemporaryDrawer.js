@@ -3,23 +3,16 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Control from 'react-leaflet-control';
 import { BiRightArrow } from "react-icons/bi";
 import { BiUpArrow } from "react-icons/bi";
 import {Form, FormControl, Container} from "react-bootstrap";
 
 
 const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
+  drawerPaper: {
+    height: `100%`,
+    width: `20%`,
+    top: `7.5%`,
   },
 });
 
@@ -41,44 +34,44 @@ const TemporaryDrawer = () => {
   const formDrawer = (anchor) => (
     <div>
       <Container className="formContainer">
-				<Form className="mx-auto">
-				<Form.Group controlId="formName">
-					<Form.Label>Name :</Form.Label>
-					<Form.Control
-					type="text"
-					name="name"
-					placeholder="Full Name"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formEmail">
-					<Form.Label>Email :</Form.Label>
-					<Form.Control
-					type="text"
-					name="email"
-					placeholder="Email"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formPhone">
-					<Form.Label>Phone :</Form.Label>
-					<Form.Control
-					type="text"
-					name="phone"
-					placeholder="Phone"
-					/>
-				</Form.Group>
-				<Form.Group controlId="formBlog">
-					<Form.Label>Blog :</Form.Label>
-					<Form.Control
-					type="text"
-					name="blog"
-					placeholder="Blog URL"
-					/>
-				</Form.Group>
-				<Button variant="primary" type="submit" id="formSubmit">
-					Submit
-				</Button>
-			</Form>
-			</Container>
+        <Form className="mx-auto">
+        <Form.Group controlId="formName">
+          <Form.Label>Name :</Form.Label>
+          <Form.Control
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          />
+        </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email :</Form.Label>
+          <Form.Control
+          type="text"
+          name="email"
+          placeholder="Email"
+          />
+        </Form.Group>
+        <Form.Group controlId="formPhone">
+          <Form.Label>Phone :</Form.Label>
+          <Form.Control
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          />
+        </Form.Group>
+        <Form.Group controlId="formBlog">
+          <Form.Label>Blog :</Form.Label>
+          <Form.Control
+          type="text"
+          name="blog"
+          placeholder="Blog URL"
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit" id="formSubmit">
+          Submit
+        </Button>
+      </Form>
+      </Container>
     </div>
   );
 
@@ -87,14 +80,25 @@ const TemporaryDrawer = () => {
       {['left', 'bottom'].map((anchor) => (
         <React.Fragment key={anchor}>
           {anchor === 'left' ? <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiRightArrow />}</Button> : <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiUpArrow />}</Button>}
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {formDrawer(anchor)}
-          </Drawer>
+          
+          {anchor === 'left' ? 
+            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }} classes={{
+            paper: classes.drawerPaper
+          }}>
+              {formDrawer(anchor)}
+            </Drawer>
+            :
+            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }}>
+                {formDrawer(anchor)}
+              </Drawer>}
         </React.Fragment>
       ))}
+
+      {console.log(document.querySelector('.App'))}
     </div>
     
   );
 }
 
 export default TemporaryDrawer;
+
