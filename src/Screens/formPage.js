@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { FiClock } from "react-icons/fi";
+import { FaClock, FaRunning, FaWalking} from "react-icons/fa";
 // Schema for yup
 
 
@@ -17,23 +19,21 @@ const validationSchema = Yup.object().shape({
     .max(100, "*Names can't be longer than 100 characters")
     .required("*Name is required"),
   email: Yup.string()
-    .email("*Must be a valid email address")
-    .max(100, "*Email must be less than 100 characters")
-    .required("*Email is required"),
+    .min(2, "*Names must have at least 2 characters")
+    .max(100, "*Description can't be longer than 100 characters")
+    .required("*Event Description is required"),
   phone: Yup.string()
     .matches(phoneRegExp, "*Phone number is not valid")
     .required("*Phone number required"),
   blog: Yup.string()
-    .url("*Must enter URL in http://www.example.com format")
-    .required("*URL required")
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
 });
 
 
 export const formPage = () => (
   <React.Fragment>
     <Container>
-
-      //Sets initial values for form inputs
       <Formik
         initialValues={{ name:"", email:"", phone:"", blog:""}}
         validationSchema={validationSchema}
@@ -66,7 +66,7 @@ export const formPage = () => (
             <Form onSubmit={handleSubmit} className="mx-auto">
               {console.log(values)}
               <Form.Group controlId="formName">
-                <Form.Label>Name :</Form.Label>
+                <Form.Label>Event Name :</Form.Label>
                 <Form.Control
                   type="text"
                   /* This name property is used to access the value of the form element via values.nameOfElement */
@@ -81,13 +81,17 @@ export const formPage = () => (
                   /* Check if the name field (this field) has been touched and if there is an error, if so add the .error class styles defined in the CSS (make the input box red) */
                   className={touched.name && errors.name ? "error" : null}
                 />
+                {touched.name && errors.name ? (
+                  <div className="error-message">{errors.name}</div>
+                ) : null}
               </Form.Group>
               <Form.Group controlId="formEmail">
-                <Form.Label>Email :</Form.Label>
+                <Form.Label>Event Description :</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="textarea" 
+                  rows={3}
                   name="email"
-                  placeholder="Email"
+                  placeholder="Yoga in the park"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.email}
@@ -114,11 +118,11 @@ export const formPage = () => (
                 ) : null}
               </Form.Group>
               <Form.Group controlId="formBlog">
-                <Form.Label>Blog :</Form.Label>
+                <Form.Label>Invite Friends :</Form.Label>
                 <Form.Control
                   type="text"
                   name="blog"
-                  placeholder="Blog URL"
+                  placeholder="Joe Jack"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.blog}
@@ -126,9 +130,17 @@ export const formPage = () => (
                 />
                 
               </Form.Group>
+              <Form.Label>Choose Icon :</Form.Label>
+              <Form.Control className="Icon-Selector"as="select" multiple>
+                  <option> &#xf2b9;</option>
+                  <option>&#xf358;</option>
+                  <option>&#xf35b;</option>
+                  <option>&#xf1f6;</option>
+                  <option>5</option>
+                </Form.Control>
               <Button variant="primary" type="submit" disabled={isSubmitting}>
-   Submit
-</Button>
+                Submit
+              </Button>
             </Form>
           )}
       </Formik>
