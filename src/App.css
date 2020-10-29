@@ -67,11 +67,12 @@ navbar--------------------------------------------------------------------------
   background-color: #231e1f;
 }
 .navfont {
-  color: #ffffff;
+  color: #fbfafa
 }
 .navbar a {
   font-family: "LLCircularWeb-Black";
   font-size: 1.3rem;
+  font-weight: 700;
 }
 a,
 a:hover,
