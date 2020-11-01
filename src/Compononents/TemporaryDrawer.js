@@ -8,15 +8,15 @@ import { BiUpArrow } from "react-icons/bi";
 import {Form, FormControl, Container} from "react-bootstrap";
 
 
-const useStyles = makeStyles({
-  drawerPaper: {
-    height: `100%`,
-    width: `20%`,
-    top: `7.5%`,
-  },
-});
 
 const TemporaryDrawer = () => {
+  const useStyles = makeStyles({
+    drawerPaper: {
+      height: `100%`,
+      top: document.querySelector('.navbar-custom').clientHeight,
+    },
+  });
+  
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -27,7 +27,7 @@ const TemporaryDrawer = () => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
+    
     setState({ ...state, [anchor]: open });
   };
 
