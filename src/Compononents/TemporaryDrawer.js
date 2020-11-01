@@ -15,6 +15,19 @@ const TemporaryDrawer = () => {
       height: `100%`,
       top: document.querySelector('.navbar-custom').clientHeight,
     },
+    drawerPaper2: {
+      '@media (min-height:500px)': { 
+        height: '55%'
+      },
+
+      '@media (min-height:1000px)': { 
+        height: '60%'
+      },
+
+      '@media (min-height:1000px)': {
+        height: '35%'
+      }
+    }
   });
   
   const classes = useStyles();
@@ -88,7 +101,9 @@ const TemporaryDrawer = () => {
               {formDrawer(anchor)}
             </Drawer>
             :
-            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }}>
+            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }} classes={{
+              paper: classes.drawerPaper2
+            }}>
                 {formDrawer(anchor)}
               </Drawer>}
         </React.Fragment>
