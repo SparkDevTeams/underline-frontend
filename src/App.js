@@ -21,8 +21,10 @@ class App extends React.Component {
             <Route exact path="/">
               <Maps />
             </Route>
-            <Route path="/about" component={aboutPage}>
-            </Route>
+            <Route path='/about' component={() => { 
+            window.location.href = 'https://www.theunderline.org/'; 
+          return null;
+          }}/>
             <Route path="/form" component={formPage}>
             </Route>
           </Switch>  

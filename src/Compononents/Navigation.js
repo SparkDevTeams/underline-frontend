@@ -6,7 +6,7 @@ import logo from '../Images/Logo.png';
 class Navigation extends React.Component {
   render() {
     return (
-        <div className="App">
+        <div className="navigation">
         <Navbar className="navbar-custom" expand="lg" variant = "dark" >
           <Navbar.Brand href="#home"><a className="navfont"><img className="LogoImg" src={logo} alt="Logo" /></a></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
