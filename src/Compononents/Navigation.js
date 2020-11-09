@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
 import logo from '../Images/Logo.png';
 
-class Navigation extends React.Component {
-  render() {
-    return (
-        <div className="navigation">
+const Navigation = () => (
+
+        <div className="App">
         <Navbar className="navbar-custom" expand="lg" variant = "dark" >
           <Navbar.Brand href="#home"><a className="navfont"><img className="LogoImg" src={logo} alt="Logo" /></a></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -20,7 +19,6 @@ class Navigation extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         </div>
-    );
-    }
-}
-export default Navigation;
+    )
+
+    export default Navigation;

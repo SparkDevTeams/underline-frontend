@@ -8,6 +8,11 @@ import { FiClock } from "react-icons/fi";
 import { FaClock, FaRunning, FaWalking} from "react-icons/fa";
 // Schema for yup
 
+const Gloop = () => {
+
+  
+// Schema for yup
+
 
 // RegEx for phone number validation
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
@@ -31,7 +36,7 @@ const validationSchema = Yup.object().shape({
 });
 
 
-export const formPage = () => (
+return(
   <React.Fragment>
     <Container>
       <Formik
@@ -147,3 +152,6 @@ export const formPage = () => (
     </Container>
   </React.Fragment>
 )
+}
+
+export default Gloop;

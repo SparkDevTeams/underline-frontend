@@ -5,7 +5,7 @@ import Maps from './Screens/Maps'
 import { aboutPage } from './Screens/aboutPage.js';
 import Navigation from './Compononents/Navigation.js';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
-import { formPage } from './Screens/formPage.js'
+import EventForm  from './Compononents/EventForm'
 import './App.css';
 import axios from "axios";
 
@@ -25,7 +25,7 @@ class App extends React.Component {
             window.location.href = 'https://www.theunderline.org/'; 
           return null;
           }}/>
-            <Route path="/form" component={formPage}>
+            <Route path="/form" component={EventForm}>
             </Route>
           </Switch>  
         </Router>

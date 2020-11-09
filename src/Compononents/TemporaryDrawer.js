@@ -6,7 +6,29 @@ import Button from '@material-ui/core/Button';
 import { BiRightArrow } from "react-icons/bi";
 import { BiUpArrow } from "react-icons/bi";
 import {Form, FormControl, Container} from "react-bootstrap";
+import * as Yup from 'yup';
+import EventForm from "./EventForm.js"
 
+// RegEx for phone number validation
+const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
+
+// Schema for yup
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, "*Names must have at least 2 characters")
+    .max(100, "*Names can't be longer than 100 characters")
+    .required("*Name is required"),
+  email: Yup.string()
+    .min(2, "*Names must have at least 2 characters")
+    .max(100, "*Description can't be longer than 100 characters")
+    .required("*Event Description is required"),
+  phone: Yup.string()
+    .matches(phoneRegExp, "*Phone number is not valid")
+    .required("*Phone number required"),
+  blog: Yup.string()
+  .min(2, "*Names must have at least 2 characters")
+  .max(100, "*Names can't be longer than 100 characters")
+});
 
 
 const TemporaryDrawer = () => {
@@ -45,47 +67,7 @@ const TemporaryDrawer = () => {
   };
 
   const formDrawer = (anchor) => (
-    <div>
-      <Container className="formContainer">
-        <Form className="mx-auto">
-        <Form.Group controlId="formName">
-          <Form.Label>Name :</Form.Label>
-          <Form.Control
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          />
-        </Form.Group>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email :</Form.Label>
-          <Form.Control
-          type="text"
-          name="email"
-          placeholder="Email"
-          />
-        </Form.Group>
-        <Form.Group controlId="formPhone">
-          <Form.Label>Phone :</Form.Label>
-          <Form.Control
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          />
-        </Form.Group>
-        <Form.Group controlId="formBlog">
-          <Form.Label>Blog :</Form.Label>
-          <Form.Control
-          type="text"
-          name="blog"
-          placeholder="Blog URL"
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" id="formSubmit">
-          Submit
-        </Button>
-      </Form>
-      </Container>
-    </div>
+    <EventForm />
   );
 
   return (

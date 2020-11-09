@@ -52,7 +52,7 @@ function Maps(props) {
   var zoomLevel = 17;
   return (
     <div id="maps">
-      <Map center={position} zoom={zoomLevel}>
+      <Map center={position} zoom={zoomLevel}  attributionControl={false}>
         <link
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
