@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter } from 'react-router-dom';
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button, Container} from 'react-bootstrap';
-import logo from '../Images/Logo.png';
+import logo from '../Images/Logo.svg';
 
 const Navigation = () => (
 
