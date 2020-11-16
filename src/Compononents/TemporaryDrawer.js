@@ -8,6 +8,7 @@ import { BiUpArrow } from "react-icons/bi";
 import {Form, FormControl, Container} from "react-bootstrap";
 import * as Yup from 'yup';
 import EventForm from "./EventForm.js"
+import Events from './Events'
 
 // RegEx for phone number validation
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
@@ -66,9 +67,13 @@ const TemporaryDrawer = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const formDrawer = (anchor) => (
-    <EventForm />
-  );
+  const formDrawer = (anchor) => {
+    return (
+    <div>
+      <EventForm />
+      <Events />
+    </div>
+  )};
 
   return (
     <div>

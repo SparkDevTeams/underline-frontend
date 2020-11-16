@@ -32,10 +32,7 @@ class App extends React.Component {
         </React.Fragment>
   );
 }
-componentDidMount(){
-  axios.get('https://sparkdev-underline.herokuapp.com/users/find?email=<test@mail.com>')
-  .then(res=> console.log(res.data))
-}
+
 }
 
 
