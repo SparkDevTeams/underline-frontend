@@ -9,6 +9,7 @@ import {Form, FormControl, Container} from "react-bootstrap";
 import * as Yup from 'yup';
 import EventForm from "./EventForm.js"
 import Events from './Events'
+import Navigation from './Navigation'
 
 // RegEx for phone number validation
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
@@ -37,7 +38,15 @@ const TemporaryDrawer = () => {
     drawerPaper: {
       height: `100%`,
       top: document.querySelector('.navbar-custom').clientHeight,
+      '@media (min-width:500px)': { 
+        width: '55%'
+      },
+
+      '@media (min-width:1000px)': { 
+        width: '35%'
+      },
     },
+
     drawerPaper2: {
       '@media (min-height:500px)': { 
         height: '55%'
@@ -48,7 +57,8 @@ const TemporaryDrawer = () => {
       },
 
       '@media (min-height:1000px)': {
-        height: '35%'
+        height: '35%',
+        width: '50%'
       }
     }
   });
@@ -70,6 +80,7 @@ const TemporaryDrawer = () => {
   const formDrawer = (anchor) => {
     return (
     <div>
+      <Navigation />
       <EventForm />
       <Events />
     </div>

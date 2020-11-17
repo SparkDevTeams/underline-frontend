@@ -40,7 +40,7 @@ const Gloop = () => {
           creator_id: "0"
         };
         
-        let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
+        //let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
   
       console.log(event); 
     } catch (err) {
