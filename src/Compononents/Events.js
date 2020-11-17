@@ -5,7 +5,7 @@ const Events = () => {
 
     const [state, setState] = useState({
         Events: [],
-      });
+    });
 
       const renderEvents = async() => {
         try {

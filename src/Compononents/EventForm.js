@@ -6,9 +6,47 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { FiClock } from "react-icons/fi";
 import { FaClock, FaRunning, FaWalking} from "react-icons/fa";
+import axios from "axios";
 // Schema for yup
 
 const Gloop = () => {
+  const [formValues, setFormValues] = useState({ name:"", email:"", phone:"", blog:""}); 
+
+  const submitEvent = async() => {
+    console.log('FoRM VALUES: ', formValues);
+    try {
+      let event = {
+          title: formValues.name,
+          description: formValues.email,
+          date: new Date(),
+          tag: "sporting_events",
+          location: {
+          latitude: 25.7659,
+          longitude: 80.1955
+          },
+          max_capacity: 10,
+          public: true,
+          attending: [
+          {
+          first_name: "John",
+          last_name: "Doe",
+          email: "jdoe@mail.com"
+          }
+          ],
+          upvotes: 2,
+          comment_ids: [ ],
+          rating: 5,
+          status: "active",
+          creator_id: "0"
+        };
+        
+        let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
+  
+      console.log(event); 
+    } catch (err) {
+        console.log(err);
+    }
+  }
 
   
 // Schema for yup
@@ -69,7 +107,7 @@ return(
           handleSubmit,
           isSubmitting }) => (
             <Form onSubmit={handleSubmit} className="mx-auto">
-              {console.log(values)}
+              {setFormValues(values)}
               <Form.Group controlId="formName">
                 <Form.Label>Event Name :</Form.Label>
                 <Form.Control
@@ -143,7 +181,7 @@ return(
                   <option>&#xf1f6;</option>
                   <option>5</option>
                 </Form.Control>
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
+              <Button variant="primary" type="submit" disabled={isSubmitting} onClick={submitEvent}>
                 Submit
               </Button>
             </Form>
