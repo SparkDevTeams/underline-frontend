@@ -17,16 +17,6 @@ const Event = ({title, description, eventKey}) => {
         <Card>
                 <Accordion.Toggle as={Card.Header} eventKey="0">
                 {title}
-
-                <StarRatings
-                    rating={rating}
-                    starRatedColor="#3EB44A"
-                    starHoverColor="#3EB44A"
-                    changeRating={changeRating}
-                    starDimension="30px"
-                    numberOfStars={5}
-                    name="rating"
-                />
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                     <Card.Body><b>Description:</b> {description}</Card.Body>
@@ -36,16 +26,6 @@ const Event = ({title, description, eventKey}) => {
         <Card>
                 <Accordion.Toggle as={Card.Header} eventKey={eventKey}>
                 {title}
-
-                <StarRatings
-                    rating={rating}
-                    starRatedColor="#3EB44A"
-                    starHoverColor="#3EB44A"
-                    changeRating={changeRating}
-                    starDimension="30px"
-                    numberOfStars={5}
-                    name='rating'
-                />
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={eventKey}>
                     <Card.Body><b>Description:</b> {description}</Card.Body>
