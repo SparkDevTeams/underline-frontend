@@ -13,7 +13,7 @@ import Navigation from './Navigation'
 
 
 
-const TemporaryDrawer = ({toggleDrawer, state}) => {
+const TemporaryDrawer = ({toggleDrawer, state, button}) => {
   const useStyles = makeStyles({
     drawerPaper: {
       height: `100%`,
@@ -48,8 +48,9 @@ const TemporaryDrawer = ({toggleDrawer, state}) => {
   const formDrawer = (anchor) => {
     return (
     <div>
-      <EventForm />
-      <Events />
+      {button === 'createEventButton' ? <EventForm /> : <Events />} 
+      {console.log(button)}
+      
     </div>
   )};
 

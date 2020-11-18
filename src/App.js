@@ -17,14 +17,21 @@ const App = () => {
     left: false,
     bottom: false,
   });
+
+  const [button, setButton] = useState("listEvents");
   
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (anchor, open, button) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     
     setState({ ...state, [anchor]: open });
+    setButton(button);
   };
+
+  const changeButton = (btn) => {
+    setButton(btn);
+  }
 
     return (
       <React.Fragment>
@@ -32,7 +39,7 @@ const App = () => {
         <Router basename="/">
           <Switch>
             <Route exact path="/">
-              <Maps toggleDrawer={toggleDrawer} state={state}/>
+              <Maps toggleDrawer={toggleDrawer} state={state} button={button}/>
             </Route>
             <Route path='/about' component={() => { 
             window.location.href = 'https://www.theunderline.org/'; 
