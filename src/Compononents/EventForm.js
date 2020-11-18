@@ -9,7 +9,7 @@ import { FaClock, FaRunning, FaWalking} from "react-icons/fa";
 import axios from "axios";
 // Schema for yup
 
-const Gloop = () => {
+const Gloop = (lat, long) => {
   const [formValues, setFormValues] = useState({ name:"", email:"", phone:"", blog:""}); 
 
   const submitEvent = async() => {
@@ -21,8 +21,8 @@ const Gloop = () => {
           date: new Date(),
           tag: "sporting_events",
           location: {
-          latitude: 25.7659,
-          longitude: 80.1955
+          latitude: lat,
+          longitude: long
           },
           max_capacity: 10,
           public: true,

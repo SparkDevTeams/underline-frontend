@@ -27,9 +27,20 @@ function GetIcon(_iconSize, typeIcon) {
     iconSize: [_iconSize]
   })
 }
-function Maps({toggleDrawer, state, button}) {
+function Maps({toggleDrawer, state, button, submitEvent}) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
+
+    const handleClick = (e) =>
+    {
+      setLat(e.latlng); 
+      setLong(e.latlng); 
+      //console.log(lat, long);
+      //submitEvent(lat)
+    }
+  
 
   const onClose = () => {
     setCollapsed(true);
@@ -52,7 +63,7 @@ function Maps({toggleDrawer, state, button}) {
   var zoomLevel = 17;
   return (
     <div id="maps">
-      <Map center={position} zoom={zoomLevel}  attributionControl={false}>
+      <Map center={position} zoom={zoomLevel} onclick={handleClick} zoomControl={false} attributionControl={false}>
         <link
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
@@ -84,7 +95,7 @@ function Maps({toggleDrawer, state, button}) {
         ))}
 
         <Control position="topleft" >
-          <TemporaryDrawer toggleDrawer={toggleDrawer} state={state} button={button}/>
+          <TemporaryDrawer toggleDrawer={toggleDrawer} state={state} button={button} lat={lat} long={long}/>
         </Control>
       </Map>
     </div>
