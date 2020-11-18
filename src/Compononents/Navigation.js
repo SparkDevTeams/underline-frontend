@@ -21,8 +21,7 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
             <Nav > 
               <Nav.Link  href="/"><a className="navfont">Home</a></Nav.Link>
               <Nav.Link  href="/about"><a className="navfont">About</a></Nav.Link>
-              <Nav.Link  href="/form"><a className="navfont">Form</a></Nav.Link>
-
+             
               <Button onClick={toggleDrawer('left', true, 'createEventButton')} variant="link" id="createEventButton"><a className="navfont">Create an event</a></Button>
 
               <Button onClick={toggleDrawer('left', true, 'listEventsButton')} variant="link" id="listEvents"><a className="navfont">Events</a></Button>
