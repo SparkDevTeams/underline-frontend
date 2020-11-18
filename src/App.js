@@ -11,15 +11,28 @@ import axios from "axios";
 
 
 
-class App extends React.Component {
-  render() {
+const App = () => {
+
+  const [state, setState] = useState({
+    left: false,
+    bottom: false,
+  });
+  
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    
+    setState({ ...state, [anchor]: open });
+  };
+
     return (
       <React.Fragment>
-        <Navigation />
+        <Navigation toggleDrawer={toggleDrawer} state={state}/>
         <Router basename="/">
           <Switch>
             <Route exact path="/">
-              <Maps />
+              <Maps toggleDrawer={toggleDrawer} state={state}/>
             </Route>
             <Route path='/about' component={() => { 
             window.location.href = 'https://www.theunderline.org/'; 
@@ -31,8 +44,6 @@ class App extends React.Component {
         </Router>
         </React.Fragment>
   );
-}
-
 }
 
 

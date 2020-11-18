@@ -1,45 +1,45 @@
 @font-face {
-  font-family: "LLCircularWeb-Black";
-  src: url("fonts/lineto-circular-black-c.eot");
-  src: url("fonts/lineto-circular-black-c.eot?#iefix")
-      format("embedded-opentype"),
-    url("fonts/lineto-circular-black-c.woff") format("woff"),
-    url("fonts/lineto-circular-black-c.ttf") format("truetype"),
-    url("fonts/lineto-circular-black-c.svg#LLCircularWeb-Black") format("svg");
-  font-weight: normal;
-  font-style: normal;
+	font-family: "LLCircularWeb-Black";
+	src: url("fonts/lineto-circular-black-c.eot");
+	src: url("fonts/lineto-circular-black-c.eot?#iefix")
+			format("embedded-opentype"),
+		url("fonts/lineto-circular-black-c.woff") format("woff"),
+		url("fonts/lineto-circular-black-c.ttf") format("truetype"),
+		url("fonts/lineto-circular-black-c.svg#LLCircularWeb-Black") format("svg");
+	font-weight: normal;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "LLCircularWeb-Book";
-  src: url("fonts/lineto-circular-book-c.eot");
-  src: url("fonts/lineto-circular-book-c.eot?#iefix")
-      format("embedded-opentype"),
-    url("fonts/lineto-circular-book-c.woff") format("woff"),
-    url("fonts/lineto-circular-book-c.ttf") format("truetype"),
-    url("fonts/lineto-circular-book-c.svg#LLCircularWeb-Book") format("svg");
-  font-weight: normal;
-  font-style: normal;
+	font-family: "LLCircularWeb-Book";
+	src: url("fonts/lineto-circular-book-c.eot");
+	src: url("fonts/lineto-circular-book-c.eot?#iefix")
+			format("embedded-opentype"),
+		url("fonts/lineto-circular-book-c.woff") format("woff"),
+		url("fonts/lineto-circular-book-c.ttf") format("truetype"),
+		url("fonts/lineto-circular-book-c.svg#LLCircularWeb-Book") format("svg");
+	font-weight: normal;
+	font-style: normal;
 }
 
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
-
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
-.Icon-Selector{
-    font-family: 'Lato', 'Font Awesome 5 Free', 'Font Awesome 5 Brands', 'FontAwesome';
-    font-weight: 900;
+.Icon-Selector {
+	font-family: "Lato", "Font Awesome 5 Free", "Font Awesome 5 Brands",
+		"FontAwesome";
+	font-weight: 900;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -47,14 +47,14 @@
 form error message -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 .error {
-  border: 2px solid #ff6565;
+	border: 2px solid #ff6565;
 }
 .error-message {
-  color: #ff6565;
-  padding: 0.5em 0.2em;
-  height: 1em;
-  position: absolute;
-  font-size: 0.8em;
+	color: #ff6565;
+	padding: 0.5em 0.2em;
+	height: 1em;
+	position: absolute;
+	font-size: 0.8em;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -66,26 +66,26 @@ form error message -------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 navbar-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-.navbar{
-  height: 4.7vh;
+.navbar {
+	height: 4.7vh;
 }
 /* Modify the backgorund color */
 .navbar-custom {
-  background-color: #231e1f;
+	background-color: #231e1f;
 }
 .navfont {
-  color: #fbfafa
+	color: #fbfafa;
 }
 .navbar a {
-  font-family: "LLCircularWeb-Black";
-  font-size: 1.3rem;
-  font-weight: 700;
+	font-family: "LLCircularWeb-Black";
+	font-size: 1.3rem;
+	font-weight: 700;
 }
 a,
 a:hover,
 a:visited,
 a:focus {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -94,51 +94,51 @@ a:focus {
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 .App-link {
-  border: 2px solid #ff6565;
+	border: 2px solid #ff6565;
 }
 .error-message {
-  color: #ff6565;
-  padding: 0.5em 0.2em;
-  height: 1em;
-  position: absolute;
-  font-size: 0.8em;
+	color: #ff6565;
+	padding: 0.5em 0.2em;
+	height: 1em;
+	position: absolute;
+	font-size: 0.8em;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 .leaflet-container {
-  width: 100%;
-  height: 95.3vh;
+	width: 100%;
+	height: 95.3vh;
 }
 
 #leftButton {
-  background-color: white;
-  border: solid gray 1px;
+	background-color: white;
+	border: solid gray 1px;
 }
 
 #bottomButton {
-  position: fixed;
-  left: 50%;
-  bottom: 20px;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
-  background-color: white;
-  border: solid gray 1px;
+	position: fixed;
+	left: 50%;
+	bottom: 20px;
+	transform: translate(-50%, -50%);
+	margin: 0 auto;
+	background-color: white;
+	border: solid gray 1px;
 }
 
 .formContainer {
-  padding: 10px;
+	padding: 10px;
 }
 
 #formSubmit {
-  background-color: #007bff;
-  color: white;
+	background-color: #007bff;
+	color: white;
 }
 @media (min-width: 576px) {
 }
@@ -153,6 +153,6 @@ a:focus {
 }
 
 .LogoImg {
-  width: 145px;
-  height: auto;
+	width: 145px;
+	height: auto;
 }

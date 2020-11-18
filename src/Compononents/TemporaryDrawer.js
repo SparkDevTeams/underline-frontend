@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const TemporaryDrawer = () => {
+const TemporaryDrawer = ({toggleDrawer, state}) => {
   const useStyles = makeStyles({
     drawerPaper: {
       height: `100%`,
@@ -64,23 +64,10 @@ const TemporaryDrawer = () => {
   });
   
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    left: false,
-    bottom: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    
-    setState({ ...state, [anchor]: open });
-  };
 
   const formDrawer = (anchor) => {
     return (
     <div>
-      <Navigation />
       <EventForm />
       <Events />
     </div>
@@ -88,26 +75,13 @@ const TemporaryDrawer = () => {
 
   return (
     <div>
-      {['left', 'bottom'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          {anchor === 'left' ? <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiRightArrow />}</Button> : <Button onClick={toggleDrawer(anchor, true)} id={anchor + 'Button'}>{<BiUpArrow />}</Button>}
-          
-          {anchor === 'left' ? 
-            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }} classes={{
-            paper: classes.drawerPaper
-          }}>
-              {formDrawer(anchor)}
-            </Drawer>
-            :
-            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)} BackdropProps={{ invisible: true }} classes={{
-              paper: classes.drawerPaper2
-            }}>
-                {formDrawer(anchor)}
-              </Drawer>}
-        </React.Fragment>
-      ))}
-
-      {console.log(document.querySelector('.App'))}
+      {
+        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} BackdropProps={{ invisible: true }} classes={{
+          paper: classes.drawerPaper
+        }}>
+            {formDrawer('left')}
+          </Drawer>
+      }
     </div>
     
   );

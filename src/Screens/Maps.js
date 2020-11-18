@@ -27,7 +27,7 @@ function GetIcon(_iconSize, typeIcon) {
     iconSize: [_iconSize]
   })
 }
-function Maps(props) {
+function Maps({toggleDrawer, state}) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
 
@@ -84,7 +84,7 @@ function Maps(props) {
         ))}
 
         <Control position="topleft" >
-          <TemporaryDrawer />
+          <TemporaryDrawer toggleDrawer={toggleDrawer} state={state}/>
         </Control>
       </Map>
     </div>
