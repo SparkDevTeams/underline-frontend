@@ -132,6 +132,11 @@ a:focus {
 	border: solid gray 1px;
 }
 
+#commentsCollapseButton {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .formContainer {
 	padding: 10px;
 }

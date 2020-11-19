@@ -14,10 +14,15 @@ const Events = () => {
         try {
             let res = await axios.get('https://sparkdev-underline.herokuapp.com/events/find/all')
             let e = res.data.events;
+
+            
             
             setEvents({
-                Events: e.map((event, i) => 
-                <Event title={event.title} description={event.description} eventKey={i}/>
+                Events: e.map((event, i) => {
+                    return (
+                        <Event title={event.title} description={event.description} eventKey={i} comment_ids={event.comment_ids} key={i}/>
+                    )
+                }
                 )
             });
         } catch (err) {
@@ -27,7 +32,7 @@ const Events = () => {
 
     useEffect(() => {
         renderEvents();
-    });
+    }, []);
 
     return (
         <div>
