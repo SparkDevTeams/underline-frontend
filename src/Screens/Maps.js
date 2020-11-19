@@ -30,16 +30,26 @@ function GetIcon(_iconSize, typeIcon) {
 function Maps({toggleDrawer, state, button, submitEvent}) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
-  const [lat, setLat] = useState(0);
+  const [lat, setLat] = useState([0,0]);
   const [long, setLong] = useState(0);
+  const [isInPoly, setInPoly] = useState(false);
+  const [displayMarker, setDisplayMarker] = useState(false);
 
     const handleClick = (e) =>
     {
       setLat(e.latlng); 
       setLong(e.latlng); 
-      //console.log(lat, long);
-      //submitEvent(lat)
+      console.log(lat, long);
     }
+  const handlePolyClick = () =>
+  {
+    setInPoly(true);
+    setDisplayMarker(true);
+    setTimeout(() => 
+    {
+      setInPoly(false);
+    }, 50);
+  }
   
 
   const onClose = () => {
@@ -58,12 +68,12 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
     { name: "icon2", position: [25.76421, -80.1953],"typeIcon":"food" },
     { name: "icon2", position: [25.76521, -80.19541],"typeIcon":"athletic" },
   ];
-
+  var parkPosition = [[25.7664, -80.1957],[25.7664, -80.1954],[25.7625, -80.1952],[25.7625, -80.1955],]
   var position = [25.763, -80.195];
   var zoomLevel = 17;
   return (
     <div id="maps">
-      <Map center={position} zoom={zoomLevel} onclick={handleClick} zoomControl={false} attributionControl={false}>
+      <Map center={position} zoom={zoomLevel} onclick={isInPoly === true ? handleClick : null} zoomControl={false} attributionControl={false}>
         <link
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
@@ -81,12 +91,15 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
             [25.7625, -80.1952],
             [25.7625, -80.1955],
           ]}
-		  //color="blue"
-		  fillColor='green'
-    		weight={2}
+		      //color="blue"
+		      fillColor='green'
+    	  	weight={2}
         	opacity={.01} //Outline color
-        	fillOpacity={0.4}
-        />
+          fillOpacity={0.4}
+          onclick={handlePolyClick}
+        >
+          {displayMarker === true ? <Marker position={lat}/> : null}
+        </Polygon>
         {locations.map((location) => (
           <Marker icon = {GetIcon(40, location.typeIcon)} position={location.position}>
 
