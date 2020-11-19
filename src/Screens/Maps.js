@@ -31,14 +31,16 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
   const [coordinates, setCoords] = useState([0,0]);
-  const [long, setLong] = useState(0);
   const [isInPoly, setInPoly] = useState(false);
   const [displayMarker, setDisplayMarker] = useState(false);
 
     const handleClick = (e) =>
     {
-      setCoords(e.latlng); 
-      console.log(coordinates);
+      if(isInPoly === true)
+      {
+        setCoords(e.latlng); 
+        console.log(coordinates);
+      }
     }
   const handlePolyClick = () =>
   {
@@ -60,6 +62,8 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
     setSelected(id);
   };
 
+
+
   
 
   const locations = [
@@ -72,7 +76,7 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
   var zoomLevel = 17;
   return (
     <div id="maps">
-      <Map center={position} zoom={zoomLevel} onclick={isInPoly === true ? handleClick : null} zoomControl={false} attributionControl={false}>
+      <Map center={position} zoom={zoomLevel} onclick={handleClick} zoomControl={false} attributionControl={false}>
         <link
           rel="stylesheet"
           href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
