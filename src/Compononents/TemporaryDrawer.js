@@ -13,7 +13,7 @@ import Navigation from './Navigation'
 
 
 
-const TemporaryDrawer = ({toggleDrawer, state, button, lat, long}) => {
+const TemporaryDrawer = ({toggleDrawer, state, button, coordinates}) => {
   const useStyles = makeStyles({
     drawerPaper: {
       height: `100%`,
@@ -48,7 +48,7 @@ const TemporaryDrawer = ({toggleDrawer, state, button, lat, long}) => {
   const formDrawer = (anchor) => {
     return (
     <div>
-      {button === 'createEventButton' ? <EventForm lat={lat} long={long}/> : <Events />} 
+      {button === 'createEventButton' ? <EventForm coordinates={coordinates} /> : <Events />} 
       
     </div>
   )};

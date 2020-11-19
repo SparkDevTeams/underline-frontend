@@ -30,16 +30,15 @@ function GetIcon(_iconSize, typeIcon) {
 function Maps({toggleDrawer, state, button, submitEvent}) {
   const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState("home");
-  const [lat, setLat] = useState([0,0]);
+  const [coordinates, setCoords] = useState([0,0]);
   const [long, setLong] = useState(0);
   const [isInPoly, setInPoly] = useState(false);
   const [displayMarker, setDisplayMarker] = useState(false);
 
     const handleClick = (e) =>
     {
-      setLat(e.latlng); 
-      setLong(e.latlng); 
-      console.log(lat, long);
+      setCoords(e.latlng); 
+      console.log(coordinates);
     }
   const handlePolyClick = () =>
   {
@@ -48,7 +47,7 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
     setTimeout(() => 
     {
       setInPoly(false);
-    }, 50);
+    }, 100);
   }
   
 
@@ -98,7 +97,7 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
           fillOpacity={0.4}
           onclick={handlePolyClick}
         >
-          {displayMarker === true ? <Marker position={lat}/> : null}
+          {displayMarker === true ? <Marker position={coordinates} onclick={toggleDrawer('left', true, 'createEventButton')}/> : null}
         </Polygon>
         {locations.map((location) => (
           <Marker icon = {GetIcon(40, location.typeIcon)} position={location.position}>
@@ -108,7 +107,7 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
         ))}
 
         <Control position="topleft" >
-          <TemporaryDrawer toggleDrawer={toggleDrawer} state={state} button={button} lat={lat} long={long}/>
+          <TemporaryDrawer toggleDrawer={toggleDrawer} state={state} button={button} coordinates={coordinates}/>
         </Control>
       </Map>
     </div>
