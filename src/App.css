@@ -21,7 +21,12 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
+a::selection {
+  
+	background: none;
+	text-decoration: none;
+	
+}
 .App {
 	text-align: center;
 }
@@ -74,19 +79,24 @@ navbar--------------------------------------------------------------------------
 	background-color: #231e1f;
 }
 .navfont {
-	color: #fbfafa;
+	color: #fbfafa !important;
+	text-decoration: none !important;
+}
+.navfont
+.navfont:hover
+.navfont:visited
+.navfont:focus { 
+	text-decoration: none !important;
+	color: #fbfafa !important;
 }
 .navbar a {
 	font-family: "LLCircularWeb-Black";
 	font-size: 1.3rem;
 	font-weight: 700;
-}
-a,
-a:hover,
-a:visited,
-a:focus {
 	text-decoration: none;
+	
 }
+
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
