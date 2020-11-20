@@ -44,14 +44,11 @@ function GetIcon(_iconSize, typeIcon) {
 function Maps({ toggleDrawer, state, button, submitEvent }) {
 	const [collapsed, setCollapsed] = useState(true);
 	const [selected, setSelected] = useState("home");
-	const [lat, setLat] = useState(0);
-	const [long, setLong] = useState(0);
+	const [coordinates, setCoords] = useState([0,0]);
 
 	const handleClick = (e) => {
-		setLat(e.latlng);
-		setLong(e.latlng);
-		//console.log(lat, long);
-		//submitEvent(lat)
+		setCoords(e.latlng); 
+    console.log(coordinates);
 	};
 
 	const onClose = () => {
@@ -63,7 +60,7 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
 		setSelected(id);
 	};
 
-	const [events, setEvents] = useState({});
+	const [events, setEvents] = useState([]);
 
 	const renderEvents = async () => {
 		try {
@@ -127,20 +124,32 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
 					fillOpacity={0.4}
 				/>
 
-				{locations.map((location) => (
-					<Marker
-						icon={GetIcon(40, location.typeIcon)}
-						position={location.position}
+        {events.map((event) => {
+
+          let iconName = 'Restrooms';
+
+          if (event.tag === 'sporting_events') {
+            iconName = 'athletic';
+          } else if (event.tag === 'food_events') {
+            iconName = 'food';
+          } else {
+            iconName = 'Restrooms';
+          }
+
+          return(
+            <Marker
+						icon={GetIcon(40, iconName)}
+						position={[event.location.latitude, event.location.longitude]} key={event.event_id}
 					></Marker>
-				))}
+          )
+        })}
 
 				<Control position="topleft">
 					<TemporaryDrawer
 						toggleDrawer={toggleDrawer}
 						state={state}
 						button={button}
-						lat={lat}
-						long={long}
+						coordinates={coordinates}
 					/>
 				</Control>
 			</Map>

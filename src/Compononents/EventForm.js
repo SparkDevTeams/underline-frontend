@@ -162,6 +162,7 @@ return(
                   <div className="error-message">{errors.phone}</div>
                 ) : null}
               </Form.Group>
+              
               <Form.Group controlId="formBlog">
                 <Form.Label>Invite Friends :</Form.Label>
                 <Form.Control
