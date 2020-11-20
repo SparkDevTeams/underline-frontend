@@ -33,10 +33,7 @@ const Gloop = ({coordinates}) => {
           description: formValues.latitude + '    ' + formValues.longitude,
           date: new Date(),
           tag: "sporting_events",
-          location: {
-          latitude: formValues.latitude,
-          longitude: formValues.longitude
-          },
+          location: coordinates,
           max_capacity: 10,
           public: true,
           attending: [
@@ -56,6 +53,7 @@ const Gloop = ({coordinates}) => {
         //let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
   
       //console.log(res); 
+      console.log(event);
     } catch (err) {
         console.log(err);
     }
@@ -187,33 +185,7 @@ return(
                 
               </Form.Group>
 
-              <Form.Group controlId="formLat">
-                <Form.Label>Latitude:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="latitude"
-                  placeholder="25.76321"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.latitude}
-                  className={touched.latitude && errors.latitude ? "error" : null}
-                />
-                
-              </Form.Group>
-
-              <Form.Group controlId="formLng">
-                <Form.Label>Longitude:</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="longitude"
-                  placeholder="-80.1952"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.longitude}
-                  className={touched.longitude && errors.longitude ? "error" : null}
-                />
-                
-              </Form.Group>
+              
 
               <Form.Label>Choose Icon :</Form.Label>
               <Form.Control className="Icon-Selector"as="select" multiple>
