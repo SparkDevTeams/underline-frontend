@@ -26,11 +26,6 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
 
               <Button onClick={toggleDrawer('left', true, 'listEventsButton')} variant="link" id="listEvents"><a className="navfont">Events</a></Button>
 
-      
-
-              
-
-              <Button variant="primary" onClick={handleShow}>Launch demo modal</Button>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
