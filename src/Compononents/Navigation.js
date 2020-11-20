@@ -22,7 +22,7 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
               <Nav.Link  href="/"><a className="navfont">Home</a></Nav.Link>
               <Nav.Link  href="/about"><a className="navfont">About</a></Nav.Link>
              
-              <Button onClick={toggleDrawer('left', true, 'createEventButton')} variant="link" id="createEventButton"><a className="navfont">Create an event</a></Button>
+              <Button onClick={handleShow} variant="link" id="createEventButton"><a className="navfont">Create an event</a></Button>
 
               <Button onClick={toggleDrawer('left', true, 'listEventsButton')} variant="link" id="listEvents"><a className="navfont">Events</a></Button>
 
@@ -37,15 +37,12 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
 
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Yoga Class</Modal.Title>
+          <Modal.Title>Create a new event</Modal.Title>
         </Modal.Header>
-        <Modal.Body><b>Description:</b> Weekly 90 minute yoga session in the park</Modal.Body>
+        <Modal.Body><b>To create a new event, click on the green space on the map, then click the pin </b></Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

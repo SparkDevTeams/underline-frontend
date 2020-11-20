@@ -67,8 +67,7 @@ const validationSchema = Yup.object().shape({
     .max(100, "*Description can't be longer than 100 characters")
     .required("*Event Description is required"),
   phone: Yup.string()
-    .matches(phoneRegExp, "*Phone number is not valid")
-    .required("*Phone number required"),
+    .matches(phoneRegExp, "*Phone number is not valid"),
   blog: Yup.string()
   .min(2, "*Names must have at least 2 characters")
   .max(100, "*Names can't be longer than 100 characters")
