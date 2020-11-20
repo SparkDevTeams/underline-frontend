@@ -34,7 +34,7 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
         <Modal.Header closeButton>
           <Modal.Title>Create a new event</Modal.Title>
         </Modal.Header>
-        <Modal.Body><b>To create a new event, click on the green space on the map, then click the pin </b></Modal.Body>
+        <Modal.Body><b>To create a new event, click the green space on the map, then click the pin </b></Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

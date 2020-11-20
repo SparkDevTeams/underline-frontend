@@ -56,7 +56,7 @@ const TemporaryDrawer = ({toggleDrawer, state, button, coordinates}) => {
   return (
     <div>
       {
-        <Drawer variant='permanent' anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} BackdropProps={{ invisible: true }} classes={{
+        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} BackdropProps={{ invisible: true }} classes={{
           paper: classes.drawerPaper
         }}>
             {formDrawer('left')}
