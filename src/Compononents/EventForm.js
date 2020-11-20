@@ -12,28 +12,19 @@ import axios from "axios";
 const Gloop = ({coordinates}) => {
   const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"]}); 
 
-  //console.log('hello: ' + formValues.latitude);
-  //console.log('hello cords lat: ', coordinates["lat"]);
-  //console.log('hello cords lng: ', coordinates["lng"]);
 
   const submitEvent = async() => {
-    //console.log('FoRM VALUES: ', formValues);
-    
-    let newFormValues = {
-      name: formValues.name, email: formValues.email, phone: formValues.phone, blog: formValues.blog, latitude: coordinates["lat"], longitude: coordinates["lng"]
-    };
-
-    setFormValues(newFormValues);
-
-    //console.log('NEW FORM VALUES: ', formValues);
     
     try {
       let event = {
           title: formValues.name,
-          description: formValues.latitude + '    ' + formValues.longitude,
+          description: formValues.email,
           date: new Date(),
           tag: "sporting_events",
-          location: coordinates,
+          location: {
+            latitude: coordinates["lat"], 
+            longitude: coordinates["lng"]
+          },
           max_capacity: 10,
           public: true,
           attending: [
@@ -50,9 +41,9 @@ const Gloop = ({coordinates}) => {
           creator_id: "0"
         };
         
-        //let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
+        let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
   
-      //console.log(res); 
+      console.log(res); 
       console.log(event);
     } catch (err) {
         console.log(err);
