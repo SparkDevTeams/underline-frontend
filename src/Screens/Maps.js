@@ -160,9 +160,13 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
 
           return(
             <Marker
-						icon={GetIcon(40, iconName)}
-						position={[event.location.latitude, event.location.longitude]} key={event.event_id}
-					></Marker>
+				icon={GetIcon(40, iconName)}
+				position={[event.location.latitude, event.location.longitude]} key={event.event_id}
+			>
+				<Popup>
+					<b>{event.title}</b> <br /> {event.description}
+				</Popup>
+			</Marker>
           )
         })}
 
