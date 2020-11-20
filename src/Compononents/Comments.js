@@ -33,6 +33,7 @@ const Comments = ({comment_ids}) => {
     }, []); 
 
     comments.forEach(comment => console.log(comment))
+    console.log()
     return (
         <div>
             <Button
@@ -43,10 +44,14 @@ const Comments = ({comment_ids}) => {
 
                 <Collapse in={open}>
                     <div id="commentsCollapseText">
-                        {comments.map((comment) => 
-                        <Card.Text>
-                            <div><b>Guest:</b></div> {comment}
-                        </Card.Text>)}
+                        {comments.length === 0 ? 
+                            <Card.Text>
+                                <div><b>No Comments</b></div>
+                            </Card.Text> : 
+                        comments.map((comment) => 
+                            <Card.Text>
+                                <div><b>Guest:</b></div> {comment}
+                            </Card.Text>)}
                     </div>
                 </Collapse>
         </div>
