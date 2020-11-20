@@ -9,20 +9,33 @@ import { FaClock, FaRunning, FaWalking} from "react-icons/fa";
 import axios from "axios";
 // Schema for yup
 
-const Gloop = (coordinates) => {
-  const [formValues, setFormValues] = useState({ name:"", email:"", phone:"", blog:""}); 
+const Gloop = ({coordinates}) => {
+  const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"]}); 
+
+  //console.log('hello: ' + formValues.latitude);
+  //console.log('hello cords lat: ', coordinates["lat"]);
+  //console.log('hello cords lng: ', coordinates["lng"]);
 
   const submitEvent = async() => {
-    console.log('FoRM VALUES: ', formValues);
+    //console.log('FoRM VALUES: ', formValues);
+    
+    let newFormValues = {
+      name: formValues.name, email: formValues.email, phone: formValues.phone, blog: formValues.blog, latitude: coordinates["lat"], longitude: coordinates["lng"]
+    };
+
+    setFormValues(newFormValues);
+
+    //console.log('NEW FORM VALUES: ', formValues);
+    
     try {
       let event = {
           title: formValues.name,
-          description: formValues.email,
+          description: formValues.latitude + '    ' + formValues.longitude,
           date: new Date(),
           tag: "sporting_events",
           location: {
-          latitude: coordinates,
-          longitude: coordinates
+          latitude: formValues.latitude,
+          longitude: formValues.longitude
           },
           max_capacity: 10,
           public: true,
@@ -42,7 +55,7 @@ const Gloop = (coordinates) => {
         
         //let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
   
-      console.log(event); 
+      //console.log(res); 
     } catch (err) {
         console.log(err);
     }
@@ -78,7 +91,7 @@ return(
   <React.Fragment>
     <Container>
       <Formik
-        initialValues={{ name:"", email:"", phone:"", blog:""}}
+        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 0, longitude: 0}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
             // When button submits form and form is in the process of submitting, submit button is disabled
@@ -173,6 +186,35 @@ return(
                 />
                 
               </Form.Group>
+
+              <Form.Group controlId="formLat">
+                <Form.Label>Latitude:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="latitude"
+                  placeholder="25.76321"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.latitude}
+                  className={touched.latitude && errors.latitude ? "error" : null}
+                />
+                
+              </Form.Group>
+
+              <Form.Group controlId="formLng">
+                <Form.Label>Longitude:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="longitude"
+                  placeholder="-80.1952"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.longitude}
+                  className={touched.longitude && errors.longitude ? "error" : null}
+                />
+                
+              </Form.Group>
+
               <Form.Label>Choose Icon :</Form.Label>
               <Form.Control className="Icon-Selector"as="select" multiple>
                   <option> &#xf2b9;</option>

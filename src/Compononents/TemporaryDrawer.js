@@ -23,7 +23,7 @@ const TemporaryDrawer = ({toggleDrawer, state, button, coordinates}) => {
       },
 
       '@media (min-width:1000px)': { 
-        width: '35%'
+        width: '25%'
       },
     },
 
@@ -56,7 +56,7 @@ const TemporaryDrawer = ({toggleDrawer, state, button, coordinates}) => {
   return (
     <div>
       {
-        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} BackdropProps={{ invisible: true }} classes={{
+        <Drawer variant='permanent' anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)} BackdropProps={{ invisible: true }} classes={{
           paper: classes.drawerPaper
         }}>
             {formDrawer('left')}

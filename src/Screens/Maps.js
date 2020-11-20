@@ -28,8 +28,6 @@ function GetIcon(_iconSize, typeIcon) {
   })
 }
 function Maps({toggleDrawer, state, button, submitEvent}) {
-  const [collapsed, setCollapsed] = useState(true);
-  const [selected, setSelected] = useState("home");
   const [coordinates, setCoords] = useState([0,0]);
   const [isInPoly, setInPoly] = useState(false);
   const [displayMarker, setDisplayMarker] = useState(false);
@@ -51,17 +49,6 @@ function Maps({toggleDrawer, state, button, submitEvent}) {
       setInPoly(false);
     }, 100);
   }
-  
-
-  const onClose = () => {
-    setCollapsed(true);
-  };
-
-  const onOpen = (id) => {
-    setCollapsed(false);
-    setSelected(id);
-  };
-
 
 
   
