@@ -10,7 +10,7 @@ import axios from "axios";
 // Schema for yup
 
 const Gloop = ({coordinates}) => {
-  const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"]}); 
+  const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"], tag:"sporting_events"}); 
 
 
   const submitEvent = async() => {
@@ -80,7 +80,7 @@ return(
   <React.Fragment>
     <Container>
       <Formik
-        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 0, longitude: 0}}
+        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 0, longitude: 0, tag:""}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
             // When button submits form and form is in the process of submitting, submit button is disabled
@@ -162,7 +162,6 @@ return(
                   <div className="error-message">{errors.phone}</div>
                 ) : null}
               </Form.Group>
-              
               <Form.Group controlId="formBlog">
                 <Form.Label>Invite Friends :</Form.Label>
                 <Form.Control
@@ -176,8 +175,19 @@ return(
                 />
                 
               </Form.Group>
-
               
+              {/*<Form.Group controlId="formBlog">
+                  <Form.Label>Tag</Form.Label>
+                  <Form.Control className="Icon-Selector"as="select"  onChange={($event) =>(values.tag = $event.target.value)}
+                    onBlur={handleBlur} >
+                    <option value={"sporting_events"}>Sporting Event</option>
+                    <option value={"Food"}>Food</option>
+                    <option value={"Outdoor Activity"}>Outdoor Activity</option>
+                    <option value={"Fun"}>Fun</option>
+                    <option value={"Other"}>Other</option>
+                  </Form.Control>
+                  
+                </Form.Group>*/}
 
               <Form.Label>Choose Icon :</Form.Label>
               <Form.Control className="Icon-Selector"as="select" multiple>

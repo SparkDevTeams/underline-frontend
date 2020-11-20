@@ -44,12 +44,26 @@ function GetIcon(_iconSize, typeIcon) {
 function Maps({ toggleDrawer, state, button, submitEvent }) {
 	const [collapsed, setCollapsed] = useState(true);
 	const [selected, setSelected] = useState("home");
-	const [coordinates, setCoords] = useState([0,0]);
-
-	const handleClick = (e) => {
-		setCoords(e.latlng); 
-    console.log(coordinates);
-	};
+  const [coordinates, setCoords] = useState([0,0]);
+  const [isInPoly, setInPoly] = useState(false);
+  const [displayMarker, setDisplayMarker] = useState(false)
+	const handleClick = (e) =>
+    {
+      if(isInPoly === true)
+      {
+        setCoords(e.latlng); 
+        console.log(coordinates);
+      }
+    }
+    const handlePolyClick = () =>
+  {
+    setInPoly(true);
+    setDisplayMarker(true);
+    setTimeout(() => 
+    {
+      setInPoly(false);
+    }, 100);
+  }
 
 	const onClose = () => {
 		setCollapsed(true);
@@ -80,7 +94,7 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
 		renderEvents();
 	}, []);
 
-	console.log("This is the value of events: " ,events); //error
+	//console.log("This is the value of events: " ,events); //error
 	//console.log("This is the value of event: " , event.location)
 
 	const locations = [
@@ -121,9 +135,10 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
 					fillColor="green"
 					weight={2}
 					opacity={0.01} //Outline color
-					fillOpacity={0.4}
+          fillOpacity={0.4}
+          onclick={handlePolyClick}
 				/>
-
+        {displayMarker === true ? <Marker position={coordinates} onclick={toggleDrawer('left', true, 'createEventButton')}/> : null}
         {events.map((event) => {
 
           let iconName = 'Restrooms';
