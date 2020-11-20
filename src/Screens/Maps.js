@@ -29,6 +29,8 @@ import TemporaryDrawer from "../Compononents/TemporaryDrawer";
 import Control from "react-leaflet-control";
 import L from "leaflet";
 import axios from "axios";
+import music_event from "../Images/guitar-solid.png"
+import art_event from "../Images/paint-brush-solid.png"
 import Event from "../Compononents/Event";
 import Events from "../Compononents/Events";
 //import Events from "material-ui/utils/events";
@@ -147,9 +149,14 @@ function Maps({ toggleDrawer, state, button, submitEvent }) {
             iconName = 'athletic';
           } else if (event.tag === 'food_events') {
             iconName = 'food';
-          } else {
+          } else if (event.tag === 'art_expo') {
+            iconName = 'paint-brush-solid';
+          } else if (event.tag === 'music_show') {
+            iconName = 'guitar-solid';
+          } else  {
             iconName = 'Restrooms';
           }
+          
 
           return(
             <Marker
