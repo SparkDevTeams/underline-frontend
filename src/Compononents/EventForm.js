@@ -79,7 +79,7 @@ return(
   <React.Fragment>
     <Container>
       <Formik
-        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 1, longitude: 1, tag:""}}
+        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 1, longitude: 1, tag:"sporting_events"}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
             // When button submits form and form is in the process of submitting, submit button is disabled
