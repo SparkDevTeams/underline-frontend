@@ -10,7 +10,7 @@ import axios from "axios";
 // Schema for yup
 
 const Gloop = ({coordinates}) => {
-  const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"], tag:"sporting_events"}); 
+  const [formValues, setFormValues] = useState({ name:"", email: "", phone:"", blog:"", latitude: coordinates["lat"], longitude: coordinates["lng"], tag:"sporting_event"}); 
 
 
   const submitEvent = async() => {
@@ -20,7 +20,7 @@ const Gloop = ({coordinates}) => {
           title: formValues.name,
           description: formValues.email,
           date: new Date(),
-          tag: "sporting_events",
+          tag: formValues.tag,
           location: {
             latitude: coordinates["lat"], 
             longitude: coordinates["lng"]
@@ -41,10 +41,9 @@ const Gloop = ({coordinates}) => {
           creator_id: "0"
         };
         
-        let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
+      let res = await axios.post('https://sparkdev-underline.herokuapp.com/events/register', event); 
   
       console.log(res); 
-      console.log(event);
     } catch (err) {
         console.log(err);
     }
@@ -80,7 +79,7 @@ return(
   <React.Fragment>
     <Container>
       <Formik
-        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 0, longitude: 0, tag:""}}
+        initialValues={{ name:"", email:"", phone:"", blog:"", latitude: 1, longitude: 1, tag:""}}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, resetForm}) => {
             // When button submits form and form is in the process of submitting, submit button is disabled
@@ -176,27 +175,18 @@ return(
                 
               </Form.Group>
               
-              {/*<Form.Group controlId="formBlog">
+              <Form.Group controlId="formBlog">
                   <Form.Label>Tag</Form.Label>
                   <Form.Control className="Icon-Selector"as="select"  onChange={($event) =>(values.tag = $event.target.value)}
                     onBlur={handleBlur} >
-                    <option value={"sporting_events"}>Sporting Event</option>
-                    <option value={"Food"}>Food</option>
-                    <option value={"Outdoor Activity"}>Outdoor Activity</option>
-                    <option value={"Fun"}>Fun</option>
-                    <option value={"Other"}>Other</option>
-                  </Form.Control>
-                  
-                </Form.Group>*/}
+                    <option value={"sporting_events"}>Sporting Events</option>
+                    <option value={"food_events"}>Food Events</option>
+                    <option value={"art_expo"}>Art Expo</option>
+                    <option value={"music_show"}>Music Show</option>
+                    <option value={"restroom"}>Restroom</option>
+                  </Form.Control>    
+              </Form.Group>
 
-              <Form.Label>Choose Icon :</Form.Label>
-              <Form.Control className="Icon-Selector"as="select" multiple>
-                  <option> &#xf2b9;</option>
-                  <option>&#xf358;</option>
-                  <option>&#xf35b;</option>
-                  <option>&#xf1f6;</option>
-                  <option>5</option>
-                </Form.Control>
               <Button variant="primary" type="submit" disabled={isSubmitting} onClick={submitEvent}>
                 Submit
               </Button>

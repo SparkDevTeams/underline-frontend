@@ -44,9 +44,9 @@ function GetIcon(_iconSize, typeIcon) {
 function Maps({ toggleDrawer, state, button, submitEvent }) {
 	const [collapsed, setCollapsed] = useState(true);
 	const [selected, setSelected] = useState("home");
-  const [coordinates, setCoords] = useState([0,0]);
-  const [isInPoly, setInPoly] = useState(false);
-  const [displayMarker, setDisplayMarker] = useState(false)
+	const [coordinates, setCoords] = useState([0,0]);
+	const [isInPoly, setInPoly] = useState(false);
+	const [displayMarker, setDisplayMarker] = useState(false)
 	const handleClick = (e) =>
     {
       if(isInPoly === true)
