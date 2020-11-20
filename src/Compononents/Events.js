@@ -15,8 +15,6 @@ const Events = () => {
             let res = await axios.get('https://sparkdev-underline.herokuapp.com/events/find/all')
             let e = res.data.events;
 
-            
-            
             setEvents({
                 Events: e.map((event, i) => {
                     return (
