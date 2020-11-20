@@ -39,7 +39,7 @@ const App = () => {
         <Router basename="/">
           <Switch>
             <Route exact path="/">
-              <Maps toggleDrawer={toggleDrawer} state={state} button={button}/>
+              { <Maps toggleDrawer={toggleDrawer} state={state} button={button}/> }
             </Route>
             <Route path='/about' component={() => { 
             window.location.href = 'https://www.theunderline.org/'; 
