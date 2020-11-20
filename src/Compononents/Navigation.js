@@ -14,7 +14,7 @@ const Navigation = ({toggleDrawer, state, changeButton}) => {
       
   return (
     <div className="App">
-        <Navbar className="navbar-custom" expand="lg" variant = "dark" >
+        <Navbar className="navbar-custom navbar-static-top" expand="lg" variant = "dark" >
           <Navbar.Brand href="#home"><a className="navfont"><img className="LogoImg" src={logo} alt="Logo" /></a></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
