@@ -1,4 +1,4 @@
-# The Underline Web App Front End
+# The Underline Front End
 
 ## Project setup
 
