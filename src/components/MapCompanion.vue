@@ -26,12 +26,16 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
+@import "../assets/fonts.css";
+
 #map-companion-container {
+  font-family: $font;
   @extend .clear;
-  height: 70vh;
-  width: 30vw;
+  height: 94%;
+  width: 30%;
   position: absolute;
-  right: 15vw;
+  right: 1vw;
+  top: 1vw;
   z-index: 401;
 
   background: white;

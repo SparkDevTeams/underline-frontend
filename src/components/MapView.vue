@@ -1,12 +1,14 @@
 <template>
   <div id="map-container">
     <div id="underline-map">
+      <MapCompanion></MapCompanion>
     </div>
   </div>
 </template>
 
 <script>
 import leaflet from "leaflet";
+import MapCompanion from "./MapCompanion.vue"
 export default {
   data() {
     return {
@@ -50,6 +52,7 @@ export default {
   },
   watch: {},
   components: {
+    MapCompanion
   },
 };
 </script>
@@ -57,12 +60,13 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 #map-container {
-  height: 100%;
-  width: 100vw;
+  height: 80vh;
+  width: 96vw;
 }
 #underline-map {
   height: 100%;
   margin-top: 0px;
-  border-radius: 5px;
+  border-radius: 15px;
+  margin:2vw 0;
 }
 </style>

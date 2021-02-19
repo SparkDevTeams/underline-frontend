@@ -1,39 +1,27 @@
 <template>
   <div id="nav-container">
-    <img id="logo" src="../assets/logo.png">
+    <img id="logo" src="../assets/grn-and-wht-u-logo.png">
     <button>Explore</button>
     <button>Events</button>
-    <button @click="changeHeader">About</button>
+    <button>About</button>
     <button id="support-button">Support</button>
     <button>Donate</button>
-    <h1>{{header}}</h1>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      header: "collin"
-    };
-  },
-  methods: {
-    changeHeader() {
-      this.header = "header"
-    }
-  },
-};
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 
 #nav-container {
+  font-family: inherit;
   @extend .flex-row;
   justify-content: flex-start;
   height: 11vh;
   width: 100vw;
-  background-color: rgb(34, 34, 34);
+  background-color: rgb(0, 0, 0);
   padding: 0px 20px;
   box-sizing: border-box;
 
@@ -43,9 +31,11 @@ export default {
 
   button {
     @extend .clear;
+    font-smooth: antialiased;
+    font-family: inherit;
     background-color: transparent;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 19px;
+    font-weight: 600;
     color:gray;
     margin: 0px 25px;
     cursor: pointer;

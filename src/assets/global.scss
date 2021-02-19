@@ -1,6 +1,10 @@
 $colors: (
-     primary: #ffffff
+     green: #03bf4d,
+     grey: #6e6e6e,
+
 );
+
+$font: "LLCircularWeb-Black";
 
 @function color($color-name) {
      @return map-get($map: $colors, $key: $color-name);
@@ -23,8 +27,6 @@ $colors: (
      }
 }
 
-$font: "Montserrat", sans-serif;
-$fonta: "Lato", sans-serif;
 
 .clear {
      margin: 0px;
@@ -47,14 +49,11 @@ $fonta: "Lato", sans-serif;
 body {
      margin: 0px;
      padding: 0px;
-     font-family: $font;
-     color: color(secondary-d);
 }
 
 .button {
      @extend .clear;
 
-     font-family: $font;
 
      position: relative;
      cursor: pointer;
@@ -81,7 +80,6 @@ body {
      border-radius: 5px;
      font-size: 1rem;
      color: color(secondary-d);
-     font-family: $font;
      font-weight: 500;
      background: color(nwhite);
      transition: border-radius 0.2s;

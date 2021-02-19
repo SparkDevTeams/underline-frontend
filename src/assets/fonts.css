@@ -1,0 +1,35 @@
+/*
+ * Legal Disclaimer
+ *
+ * These Fonts are licensed only for use on these domains and their subdomains:
+ * theunderline.org
+ *
+ * It is illegal to download or use them on other websites.
+ *
+ * While the @font-face statements below may be modified by the client, this
+ * disclaimer may not be removed.
+ *
+ * Lineto.com, 2014
+ */
+
+@font-face {
+	 font-family: "LLCircularWeb-Black";
+	 src: 	 url("fonts/lineto-circular-black-c.eot");
+	 src: 	 url("fonts/lineto-circular-black-c.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/lineto-circular-black-c.woff") format("woff"),
+		 url("fonts/lineto-circular-black-c.ttf") format("truetype"),
+		 url("fonts/lineto-circular-black-c.svg#LLCircularWeb-Black") format("svg");
+	 font-weight: normal;
+	 font-style: normal;
+}
+
+@font-face {
+	 font-family: "LLCircularWeb-Book";
+	 src: 	 url("fonts/lineto-circular-book-c.eot");
+	 src: 	 url("fonts/lineto-circular-book-c.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/lineto-circular-book-c.woff") format("woff"),
+		 url("fonts/lineto-circular-book-c.ttf") format("truetype"),
+		 url("fonts/lineto-circular-book-c.svg#LLCircularWeb-Book") format("svg");
+	 font-weight: normal;
+	 font-style: normal;
+}
