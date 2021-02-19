@@ -1,35 +1,66 @@
 <template>
   <div id="nav-container">
-    <button>Event List</button>
-    <img src="../assets/logo.png">
+    <img id="logo" src="../assets/logo.png">
+    <button>Explore</button>
+    <button>Events</button>
+    <button @click="changeHeader">About</button>
+    <button id="support-button">Support</button>
+    <button>Donate</button>
+    <h1>{{header}}</h1>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      header: "collin"
+    };
+  },
+  methods: {
+    changeHeader() {
+      this.header = "header"
+    }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
+
 #nav-container {
-
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 7vh;
   @extend .flex-row;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  height: 11vh;
+  width: 100vw;
+  background-color: rgb(34, 34, 34);
+  padding: 0px 20px;
+  box-sizing: border-box;
 
-  // z index of leaflet is 400 by default
-  z-index: 401;
-  
-  img {
-    height: 80%;
-    margin-right: 8px;
-    cursor: pointer;
+  #logo {
+    height: 60%;
   }
+
   button {
-    margin-right: 5vw;
+    @extend .clear;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 700;
+    color:gray;
+    margin: 0px 25px;
+    cursor: pointer;
+
+    &:hover {
+      color:rgb(255, 255, 255);
+    }
+
+  }
+
+  #support-button {
+    margin-left:auto;
   }
 }
+
+
+
 </style>

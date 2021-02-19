@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <NavBar></NavBar>
     <MapView></MapView>
     <MapCompanion></MapCompanion>
   </div>
