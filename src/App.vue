@@ -2,12 +2,14 @@
   <div id="app">
     <NavBar></NavBar>
     <MapView></MapView>
+    <SmartEvent></SmartEvent>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
 import MapView from "./components/MapView.vue";
+import SmartEvent from "./components/SmartEvent.vue";
 export default {
   name: "app",
   data() {
@@ -18,7 +20,8 @@ export default {
   watch: {},
   components: {
     NavBar,
-    MapView
+    MapView,
+    SmartEvent
   },
 };
 </script>

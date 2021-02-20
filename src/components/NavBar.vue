@@ -14,9 +14,10 @@
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
+@import "../assets/fonts.css";
 
 #nav-container {
-  font-family: inherit;
+  font-family: $font;
   @extend .flex-row;
   justify-content: flex-start;
   height: 11vh;
@@ -32,7 +33,7 @@
   button {
     @extend .clear;
     font-smooth: antialiased;
-    font-family: inherit;
+    font-family: $font;
     background-color: transparent;
     font-size: 19px;
     font-weight: 600;

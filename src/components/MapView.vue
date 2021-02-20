@@ -1,8 +1,7 @@
 <template>
   <div id="map-container">
-    <div id="underline-map">
-      <MapCompanion></MapCompanion>
-    </div>
+    <MapCompanion></MapCompanion>
+    <div id="underline-map"></div>
   </div>
 </template>
 
@@ -60,8 +59,9 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 #map-container {
-  height: 80vh;
+  height: 64vh;
   width: 96vw;
+  @extend .shadow;
 }
 #underline-map {
   height: 100%;
