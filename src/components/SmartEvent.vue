@@ -1,6 +1,11 @@
 <template>
   <div id="smart-event-container">
-
+    <p>I want to have a</p>
+    <input>
+    <p> on </p>
+    <input>
+    <p> in </p>
+    <input>
   </div>
 </template>
 
@@ -19,5 +24,11 @@ export default {
   width: 96vw;
   background-color: black;
   border-radius: 0px 0px 10px 10px;
+  @extend .flex-row;
+
+  p {
+    color: white;
+
+  }
 }
 </style>
