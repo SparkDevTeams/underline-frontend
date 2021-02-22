@@ -1,14 +1,15 @@
 <template>
   <div id="app">
+    <NavBar></NavBar>
     <MapView></MapView>
-    <MapCompanion></MapCompanion>
+    <SmartEvent></SmartEvent>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
 import MapView from "./components/MapView.vue";
-import MapCompanion from "./components/MapCompanion.vue";
+import SmartEvent from "./components/SmartEvent.vue";
 export default {
   name: "app",
   data() {
@@ -20,21 +21,23 @@ export default {
   components: {
     NavBar,
     MapView,
-    MapCompanion
+    SmartEvent
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./assets/global.scss";
+@import "./assets/fonts.css";
 
 #app {
   @extend .clear;
-  //font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   width: 100vw;
-  @extend .flex-column
+  @extend .flex-column;
+  justify-content: flex-start;
 }
 </style>
