@@ -2,6 +2,19 @@
 
 ## Project setup
 
+Git - You may already have this installed but if you arent sure just go ahead and install it. Git is for managing code when collaborating.
+
+https://git-scm.com/downloads
+
+NPM - NPM is a javascript package manager that allows us to download all the other libraries we need. 
+
+https://nodejs.org/en/ (either download option is fine but I would recommend what npm recommends.)
+
+Run this command after you have the two prior installed.
+```
+npm install yarn
+```
+
 cd into the project's directory and run this command to install all dependencies the project needs.
 
 ```
