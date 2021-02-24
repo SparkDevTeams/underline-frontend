@@ -15,6 +15,11 @@ Run this command after you have the two prior installed.
 npm install yarn
 ```
 
+Run this command once your terminal is pointing to a directory where you would like the project's code to be.
+```
+git clone https://github.com/SparkDevTeams/underline-frontend.git
+```
+
 cd into the project's directory and run this command to install all dependencies the project needs.
 
 ```
