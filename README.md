@@ -12,7 +12,7 @@ https://nodejs.org/en/ (either download option is fine but I would recommend wha
 
 Run this command after you have the two prior installed.
 ```
-npm install yarn
+npm install --global yarn
 ```
 
 Run this command once your terminal is pointing to a directory where you would like the project's code to be.
