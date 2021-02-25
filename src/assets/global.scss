@@ -1,121 +1,118 @@
 $colors: (
-     green: #03bf4d,
-     grey: #6e6e6e,
-
+	green: #03bf4d,
+	grey: #6e6e6e
 );
 
-$font: "LLCircularWeb-Black";
+$font: 'LLCircularWeb-Black';
 
 @function color($color-name) {
-     @return map-get($map: $colors, $key: $color-name);
+	@return map-get($map: $colors, $key: $color-name);
 }
 
 @mixin no-scroll-bar() {
-     &::-webkit-scrollbar {
-          height: 0;
-          width: 0;
-     }
+	&::-webkit-scrollbar {
+		height: 0;
+		width: 0;
+	}
 
-     &::-webkit-scrollbar-thumb {
-          height: 0;
-          width: 0;
-     }
+	&::-webkit-scrollbar-thumb {
+		height: 0;
+		width: 0;
+	}
 
-     &::-webkit-scrollbar-track {
-          height: 0;
-          width: 0;
-     }
+	&::-webkit-scrollbar-track {
+		height: 0;
+		width: 0;
+	}
 }
-
 
 .clear {
-     margin: 0px;
-     padding: 0px;
-     outline: none;
-     border: none;
+	margin: 0px;
+	padding: 0px;
+	outline: none;
+	border: none;
 }
 .view {
-     background: rgba(255, 255, 255, 0.863);
-     position: relative;
-     scrollbar-width: none;
-     -ms-overflow-style: none;
-     min-height: 89vh;
-     position: relative;
-     z-index: 1;
-     &::-webkit-scrollbar {
-          display: none;
-     }
+	background: rgba(255, 255, 255, 0.863);
+	position: relative;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	min-height: 89vh;
+	position: relative;
+	z-index: 1;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 body {
-     margin: 0px;
-     padding: 0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 .button {
-     @extend .clear;
+	@extend .clear;
 
+	position: relative;
+	cursor: pointer;
+	box-sizing: border-box;
 
-     position: relative;
-     cursor: pointer;
-     box-sizing: border-box;
-     
-     transform: scale(1);
-     transition: background 0.07s linear;
-     transition: transform 0.07s;
-     transition-timing-function: ease-out;
-     &:focus {
-          border-color: color(blue);
-     }
+	transform: scale(1);
+	transition: background 0.07s linear;
+	transition: transform 0.07s;
+	transition-timing-function: ease-out;
+	&:focus {
+		border-color: color(blue);
+	}
 }
 
 .input {
-     @extend .clear;
-     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.075),
-                              0 -7px 10px rgba(255, 255, 255, 0.616);
-     position: relative;
-     padding: 10px;
-     box-sizing: border-box;
-     width: 100%;
-     border: 2px solid color(nwhite);
-     border-radius: 5px;
-     font-size: 1rem;
-     color: color(secondary-d);
-     font-weight: 500;
-     background: color(nwhite);
-     transition: border-radius 0.2s;
-     z-index: 1;
-     &::placeholder {
-          opacity: 1;
-          color: color(medium);
-     }
-     &:focus {
-          border-color: color(blue);
-     }
+	@extend .clear;
+	box-shadow: 0 6px 9px rgba(0, 0, 0, 0.075),
+		0 -7px 10px rgba(255, 255, 255, 0.616);
+	position: relative;
+	padding: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	border: 2px solid color(nwhite);
+	border-radius: 5px;
+	font-size: 1rem;
+	color: color(secondary-d);
+	font-weight: 500;
+	background: color(nwhite);
+	transition: border-radius 0.2s;
+	z-index: 1;
+	&::placeholder {
+		opacity: 1;
+		color: color(medium);
+	}
+	&:focus {
+		border-color: color(blue);
+	}
 }
 
 .card {
-     padding: 10px;
-     background: color(nbright);
-     border-radius: 15px;
-     filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.151));
-     margin: auto;
-     box-sizing: border-box;
+	padding: 10px;
+	background: color(nbright);
+	border-radius: 15px;
+	filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.151));
+	margin: auto;
+	box-sizing: border-box;
 }
 
 .flex-row {
-     display: flex;
-     flex-flow: row nowrap;
-     align-items: center;
-     justify-content: center;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .flex-column {
-     display: flex;
-     flex-flow: column nowrap;
-     align-items: center;
-     justify-content: center;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
 }
 
 .shadow {
-     filter: drop-shadow(0 3px 2px rgba(110, 100, 128, 0.555));
+	filter: drop-shadow(0 3px 2px rgba(110, 100, 128, 0.555));
 }
