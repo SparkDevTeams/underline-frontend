@@ -3,6 +3,7 @@
     <NavBar></NavBar>
     <MapView></MapView>
     <SmartEvent></SmartEvent>
+    <EventBrowser></EventBrowser>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import NavBar from "./components/NavBar.vue";
 import MapView from "./components/MapView.vue";
 import SmartEvent from "./components/SmartEvent.vue";
+import EventBrowser from "./components/EventBrowser.vue";
 export default {
   name: "app",
   data() {
@@ -21,7 +23,8 @@ export default {
   components: {
     NavBar,
     MapView,
-    SmartEvent
+    SmartEvent,
+    EventBrowser
   },
 };
 </script>
@@ -38,6 +41,6 @@ export default {
   height: 100vh;
   width: 100vw;
   @extend .flex-column;
-  justify-content: flex-start;
+  justify-content: flex-start; 
 }
 </style>
