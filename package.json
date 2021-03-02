@@ -12,9 +12,8 @@
     "jquery": "^3.5.1",
     "jqueryui": "^1.11.1",
     "leaflet": "^1.7.1",
-    "v-calendar": "^2.2.4",
-    "vue": "^2.6.11",
-    "vuejs-datepicker": "^1.6.2"
+    "moment": "^2.29.1",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.0",

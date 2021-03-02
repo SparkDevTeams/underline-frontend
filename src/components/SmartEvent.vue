@@ -4,14 +4,22 @@
 			<p>I want to have a</p>
 			<i class="fas fa-map-marker-alt"></i>
 
-			<span contenteditable id="event-name">Kids Scavenger Hunt</span>
+			<input
+				v-model="event.eventName"
+				@click="clearEventNameText"
+				id="event-name"
+			/>
 			<p>on</p>
 
 			<i class="fas fa-map-marker-alt"></i>
-			<span contenteditable id="event-date">date</span>
+			<input type="date" id="event-date" v-model="event.eventDate" />
 			<p>in</p>
 			<i class="fas fa-map-marker-alt"></i>
-			<span contenteditable id="event-location">Brickell</span>
+			<input
+				id="event-location"
+				v-model="event.eventLocation"
+				@click="clearEventLocationText"
+			/>
 			<button @click="toggleShowError">
 				Create Event
 			</button>
@@ -24,24 +32,41 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
 	name: 'SmartEvent',
 	data() {
 		return {
+			event: {
+				eventName: 'Kids Scavenger Hunt',
+				eventDate: new moment().format('YYYY-MM-DD'),
+				eventLocation: 'Brickell, FL'
+			},
+			user: {
+				isAdmin: false
+			},
 			showErrorMsg: false,
-			errorMsg: 'You must be an admin to create an event',
-			state: {
-				opened: false,
-				date: new Date()
-			}
+			errorMsg: 'You must be an admin to create an event'
 		}
 	},
 	methods: {
 		toggleShowError() {
-			this.showErrorMsg = true
+			if (this.user.isAdmin) {
+				console.log(`Event Name: ${this.event.eventName}`)
+				console.log(`Event Date: ${this.event.eventDate}`)
+				console.log(`Event Location: ${this.event.eventLocation}`)
+			} else {
+				this.showErrorMsg = true
+			}
 		},
 		toggleCloseError() {
 			this.showErrorMsg = false
+		},
+		clearEventNameText(e) {
+			e.target.setSelectionRange(0, this.event.eventName.length)
+		},
+		clearEventLocationText(e) {
+			e.target.setSelectionRange(0, this.event.eventLocation.length)
 		}
 	}
 }
@@ -58,7 +83,6 @@ export default {
 	background-color: black;
 	border-radius: 0px 0px 10px 10px;
 	@extend .flex-column;
-	transition: 0.5s ease-out;
 
 	#smart-event {
 		@extend .flex-row;
@@ -73,8 +97,8 @@ export default {
 			margin-right: 15px;
 		}
 
-		span,
-		.smart-event__date {
+		input {
+			font-family: $font;
 			background-color: #000;
 			display: block;
 			border: none;
