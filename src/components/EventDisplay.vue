@@ -1,5 +1,6 @@
 <template>
   <div id="event-display-container">
+      <img :src = "placeholderImg">
       <h1>{{title}}</h1>
       <p>Description of Event</p>
   </div>
@@ -9,7 +10,8 @@
 export default {
   name: "EventDisplay",
   props: [
-      "title"
+      "title",
+      "placeholderImg"
   ],
   data() {
     return {
@@ -42,7 +44,8 @@ export default {
   @extend .flex-column;
 
   h1 {
-    font-size: 60px;
+    color:color(green);
+    font-size: 40px;
     text-align: center;
     @extend .clear;
   }
@@ -53,7 +56,6 @@ export default {
     font-size: 20px;
     font-weight: 300;
     text-align: center;
-    color: color(grey);
   }
   button {
     @extend .button;
@@ -64,6 +66,12 @@ export default {
     color: white;
     font-size: 16px;
     margin-top: 20px;
+  }
+
+  img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
   }
 }
 </style>

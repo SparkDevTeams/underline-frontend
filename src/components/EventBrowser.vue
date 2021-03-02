@@ -1,7 +1,9 @@
 <template>
-    <div id = "event-browser-container">
-        <h2>Explore more free activities and events in your community</h2>
-        <EventDisplay v-for = "EventTitle in EventList" :title  = "EventTitle"></EventDisplay>
+    <div id = "event-browser-component">
+        <h3>Explore more free activities and events in your community</h3>
+        <div id = "event-browser-container">
+          <EventDisplay v-for = "EventTitle in EventList" :title  = "EventTitle" :placeholderImg="EventImage"></EventDisplay>
+        </div>
     </div>
         
 </template>
@@ -12,7 +14,8 @@ export default {
   name: "EventBrowser",
   data() {
     return {
-        EventList: ["Title 1", "Title 2", "Title 3", "Title 4", "Title 5"]
+        EventList: ["Title 1", "Title 2", "Title 3", "Title 4", "Title 5"],
+        EventImage: ["https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"]
     };
   },
   methods: {},
@@ -28,7 +31,7 @@ export default {
 @import "../assets/global.scss";
 @import "../assets/fonts.css";
 
-#event-browser-container {
+#event-browser-component {
   font-family: $font;
   @extend .clear;
   height: 64vh;
@@ -42,13 +45,16 @@ export default {
   background: white;
   border-radius: 10px;
   @extend .shadow;
-  @extend .flex-row;
+  @extend .flex-column;
 
-  h2 {
-    font-size: 60px;
-    text-align: center;
+  h3 {
+    font-size: 30px;
+    margin-right: auto;
     @extend .clear;
   }
-  
+
+  #event-browser-container{
+    @extend .flex-row;
+  }
 }
 </style>
