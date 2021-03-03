@@ -26,6 +26,6 @@ export default {
   height: 100vh;
   width: 100vw;
   @extend .flex-column;
-  justify-content: flex-start;
+  justify-content: flex-start; 
 }
 </style>
