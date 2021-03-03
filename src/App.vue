@@ -1,30 +1,15 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
-    <MapView></MapView>
-    <SmartEvent></SmartEvent>
-    <EventBrowser></EventBrowser>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
-import MapView from "./components/MapView.vue";
-import SmartEvent from "./components/SmartEvent.vue";
-import EventBrowser from "./components/EventBrowser.vue";
 export default {
-  name: "app",
-  data() {
-    return {};
-  },
-  methods: {},
-  created() {},
-  watch: {},
   components: {
     NavBar,
-    MapView,
-    SmartEvent,
-    EventBrowser
   },
 };
 </script>

@@ -21,7 +21,7 @@ export default {
       var southWestBounds = L.latLng(27, -79);
       var bounds = L.latLngBounds(northEastBounds, southWestBounds);
 
-      this.map = new L.map("underline-map").setView([25.7644, -80.1935], 18);
+      this.map = new L.map("underline-map").setView([25.7644, -80.1935], 17);
       L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
         {
@@ -59,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 #map-container {
-  height: 64vh;
+  height: max(64vh,500px);
   width: 96vw;
   @extend .shadow;
 }

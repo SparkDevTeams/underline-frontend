@@ -66,6 +66,13 @@ body {
      &:focus {
           border-color: color(blue);
      }
+
+     &:hover {
+          transform: scale(1.1);
+     transition: background 0.07s linear;
+     transition: transform 0.07s;
+     transition-timing-function: ease-out;
+     }
 }
 
 .input {
