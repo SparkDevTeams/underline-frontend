@@ -50,19 +50,27 @@ body {
 }
 
 .button {
-	@extend .clear;
+     @extend .clear;
 
-	position: relative;
-	cursor: pointer;
-	box-sizing: border-box;
 
-	transform: scale(1);
-	transition: background 0.07s linear;
-	transition: transform 0.07s;
-	transition-timing-function: ease-out;
-	&:focus {
-		border-color: color(blue);
-	}
+     position: relative;
+     cursor: pointer;
+     box-sizing: border-box;
+     
+     transform: scale(1);
+     transition: background 0.07s linear;
+     transition: transform 0.07s;
+     transition-timing-function: ease-out;
+     &:focus {
+          border-color: color(blue);
+     }
+
+     &:hover {
+          transform: scale(1.1);
+     transition: background 0.07s linear;
+     transition: transform 0.07s;
+     transition-timing-function: ease-out;
+     }
 }
 
 .input {
