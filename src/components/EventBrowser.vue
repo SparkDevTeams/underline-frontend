@@ -1,8 +1,9 @@
 <template>
-    <div id = "event-browser-component">
+    <div id="event-browser-component">
         <h3>Explore more free activities and events in your community</h3>
-        <div id = "event-browser-container">
-          <EventDisplay v-for = "EventTitle in EventList" :title  = "EventTitle" :placeholderImg="EventImage"></EventDisplay>
+
+        <div id="event-browser-container">
+          <EventDisplay v-for="EventTitle in EventList" :title="EventTitle" :placeholderImg="EventImage"></EventDisplay>
         </div>
     </div>
         
@@ -34,27 +35,23 @@ export default {
 #event-browser-component {
   font-family: $font;
   @extend .clear;
-  height: 64vh;
-  width: 96vw;
-  right: 1vw;
-  top: 4vw;
-  z-index: 401;
-  padding: 2%;
+  height: 48vh;
+  width: 100%;
+  margin-top: 4vw;
   box-sizing: border-box;
-
-  background: white;
-  border-radius: 10px;
-  @extend .shadow;
   @extend .flex-column;
 
   h3 {
     font-size: 30px;
-    margin-right: auto;
     @extend .clear;
+    text-align: center;
+    margin-bottom: 1vw;
   }
 
   #event-browser-container{
     @extend .flex-row;
+    justify-content: space-around;
+    width: 100%;
   }
 }
 </style>

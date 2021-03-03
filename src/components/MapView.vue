@@ -66,7 +66,7 @@ export default {
 #underline-map {
   height: 100%;
   margin-top: 0px;
-  border-radius: 15px;
+  border-radius: 15px 15px 0 0;
   margin:2vw 0;
 }
 </style>

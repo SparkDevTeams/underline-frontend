@@ -9,8 +9,6 @@
      </div>
 </template>
 
-
-
 <script>
 export default {
      data() {
@@ -21,8 +19,6 @@ export default {
      },
 };
 </script>
-
-
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";

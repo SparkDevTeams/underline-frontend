@@ -2,6 +2,7 @@
   <div>
      <MapView></MapView>
      <SmartEvent></SmartEvent>
+     <EventBrowser></EventBrowser>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import axios from "axios";
 import MapView from "../components/MapView.vue";
 import SmartEvent from "../components/SmartEvent.vue";
+import EventBrowser from "../components/EventBrowser.vue"
 export default {
      data () {
           return {
@@ -23,7 +25,8 @@ export default {
      },
      components: {
           MapView,
-          SmartEvent
+          SmartEvent,
+          EventBrowser
      }
 }
 </script>

@@ -76,8 +76,7 @@ export default {
 @import '../assets/global.scss';
 #smart-event-container {
 	@extend .shadow;
-	border: 1px solid white;
-	margin-top: 2vh;
+	margin-top: 0px;
 	height: 15vh;
 	width: 96vw;
 	background-color: black;

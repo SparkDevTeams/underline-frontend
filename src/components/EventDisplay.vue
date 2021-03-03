@@ -32,7 +32,7 @@ export default {
 #event-display-container {
   font-family: $font;
   @extend .clear;
-  width: 30%;
+  width: 240px;
   height: 90%;
   z-index: 401;
   padding: 2%;
@@ -71,7 +71,7 @@ export default {
   img{
     width: 200px;
     height: 200px;
-    border-radius: 50px;
+    border-radius: 15px;
   }
 }
 </style>
