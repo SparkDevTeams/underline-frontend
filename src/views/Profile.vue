@@ -18,6 +18,11 @@ export default {
      mounted() {
   
      },
+     watch: {
+          $route(to, from) {
+               this.id = this.$route.params.id;
+          },
+     },
 }
 </script>
 
