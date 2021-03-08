@@ -4,6 +4,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Explore from '../views/Explore.vue'
 import About from '../views/About.vue'
 import Signin from '../views/Signin.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -14,7 +15,7 @@ const routes = [
     component: Explore
   },
   {
-    path: '/About',
+    path: '/about',
     name: 'About',
     component: About
   },
@@ -22,6 +23,11 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: Signin
+  },
+  {
+    path: '/user/:id',
+    name: 'Profile',
+    component: Profile
   }
 ]
 
