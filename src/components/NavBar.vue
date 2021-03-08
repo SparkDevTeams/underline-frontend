@@ -5,7 +5,7 @@
           <button>Events</button>
           <router-link to="About">About</router-link>
           <button id="support-button">Support</button>
-          <button>Sign in</button>
+          <router-link to="Signin">Sign in</router-link>
      </div>
 </template>
 
