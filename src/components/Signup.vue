@@ -70,7 +70,7 @@ export default {
 			let insufficientLettersError = `${this.capitalize(
 				nameData
 			)} name must be between 2 to 36 characters`
-			let noNumbersError = `Please check your ${nameData} name does not contain numbers.`
+			let nonLetterError = `Please check your ${nameData} name does not contain numbers.`
 			//Checks if user's first/last name is within 2 - 36 char long
 			if (name.length >= 2 && name.length <= 36) {
 				//Removes error message from array
@@ -78,19 +78,25 @@ export default {
 					msg => msg !== insufficientLettersError
 				)
 
-				//Checks if text field contains numbers
-				if (!name.match(/^([^0-9]*)$/)) {
-					this.errorMessages.push(noNumbersError)
+				//Checks if text field contains invalid characters
+				if (!name.match(/^[a-zA-Z]+$/)) {
+					if (!this.errorMessages.includes(nonLetterError)) {
+						this.errorMessages.push(nonLetterError)
+					}
+
 					this.errors.name = true
 				} else {
 					//Removes error message from array
 					this.errorMessages = this.errorMessages.filter(
-						msg => msg !== noNumbersError
+						msg => msg !== nonLetterError
 					)
 					this.errors.name = false
 				}
 			} else {
-				this.errorMessages.push(insufficientLettersError)
+				if (!this.errorMessages.includes(insufficientLettersError)) {
+					this.errorMessages.push(insufficientLettersError)
+				}
+
 				this.errors.name = true
 			}
 		},
@@ -98,7 +104,10 @@ export default {
 			let errorMessage = 'Please provide valid email.'
 			//Checks email format is correct.
 			if (!this.signUpData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
+
 				this.errors.email = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -119,7 +128,9 @@ export default {
 				)
 				this.errors.password = false
 			} else {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.password = true
 			}
 		},
@@ -127,7 +138,10 @@ export default {
 			let errorMessage = 'Please check your passwords match'
 			//Checks if passwords match
 			if (this.signUpData.password !== this.signUpData.confirmPassword) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
+
 				this.errors.confirmPassword = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -147,7 +161,9 @@ export default {
 				this.signUpData.password == '' ||
 				this.signUpData.confirmPassword == ''
 			) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.emptyFields = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
