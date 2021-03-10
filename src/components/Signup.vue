@@ -184,13 +184,18 @@ export default {
 				return true
 			}
 		},
-		signup() {
-			console.log(this.errors, this.hasError)
+		async signup() {
+			const userData = {
+				first_name: this.signUpData.firstName,
+				last_name: this.signUpData.lastName,
+				email: this.signUpData.email,
+				password: this.signUpData.password
+			}
 			if (this.validate()) {
-				axios({
+				await axios({
 					method: 'post',
 					url: '/users/register',
-					data: this.signUpData
+					data: userData
 				})
 					.then(response => {
 						console.log(response)
