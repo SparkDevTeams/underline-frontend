@@ -13,22 +13,29 @@
 		<input
 			v-model="signUpData.firstName"
 			@change="validateName(signUpData.firstName, 'first')"
+			:class="{ error: errors.firstName }"
 		/>
 
 		<label>Last Name</label>
 		<input
 			v-model="signUpData.lastName"
 			@change="validateName(signUpData.lastName, 'last')"
+			:class="{ error: errors.lastName }"
 		/>
 
 		<label>Email</label>
-		<input v-model="signUpData.email" @change="validateEmail" />
+		<input
+			v-model="signUpData.email"
+			@change="validateEmail"
+			:class="{ error: errors.email }"
+		/>
 
 		<label>Password</label>
 		<input
 			v-model="signUpData.password"
 			type="password"
 			@change="validatePassword"
+			:class="{ error: errors.password }"
 		/>
 
 		<label>Confirm Password</label>
@@ -36,6 +43,7 @@
 			v-model="signUpData.confirmPassword"
 			type="password"
 			@change="validatePasswordsAreSame"
+			:class="{ error: errors.confirmPassword }"
 		/>
 
 		<button @click="signup">Submit</button>
@@ -44,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 export default {
 	data() {
 		return {
@@ -55,11 +64,11 @@ export default {
 				confirmPassword: ''
 			},
 			errors: {
-				name: false,
+				firstName: false,
+				lastName: false,
 				email: false,
 				password: false,
-				confirmPassword: false,
-				emptyFields: false
+				confirmPassword: false
 			},
 			hasError: false,
 			errorMessages: []
@@ -83,21 +92,34 @@ export default {
 					if (!this.errorMessages.includes(nonLetterError)) {
 						this.errorMessages.push(nonLetterError)
 					}
-
-					this.errors.name = true
+					if (nameData == 'first') {
+						this.errors.firstName = true
+					}
+					if (nameData == 'last') {
+						this.errors.lastName = true
+					}
 				} else {
 					//Removes error message from array
 					this.errorMessages = this.errorMessages.filter(
 						msg => msg !== nonLetterError
 					)
-					this.errors.name = false
+					if (nameData == 'first') {
+						this.errors.firstName = false
+					}
+					if (nameData == 'last') {
+						this.errors.lastName = false
+					}
 				}
 			} else {
 				if (!this.errorMessages.includes(insufficientLettersError)) {
 					this.errorMessages.push(insufficientLettersError)
 				}
-
-				this.errors.name = true
+				if (nameData == 'first') {
+					this.errors.firstName = true
+				}
+				if (nameData == 'last') {
+					this.errors.lastName = true
+				}
 			}
 		},
 		validateEmail() {
@@ -153,32 +175,28 @@ export default {
 		validate() {
 			let errorMessage = 'Please make sure no text field is left blank'
 			//Checks if inputs are empty
-			if (
-				this.signUpData.firstName == '' ||
-				this.signUpData.lastName == '' ||
-				this.signUpData.email == '' ||
-				this.signUpData.password == '' ||
-				this.signUpData.password == '' ||
-				this.signUpData.confirmPassword == ''
-			) {
-				if (!this.errorMessages.includes(errorMessage)) {
-					this.errorMessages.push(errorMessage)
+			for (const key in this.signUpData) {
+				if (this.signUpData[key] == '') {
+					if (!this.errorMessages.includes(errorMessage)) {
+						this.errorMessages.push(errorMessage)
+					}
+					this.errors[key] = true
+				} else {
+					this.errorMessages = this.errorMessages.filter(
+						msg => msg !== errorMessage
+					)
+					this.errors[key] = false
 				}
-				this.errors.emptyFields = true
-			} else {
-				this.errorMessages = this.errorMessages.filter(
-					msg => msg !== errorMessage
-				)
-				this.errors.emptyFields = false
 			}
-
+			//Loops through errors obj
 			for (const key in this.errors) {
+				//checks if key in obj is true & if it is sets hasError to true
 				if (this.errors[key] == true) {
 					this.hasError = true
 				}
 			}
 
-			//if hasError is false then it will return true
+			//if hasError is false then it will return true as there is no errors in user input
 			if (!this.hasError) {
 				console.log('Everything checks out.')
 				return true
@@ -199,6 +217,10 @@ export default {
 				})
 					.then(response => {
 						console.log(response)
+						router.push({
+							path: '/user/',
+							params: { id: response.data.user_id }
+						})
 					})
 					.catch(e => {
 						console.log(e)
@@ -235,6 +257,7 @@ export default {
 		height: 4vh;
 		border-radius: 5px;
 		font-family: $font;
+		font-size: 16px;
 		letter-spacing: 1px;
 	}
 
@@ -244,6 +267,15 @@ export default {
 		width: 300px;
 		border-radius: 5px;
 		margin-bottom: 10px;
+	}
+
+	.error {
+		border: 1px solid red;
+		border-radius: 3px;
+		outline: none;
+	}
+	.error:focus {
+		border: 2px solid red;
 	}
 }
 </style>
