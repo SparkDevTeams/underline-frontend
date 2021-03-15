@@ -12,8 +12,12 @@ export default {
 		NavBar
 	},
 	created() {
-		//if localstorage variable exists, make request to validate token end point
-		//if doesnt exist make the the token variable empty
+		if (window.localStorage.getItem('token')) {
+			//if localstorage variable exists, make request to validate token end point
+		} else {
+			//if doesnt exist make the the token variable empty
+			window.localStorage.setItem('token', '')
+		}
 	}
 }
 </script>
