@@ -1,8 +1,8 @@
 <template>
   <div id="event-display-container">
-      <img :src = "placeholderImg">
+      <img :src = "eventImage">
       <h1>{{title}}</h1>
-      <p>Description of Event</p>
+      <p>{{eventDescription}}</p>
   </div>
 </template>
 
@@ -11,7 +11,9 @@ export default {
   name: "EventDisplay",
   props: [
       "title",
-      "placeholderImg"
+      "eventImage",
+      "eventDescription",
+      "eventID"
   ],
   data() {
     return {
