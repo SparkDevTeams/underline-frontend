@@ -3,7 +3,7 @@
         <h3>Explore more free activities and events in your community</h3>
 
         <div id="event-browser-container">
-          <EventDisplay v-for="EventTitle in EventList" :title="EventTitle" :placeholderImg="EventImage"></EventDisplay>
+          <EventDisplay v-for="event in eventList" :title="event.title" :eventImage="event.img" :eventDescription = "event.description" :eventID = "event.id"></EventDisplay>
         </div>
     </div>
         
@@ -15,8 +15,8 @@ export default {
   name: "EventBrowser",
   data() {
     return {
-        EventList: ["Title 1", "Title 2", "Title 3", "Title 4", "Title 5"],
-        EventImage: ["https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"]
+        eventList: [{title:"Title 1", description: "description of event", img: "", id:"event ID"}],
+        
     };
   },
   methods: {},

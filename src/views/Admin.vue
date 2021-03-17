@@ -2,7 +2,7 @@
   <div id = "admin-component">
        Admin
        <h2>Events for Review</h2>
-       <AdminEvent v-for="EventTitle in EventList" :placeholderTitle ="EventTitle" :event-image="EventImage"></AdminEvent>
+       <AdminEvent v-for="event in eventList" :title ="event.title" :eventImage="event.img" :eventDescription = "event.description" :eventID = "event.id"></AdminEvent>
   </div>
 </template>
 
@@ -13,8 +13,8 @@ export default {
      name: "Admin",
      data () {
           return {
-               EventList: ["Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"],
-               EventImage:["https://www.explorebranson.com/sites/default/files/styles/hero/public,/articles/dogwood-canyon-nature-park.jpg?itok=T6-PdQKC"]
+               eventList: [{title:"Title 1", description: "description of event", img: "", id:"event ID"}]
+               
   
           }
      },

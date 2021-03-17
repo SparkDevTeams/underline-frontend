@@ -1,8 +1,8 @@
 <template>
   <div id = "admin-event-component">
-      <img :src ="event-image">
-      <h2>{{placeholderTitle}}</h2>
-      <p>Description of event</p>
+      <img :src ="eventImage">
+      <h2>{{title}}</h2>
+      <p>{{eventDescription}}</p>
       <button id = "remove-button">Remove</button>
       <button id ="accept-button">Accept</button>
   </div>
@@ -13,8 +13,10 @@ import axios from "axios";
 export default {
   name: "AdminEvent",
   props: [
-      "placeholderTitle",
-      "event-image"
+      "title",
+      "eventImage",
+      "eventDescription",
+      "eventID"
     ],
 
      data () {
@@ -40,7 +42,8 @@ export default {
   font-family: $font;
   @extend .clear;
   width: 1000px;
-  height: 50%;
+  height: 8vh;
+  min-height: 120px;
   z-index: 401;
   padding: 2%;
   box-sizing: border-box;
@@ -73,6 +76,7 @@ export default {
     color: green;
     font-size: 15px;
     margin-top: 15px;
+    margin-left: 15px;
   }
 
   #remove-button{
