@@ -3,45 +3,52 @@
 		<h1>Create your event</h1>
 		<div class="input-wrapper">
 			<label>Event name:</label>
-			<input type="text" id="event-name" />
+			<input type="text" id="event-name" v-model="eventData.title" />
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event description:</label>
-			<textarea id="event-description"></textarea>
+			<textarea
+				id="event-description"
+				v-model="eventData.description"
+			></textarea>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event start time:</label>
-			<input type="datetime-local" id="event-start" />
+			<input
+				type="datetime-local"
+				id="event-start"
+				v-model="eventData.startDate"
+			/>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event end time</label>
-			<input type="datetime-local" id="event-end" />
+			<input type="datetime-local" id="event-end" v-model="eventData.endDate" />
 		</div>
 
 		<div class="input-wrapper">
 			<label>Tags:</label>
-			<textarea id="event-tags"></textarea>
+			<textarea id="event-tags" v-model="eventData.tags"></textarea>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event location:</label>
-			<input type="text" id="event-location" />
+			<input type="text" id="event-location" v-model="eventData.location" />
 		</div>
 
 		<div class="input-wrapper">
 			<label>Max Attendees:</label>
-			<input type="number" id="event-max" />
+			<input type="number" id="event-max" v-model="eventData.maxCapacity" />
 		</div>
 
 		<div class="input-wrapper">
 			<label>Website link:</label>
-			<input type="text" id="event-link" />
+			<input type="text" id="event-link" v-model="eventData.website" />
 		</div>
 
-		<button type="submit" @click="onSubmit">Submit</button>
+		<button @click="onSubmit">Submit</button>
 	</div>
 </template>
 
@@ -50,12 +57,36 @@ import axios from 'axios'
 export default {
 	data() {
 		return {
-			id: this.$route.params.id
+			eventData: {
+				id: this.$route.params.id,
+				title: '',
+				description: '',
+				startDate: '',
+				endDate: '',
+				tags: '',
+				location: '',
+				maxCapacity: 0,
+				link: ''
+			}
 		}
 	},
 	methods: {
-		onSubmit() {
-			console.log('Submitted')
+		async onSubmit() {
+			await axios({
+				method: 'post',
+				url: '/events/register',
+				data: this.eventData
+			})
+				.then(response => {
+					const eventId = response.data.event_id
+					router.push({
+						path: `/event/:${eventId}`,
+						params: { id: eventId }
+					})
+				})
+				.catch(error => {
+					console.log(error)
+				})
 		}
 	},
 	mounted() {},
@@ -74,10 +105,11 @@ export default {
 	@extend .flex-column;
 	box-shadow: 6px 9px 0px 1px #000000;
 	width: 80vw;
-	height: 80vh;
+	height: auto;
 	border-radius: 5px;
 	border: 1px solid black;
 	margin-top: 50px;
+	margin-bottom: 50px;
 
 	h1 {
 		color: color(green);
@@ -95,6 +127,7 @@ export default {
 		height: 50px;
 		font-size: 20px;
 		font-weight: 300;
+		margin-bottom: 30px;
 	}
 
 	.input-wrapper {

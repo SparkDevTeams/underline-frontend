@@ -31,7 +31,7 @@ export default {
 	font-family: $font;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	height: 100vh;
+	height: auto;
 	width: 100vw;
 	@extend .flex-column;
 	justify-content: flex-start;
