@@ -1,6 +1,6 @@
 <template>
   <div>
-     <MapView></MapView>
+     <MapView :companion=true></MapView>
      <SmartEvent></SmartEvent>
      <EventBrowser></EventBrowser>
   </div>

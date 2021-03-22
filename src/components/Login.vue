@@ -48,7 +48,6 @@ export default {
 				})
 					.then(response => {
 						window.localStorage.setItem('token', response.data.jwt)
-						// route to user's profile
 						router.push({
 							path: '/user/',
 							params: { id: 'response.data.user_id' }
@@ -56,7 +55,6 @@ export default {
 					})
 					.catch(error => {
 						console.log(error)
-						// display error message
 						this.showErrorMessage = true
 					})
 			}

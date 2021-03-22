@@ -5,6 +5,7 @@
         <div id="event-browser-container">
           <EventDisplay v-for="event in eventList" :title="event.title" :eventImage="event.img" :eventDescription = "event.description" :eventID = "event.id"></EventDisplay>
         </div>
+
     </div>
         
 </template>
