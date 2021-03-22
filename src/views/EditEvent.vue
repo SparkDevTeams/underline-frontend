@@ -35,7 +35,11 @@
 
 		<div class="input-wrapper">
 			<label>Event location:</label>
-			<input type="text" id="event-location" v-model="eventData.location" />
+			<select name="" id="" v-model="eventData.location">
+				<option value="">Item 1</option>
+				<option value="">Item 2</option>
+				<option value="">Item 3</option>
+			</select>
 		</div>
 
 		<div class="input-wrapper">
@@ -61,12 +65,17 @@ export default {
 				id: this.$route.params.id,
 				title: '',
 				description: '',
-				startDate: '',
-				endDate: '',
-				tags: '',
-				location: '',
-				maxCapacity: 0,
-				link: ''
+				dateTimeStart: '',
+				dateTimeEnd: '',
+				tags: [],
+				location: {
+					title: '',
+					lat: 0,
+					long: 0
+				},
+				max_capacity: 0,
+				links: [],
+				creator_id: ''
 			}
 		}
 	},
@@ -87,6 +96,28 @@ export default {
 				.catch(error => {
 					console.log(error)
 				})
+		},
+		getEventData() {
+			if (this.eventData.id !== undefined) {
+				axios({
+					method: 'get',
+					url: `/events/get/${this.eventData.id}`
+				})
+					.then(response => {
+						this.title = response.data.title
+						this.description = response.data.description
+						this.dateTimeStart = response.data.dateTimeStart
+						this.dateTimeEnd = response.data.dateTimeEnd
+						this.tags = response.data.tags
+						this.location = response.data.location
+						this.max_capacity = response.data.max_capacity
+						this.links = response.data.links
+						this.creator_id = response.data.creator_id
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			}
 		}
 	},
 	mounted() {},
