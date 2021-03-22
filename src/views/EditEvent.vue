@@ -45,7 +45,7 @@
 
 		<div class="input-wrapper">
 			<label>Website link:</label>
-			<input type="text" id="event-link" v-model="eventData.website" />
+			<input type="text" id="event-link" v-model="eventData.link" />
 		</div>
 
 		<button @click="onSubmit">Submit</button>
