@@ -5,6 +5,9 @@ import Explore from '../views/Explore.vue'
 import About from '../views/About.vue'
 import Signin from '../views/Signin.vue'
 import Profile from '../views/Profile.vue'
+import Admin from '../views/Admin.vue'
+import EditEvent from '../views/EditEvent.vue'
+import ViewEvent from '../views/ViewEvent.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +31,21 @@ const routes = [
     path: '/user/:id',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
+  },
+  {
+    path: '/event/:id',
+    name: 'ViewEvent',
+    component: ViewEvent
+  },
+  {
+    path: '/event/edit/:id',
+    name: 'EditEvent',
+    component: EditEvent
   }
 ]
 

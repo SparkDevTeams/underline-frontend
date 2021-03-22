@@ -29,6 +29,8 @@ export default {
      @extend .flex-row;
      justify-content: flex-start;
      height: 11vh;
+     min-height: 11vh;
+     max-height: 11vh;
      width: 100vw;
      background-color: rgb(0, 0, 0);
      padding: 0px 20px;
