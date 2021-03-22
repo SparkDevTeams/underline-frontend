@@ -31,9 +31,9 @@ const routes = [
     component: Profile
   },
   {
-    path: '/event/edit/:id',
-    name: 'EditEvent',
-    component: EditEvent
+    path: '/event/:id',
+    name: 'ViewEvent',
+    component: ViewEvent
   }
 ]
 

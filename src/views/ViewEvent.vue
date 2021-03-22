@@ -2,7 +2,7 @@
   <div id="view-event">
     <div id="event-display-card">
       <div id="image-container"> 
-        <h1>Image</h1>
+        <h1>Image oh</h1>
       </div>
       <div id="event-details"> 
         <h1 id="display-card-title">Event Title</h1>
