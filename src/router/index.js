@@ -5,6 +5,7 @@ import Explore from '../views/Explore.vue'
 import About from '../views/About.vue'
 import Signin from '../views/Signin.vue'
 import Profile from '../views/Profile.vue'
+import ViewEvent from '../views/ViewEvent.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/user/:id',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/event/edit/:id',
+    name: 'EditEvent',
+    component: EditEvent
   }
 ]
 
