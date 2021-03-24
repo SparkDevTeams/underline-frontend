@@ -107,6 +107,8 @@ export default {
           height: 6vh;
           color: white;
           background-color: color(green);
+          padding: 5px;
+          box-sizing:border-box;
      }
 
      img {

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 export default {
      data () {
           return {
@@ -95,7 +95,6 @@ export default {
      height: 82vh;
      padding: 2%;
      box-sizing: border-box;
-     
      @extend .flex-column;
      
      #user-profile-bar{
@@ -105,7 +104,6 @@ export default {
           height: 200px;
           padding: 2%;
           box-sizing: border-box;
-
           background: #fcfafa;
           border-radius: 10px;
           @extend .shadow;
