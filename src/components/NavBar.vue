@@ -2,19 +2,45 @@
 	<div id="nav-container">
 		<img id="logo" src="../assets/grn-and-wht-u-logo.png" />
 		<router-link to="/">Explore</router-link>
-		<button>Events</button>
+		<router-link to="Events">Events</router-link>
 		<router-link to="About">About</router-link>
 		<button id="support-button">Support</button>
-		<router-link to="Signin">Sign in</router-link>
+		<!-- <div v-if="signedIn">
+			<router-link :to="signedIn ? '/' : 'Signin'">Sign out</router-link>
+		</div>
+		<div v-if="!signedIn">
+			<router-link to="Signin">Sign in</router-link>
+		</div> -->
+		<button v-if="!signedIn" @click="login">Sign in</button>
+		<button v-if="signedIn" @click="logout">Sign out</button>
 	</div>
 </template>
 
 <script>
 export default {
 	data() {
-		return {}
+		return {
+			signedIn: false
+		}
 	},
-	methods: {}
+	methods: {
+		login() {
+			this.$router.push('Signin')
+		},
+		logout() {
+			window.localStorage.removeItem('token')
+			this.signedIn = false
+		},
+		checkUserSignedIn() {
+			const token = window.localStorage.getItem('token')
+			if (token != '') {
+				this.signedIn = true
+			}
+		}
+	},
+	mounted() {
+		this.checkUserSignedIn()
+	}
 }
 </script>
 
