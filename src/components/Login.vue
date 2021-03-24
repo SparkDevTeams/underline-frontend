@@ -51,7 +51,7 @@ export default {
 						// route to user's profile
 						router.push({
 							path: '/user/',
-							params: { id: 'response.data.user_id' }
+							params: { id: response.data.user_id }
 						})
 					})
 					.catch(error => {
