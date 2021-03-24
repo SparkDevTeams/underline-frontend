@@ -35,7 +35,7 @@
 
 		<div class="input-wrapper">
 			<label>Event location:</label>
-			<input type="text" id="event-location" v-model="eventData.location" />
+			<input type="text" id="event-location" />
 		</div>
 
 		<div class="input-wrapper">
@@ -61,12 +61,18 @@ export default {
 				id: this.$route.params.id,
 				title: '',
 				description: '',
-				startDate: '',
-				endDate: '',
-				tags: '',
-				location: '',
-				maxCapacity: 0,
-				link: ''
+				date_time_start: '',
+				date_time_end: '',
+				tags: [],
+				location: {
+                    title: "",
+                    lat: 0,
+                    long: 0,
+               	},
+				max_capacity: 0,
+				links: [],
+				public: true,
+				creator_id: ''
 			}
 		}
 	},
