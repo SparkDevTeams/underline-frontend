@@ -2,7 +2,7 @@
   <div id="view-event">
     <div id="event-display-card">
       <div id="image-container"> 
-        <h1>Image oh</h1>
+        <h1>Image</h1>
       </div>
       <div id="event-details"> 
         <h1 id="display-card-title">Event Title</h1>
@@ -12,6 +12,7 @@
           <li>Location</li>
           <li>Organization</li>
         </ul> 
+        <button>Register</button>
       </div>
     </div>
     <div id="event-info-box">
@@ -22,6 +23,7 @@
           blanditiis possimus deleniti fuga dolore reprehenderit dolores architecto 
           beatae, labore necessitatibus, laboriosam totam.
         </p>
+        <h2><b>Share</b></h2>
       </div>
       <div id="similar-events">
         <h1 class="title">Similar Events</h1>
@@ -81,16 +83,33 @@ ul{
 #event-details{
   background: #03bf4d;
   color: white;
-  border-bottom: 8vh solid black;
+  border-bottom: 10vh solid black;
   width: 60vh;
   height: 35vh;
   display: table-cell;
+  text-align: center;
 
   #display-card-title{
     font-size: min(5vh,60px);
   }
+  ul{
+    text-align: left;
+  }
   h1{
     text-align: center;
+  }
+
+  button {
+    @extend .button;
+    background-color: color(green);
+    padding: 10px 15px;
+    border-radius: 40px;
+    font-family: $font;
+    color: white;
+    font-size: 25px;
+    width: 40%;
+    margin-top: 63px;
+    
   }
 }
 #event-info-box{
@@ -111,15 +130,19 @@ ul{
 }
 #event-description{
   height: auto;
-	width: min(800px, 45vw);
+	width: min(800px, 70vw);
   margin-left: 30px;
   margin-right: 30px;
+
+  h2{
+    color:  #6e6e6e
+    //font-weight normal;
+  }
 }
 #similar-events{
-  //text-align: right;
   height: auto;
 	width: min(500px, 45vw);
-  margin-left: 35vh;
+  margin-left: 40vh;
   margin-right: 30px;
 
 }
