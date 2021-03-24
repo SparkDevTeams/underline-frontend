@@ -9,7 +9,7 @@
           </p>
 
           <p>This web application serves as a map companion that will help park-goers navigate, and give them
-            information about events on the trail through our Explore tab. <br> Guests will be able to create an account and make public or
+            information about events on the trail through our Explore <br> or Events tab. Guests will be able to create an account and make public or
             private events they can share with their family and friends.
           </p>
   </div>
