@@ -16,52 +16,87 @@
 
 		<div class="input-wrapper">
 			<label>Event start time:</label>
-			<input
-				type="datetime-local"
-				id="event-start"
-				v-model="eventData.startDate"
-			/>
+			<datetime
+				v-model="eventData.date_time_start"
+				type="datetime"
+				use12-hour
+				:minute-step="15"
+				:min-datetime="minDateTime"
+			></datetime>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event end time</label>
-			<input type="datetime-local" id="event-end" v-model="eventData.endDate" />
+			<datetime
+				v-model="eventData.date_time_end"
+				type="datetime"
+				use12-hour
+				:minute-step="15"
+				:min-datetime="eventData.date_time_start"
+			></datetime>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Tags:</label>
-			<textarea id="event-tags" v-model="eventData.tags"></textarea>
+			<select v-model="eventData.tags">
+				<option :value="['sporting_events']">Sporting Event</option>
+				<option :value="['food_events']">Food Event</option>
+				<option :value="['art_expo']">Art Expo</option>
+				<option :value="['music_show']">Music Show</option>
+			</select>
 		</div>
 
 		<div class="input-wrapper">
 			<label>Event location:</label>
-<<<<<<< HEAD
-			<input type="text" id="event-location" />
-=======
-			<select name="" id="" v-model="eventData.location">
-				<option value="">Item 1</option>
-				<option value="">Item 2</option>
-				<option value="">Item 3</option>
+			<select v-model="eventData.location" @change="onSelectLocation">
+				<option
+					v-for="location in locationList"
+					:key="location.title"
+					:value="location"
+					>{{ location.title }}</option
+				>
 			</select>
->>>>>>> 6fd4a6b37ff57b7e495ef53bc95a742f76be7254
 		</div>
 
 		<div class="input-wrapper">
-			<label>Max Attendees:</label>
-			<input type="number" id="event-max" v-model="eventData.maxCapacity" />
+			<label>Max Capacity:</label>
+			<input type="number" id="event-max" v-model="eventData.max_capacity" />
 		</div>
 
 		<div class="input-wrapper">
-			<label>Website link:</label>
-			<input type="text" id="event-link" v-model="eventData.link" />
+			<label>Please enter any website or social media link(s):</label>
+			<div id="link-inputs">
+				<input type="text" id="event-link-1" v-model="eventData.links[0]" />
+				<input type="text" id="event-link-2" v-model="eventData.links[1]" />
+				<input type="text" id="event-link-3" v-model="eventData.links[2]" />
+				<input type="text" id="event-link-4" v-model="eventData.links[3]" />
+			</div>
 		</div>
 
-		<button @click="onSubmit">Submit</button>
+		<div class="input-wrapper">
+			<label>Will this event be public or private?</label>
+			<div id="private-checkbox" @click="checkBox">
+				<input
+					type="checkbox"
+					:class="eventData.public ? 'checked' : ''"
+					v-model="eventData.public"
+				/>
+				<label>Public</label>
+			</div>
+		</div>
+
+		<div class="input-wrapper">
+			<button @click="onSubmit" id="submit-btn">Submit</button>
+			<button @click="onCancel" id="cancel-btn">Cancel</button>
+		</div>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
+import { DateTime as dt } from 'luxon'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 export default {
 	data() {
 		return {
@@ -69,32 +104,34 @@ export default {
 				id: this.$route.params.id,
 				title: '',
 				description: '',
-<<<<<<< HEAD
-				date_time_start: '',
-				date_time_end: '',
+				date_time_start: dt.now().toISO(),
+				date_time_end: dt.now().toISO(),
 				tags: [],
-				location: {
-                    title: "",
-                    lat: 0,
-                    long: 0,
-               	},
-				max_capacity: 0,
-				links: [],
 				public: true,
-=======
-				dateTimeStart: '',
-				dateTimeEnd: '',
-				tags: [],
-				location: {
-					title: '',
-					lat: 0,
-					long: 0
-				},
+				location: {},
 				max_capacity: 0,
 				links: [],
->>>>>>> 6fd4a6b37ff57b7e495ef53bc95a742f76be7254
-				creator_id: ''
-			}
+				image_ids: [],
+				creator_id: window.localStorage.getItem('token')
+			},
+			minDateTime: dt.now().toString(),
+			locationList: [
+				{
+					title: 'Miami, FL',
+					latitude: 12,
+					longitude: 15
+				},
+				{
+					title: 'Brickell, FL',
+					latitude: 12,
+					longitude: 15
+				},
+				{
+					title: 'Hialeah, FL',
+					latitude: 12,
+					longitude: 15
+				}
+			]
 		}
 	},
 	methods: {
@@ -106,14 +143,19 @@ export default {
 			})
 				.then(response => {
 					const eventId = response.data.event_id
-					router.push({
-						path: `/event/:${eventId}`,
+					this.$router.push({
+						path: `/event/${eventId}`,
 						params: { id: eventId }
 					})
 				})
 				.catch(error => {
 					console.log(error)
 				})
+		},
+		onCancel() {
+			this.$router.push({
+				path: `/`
+			})
 		},
 		getEventData() {
 			if (this.eventData.id !== undefined) {
@@ -122,24 +164,31 @@ export default {
 					url: `/events/get/${this.eventData.id}`
 				})
 					.then(response => {
-						this.title = response.data.title
-						this.description = response.data.description
-						this.dateTimeStart = response.data.dateTimeStart
-						this.dateTimeEnd = response.data.dateTimeEnd
-						this.tags = response.data.tags
-						this.location = response.data.location
-						this.max_capacity = response.data.max_capacity
-						this.links = response.data.links
-						this.creator_id = response.data.creator_id
+						this.eventData.title = response.data.title
+						this.eventData.description = response.data.description
+						this.eventData.date_time_start = response.data.date_time_start
+						this.eventData.date_time_end = response.data.date_time_end
+						this.eventData.tags = response.data.tags
+						this.eventData.public = response.data.public
+						this.eventData.location = response.data.location
+						this.eventData.max_capacity = response.data.max_capacity
+						this.eventData.links = response.data.links
+						this.eventData.image_ids = response.data.image_ids
+						this.eventData.creator_id = response.data.creator_id
 					})
 					.catch(error => {
 						console.log(error)
 					})
 			}
+		},
+		checkBox() {
+			this.eventData.public = !this.eventData.public
 		}
 	},
 	mounted() {},
-	components: {},
+	components: {
+		datetime: Datetime
+	},
 	watch: {
 		$route(to, from) {
 			this.id = this.$route.params.id
@@ -170,7 +219,7 @@ export default {
 	button {
 		@extend .button;
 		margin-top: 20px;
-		background: color(green);
+
 		border-radius: 5px;
 		width: 200px;
 		height: 50px;
@@ -179,16 +228,24 @@ export default {
 		margin-bottom: 30px;
 	}
 
+	button#submit-btn {
+		background: color(green);
+	}
+
+	button#cancel-btn {
+		background: rgba(255, 0, 0, 0.8);
+	}
+
 	.input-wrapper {
 		@extend .flex-row;
 		width: 80%;
 		justify-content: space-around;
-		margin: 5px 0;
+		margin: 10px 0;
 
 		label {
-			padding: 0;
+			padding: 0px;
 			text-align: left;
-			width: 100%;
+			width: 90%;
 			font-size: 26px;
 			letter-spacing: 1.5px;
 		}
@@ -201,7 +258,7 @@ export default {
 		}
 
 		input#event-max {
-			width: 80px;
+			width: 50px;
 		}
 
 		textarea {
@@ -209,6 +266,40 @@ export default {
 			width: 500px;
 			height: 100px;
 			border: 2px solid black;
+		}
+
+		select {
+			width: 200px;
+			height: 20px;
+			border: none;
+			border-bottom: 2px solid black;
+		}
+
+		#link-inputs {
+			padding: 0;
+			width: 500px;
+			input {
+				width: 100%;
+			}
+		}
+
+		#private-checkbox {
+			@extend .flex-row;
+			width: 500px;
+			justify-content: flex-end;
+			label {
+				font-size: 20px;
+				width: auto;
+				cursor: pointer;
+				-webkit-user-select: none; /* Safari */
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+/Edge */
+				user-select: none; /* Standard */
+			}
+
+			input {
+				width: 20px;
+			}
 		}
 	}
 }
