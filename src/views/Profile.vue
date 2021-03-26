@@ -1,9 +1,8 @@
 <template>
-
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
                <div id="profile-pic">
-                    <img id="icon" src="http://placehold.it/180" />
+                    <img id="icon" src="http://placehold.it/180" /> 
                </div> 
                <div id="profile-info">
                     <h1 id="name"> First: {{firstName}} Last:{{lastName}}</h1>
@@ -39,8 +38,8 @@
                     </div>
                </ul>
           </div>  
-          <div id="green-line"></div>
-     </div>
+
+     </div> 
 </template>
 
 <script>
@@ -90,51 +89,32 @@ export default {
 @import "../assets/global.scss";
 
 #profile-view-container{
-     @extend .clear;
      width: 100%;
-     height: 82vh;
-     padding: 2%;
-     box-sizing: border-box;
-     
-     @extend .flex-column;
-     
-     #user-profile-bar{
-          position: absolute;
-          top: 100px;
-          width: 95%;
-          height: 200px;
-          padding: 2%;
-          box-sizing: border-box;
 
-          background: #fcfafa;
-          border-radius: 10px;
-          @extend .shadow;
-          @extend .flex-column; 
+     #user-profile-bar{
+          margin-top: 50px;
+          height: 42%;
+          #profile-pic{
+               margin-left: 90px;
+               margin-right: 90px;
+               float: left;
+
+               #icon{
+                    border-radius: 100%;
+                    width: 230px;
+                    height: 230px;    
+               }
           }
-     #green-line{
-          content: "";
-          display: block;
-          background:  #03bf4d;
-          box-sizing: border-box;
-          position: absolute;
-          top: 100px;
-          width: 95%;
-          height: 7px;
-          border-radius: 10px;
+          #profile-info{
           }
-     #icon{
-          width: 150px;
-          height: 150px;
-          border-radius: 100px;
-          position: absolute;
-          top: 25px;
-          left: 40px;
+          #social-media{
           }
-     #profile-info{
-          position: absolute;
-          top: 5px;
-          left: 250px;
-          }
+     }
+     #events-component{
+          margin-left: 70px;
+          margin-top: 50px;
+     }
+     /*
      #member-type{
           color:  #03bf4d;
      }
@@ -142,7 +122,8 @@ export default {
           position: absolute;
           top: 150px;
      }
-}
+} 
+
 #events-component{
      position: absolute;
      top: 320px;
@@ -176,9 +157,6 @@ export default {
      }
      h3{
           color: #03bf4d;
+     }*/
      }
-     }
-
-
 </style>
-
