@@ -1,7 +1,5 @@
 <template>
   <div>
-     <MapView></MapView>
-     <SmartEvent></SmartEvent>
   </div>
 </template>
 

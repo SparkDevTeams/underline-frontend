@@ -1,7 +1,7 @@
 <template>
   <div id="signin-component">
-       <Login></Login>
-       <Signup></Signup>
+       <Login v-on:signedIn="$emit('signedIn')"></Login>
+       <Signup v-on:signedIn="$emit('signedIn')"></Signup>
   </div>
 </template>
 
