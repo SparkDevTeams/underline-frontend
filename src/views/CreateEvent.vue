@@ -1,19 +1,15 @@
 <template>
-	<editEvent componentTitle="Edit" :eventId="eventId" />
+	<editEvent componentTitle="Create" />
 </template>
 
 <script>
 import EditEvent from '../components/EditEvent'
 export default {
 	data() {
-		return {
-			eventId: this.$route.params.id
-		}
+		return {}
 	},
-	methods: {
-		components: {
-			editEvent: EditEvent
-		}
+	components: {
+		editEvent: EditEvent
 	}
 }
 </script>
