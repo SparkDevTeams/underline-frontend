@@ -1,155 +1,131 @@
 <template>
-  <div id="view-event">
-    <div id="event-display-card">
-      <div id="image-container"> 
-        <h1>Image</h1>
-      </div>
-      <div id="event-details"> 
-        <h1 id="display-card-title">Event Title</h1>
-        <ul class="event-details-list">
-          <li>Date</li>
-          <li>Time</li>
-          <li>Location</li>
-          <li>Organization</li>
-        </ul> 
-        <button>Register</button>
-      </div>
-    </div>
-    <div id="event-info-box">
-      <div id="event-description">
-        <h1 class="title">Event Title</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur 
-          voluptatem sapiente similique nobis sint veritatis perferendis, corrupti 
-          blanditiis possimus deleniti fuga dolore reprehenderit dolores architecto 
-          beatae, labore necessitatibus, laboriosam totam.
-        </p>
-        <h2><b>Share</b></h2>
-      </div>
-      <div id="similar-events">
-        <h1 class="title">Similar Events</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur 
-          voluptatem sapiente similique nobis sint veritatis perferendis, corrupti 
-          blanditiis possimus deleniti fuga dolore reprehenderit dolores architecto 
-          beatae, labore necessitatibus, laboriosam totam.
-        </p>
-      </div>
-    </div> 
-  </div> 
+     <div id="event-component">
+          <h1>{{ title }}</h1>
+          <span class="tag" v-for="tag in tags">{{ tag }}</span>
+          <img />
+          <h2>Located at {{ location.title }}</h2>
+          <span id="max">Max capacity: {{ max_capacity }}</span>
+
+          <div id="dates">
+               <span id="date-start">{{ dateTimeStart }}</span>
+               <span id="date-end">{{ dateTimeEnd }}</span>
+          </div>
+
+          <div id="links">
+               <span class="link" v-for="link in links">{{ link }}</span>
+          </div>
+
+          <div id="map_container">
+               <MapView
+                    :pinLat="location.lat"
+                    :pinLong="location.long"
+               ></MapView>
+          </div>
+     </div>
 </template>
 
 <script>
 import axios from "axios";
+import MapView from "../components/MapView.vue"
 export default {
-  data() {
-    return {
-      id: this.$route.params.id,
-    };
-  },
-  methods: {},
-  mounted() {},
-  components: {},
-  watch: {
-    $route(to, from) {
-      this.id = this.$route.params.id;
-    },
-  },
+     data() {
+          return {
+               id: this.$route.params.id,
+               title: "",
+               description: "",
+               dateTimeStart: "",
+               dateTimeEnd: "",
+               tags: [],
+               location: {
+                    title: "",
+                    lat: 0,
+                    long: 0,
+               },
+               max_capacity: 0,
+               links: [],
+               creator_id: "",
+          };
+     },
+     methods: {
+          getEventData() {
+               axios({
+                    method: "get",
+                    url:
+                         "https://sparkdev-underline.herokuapp.com/get/" +
+                         this.id,
+               })
+                    .then((response) => {
+                         this.title = response.data.title;
+                         this.description = response.data.description;
+                         this.dateTimeStart = response.data.dateTimeStart;
+                         this.dateTimeEnd = response.data.dateTimeEnd;
+                         this.tags = response.data.tags;
+                         this.location = response.data.location;
+                         this.max_capacity = response.data.max_capacity;
+                         this.links = response.data.links;
+                         this.creator_id = response.data.creator_id;
+                    })
+                    .catch((error) => {
+                         this.title = "This event could not be found"
+                    });
+          },
+     },
+     mounted() {
+          this.getEventData();
+     },
+     components: {
+       MapView
+     },
+     watch: {
+          $route(to, from) {
+               this.id = this.$route.params.id;
+               this.getEventData();
+          },
+     },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
+#event-component {
+     height: 89vh;
+     width: 100vw;
+     @extend .flex-column;
+     justify-content: flex-start;
 
-#event-display-card{
-  display: flex;
-  justify-content: center;
-  text-align: left;
-}
-#image-container, #event-details{
-  margin-top: 40px;
-  @extend .shadow;
-}
-ul{
-  list-style-type: none;
-  justify-content: flex-start;
-  margin-top: 40px;
-  font-size: 2vh;
-}
-#image-container{
-  background: blueviolet;
-  display: table-cell; 
-  width: 106vh;
-  vertical-align: middle;
-}
-#event-details{
-  background: #03bf4d;
-  color: white;
-  border-bottom: 10vh solid black;
-  width: 60vh;
-  height: 35vh;
-  display: table-cell;
-  text-align: center;
+     h1 {
+          font-size: 10vh;
+     }
 
-  #display-card-title{
-    font-size: min(5vh,60px);
-  }
-  ul{
-    text-align: left;
-  }
-  h1{
-    text-align: center;
-  }
+     h2 {
 
-  button {
-    @extend .button;
-    background-color: color(green);
-    padding: 10px 15px;
-    border-radius: 40px;
-    font-family: $font;
-    color: white;
-    font-size: 25px;
-    width: 40%;
-    margin-top: 63px;
-    
-  }
+     }
+
+     .tag {
+          border-radius: 10px;
+          height: 6vh;
+          color: white;
+          background-color: color(green);
+          padding: 5px;
+          box-sizing:border-box;
+     }
+
+     img {
+          height: 30vh;
+          width: 90vw;
+     }
+
+     #max {
+     }
+     #dates {
+          span {
+          }
+     }
+     #links {
+          span {
+          }
+     }
+     #map_container {
+     }
 }
-#event-info-box{
-  display: flex;
-  @extend .shadow;
-	background-color: rgb(255, 255, 255);
-	height: auto;
-	width: 165vh;
-	border-radius: 15px;
-	padding: 15px;
-	box-sizing: border-box;
-  margin-top: 20px;
-
-   p{
-    font-size: min(2vh, 30px);
-    color: #6e6e6e;
-  }
-}
-#event-description{
-  height: auto;
-	width: min(800px, 70vw);
-  margin-left: 30px;
-  margin-right: 30px;
-
-  h2{
-    color:  #6e6e6e
-    //font-weight normal;
-  }
-}
-#similar-events{
-  height: auto;
-	width: min(500px, 45vw);
-  margin-left: 40vh;
-  margin-right: 30px;
-
-}
-.title{
-  color: #03bf4d;
-  font-size: min(5vh,60px);
-}
-
-
 </style>

@@ -2,20 +2,45 @@
      <div id="nav-container">
           <img id="logo" src="../assets/grn-and-wht-u-logo.png" />
           <router-link to="/">Explore</router-link>
-          <button>Events</button>
+          <router-link to="Events">Events</router-link>
           <router-link to="About">About</router-link>
           <button id="support-button">Support</button>
-          <router-link to="Signin">Sign in</router-link>
+          <button v-if="!signedIn" @click="login">Sign in</button>
+          <button v-if="signedIn" @click="logout">Sign out</button>
      </div>
 </template>
 
 <script>
 export default {
      data() {
-          return {};
+          return {
+               signedIn: false,
+          };
      },
+     props: ["loggedIn"],
      methods: {
-
+          login() {
+               this.$router.push("/signin");
+          },
+          logout() {
+               window.localStorage.setItem("token", "");
+               this.signedIn = false;
+               this.$router.push("/signin");
+          },
+          checkUserSignedIn() {
+               const token = window.localStorage.getItem("token");
+               if (token != "") {
+                    this.signedIn = true;
+               }
+          },
+     },
+     mounted() {
+          this.checkUserSignedIn();
+     },
+     watch: {
+          loggedIn: function (newVal, oldVal) {
+               this.signedIn = newVal;
+          },
      },
 };
 </script>
@@ -29,6 +54,8 @@ export default {
      @extend .flex-row;
      justify-content: flex-start;
      height: 11vh;
+     min-height: 11vh;
+     max-height: 11vh;
      width: 100vw;
      background-color: rgb(0, 0, 0);
      padding: 0px 20px;
@@ -38,8 +65,9 @@ export default {
           height: 60%;
      }
 
-     button,a {
-          text-decoration: none;       
+     button,
+     a {
+          text-decoration: none;
           @extend .clear;
           font-smooth: antialiased;
           font-family: $font;

@@ -1,27 +1,36 @@
 <template>
   <div id="map-container">
-    <MapCompanion></MapCompanion>
+    <MapCompanion v-if="companion"></MapCompanion>
     <div id="underline-map"></div>
   </div>
 </template>
 
 <script>
 import leaflet from "leaflet";
+import router from '../router/';
 import MapCompanion from "./MapCompanion.vue"
 export default {
   data() {
     return {
       map: null,
-      areas: [],
     };
   },
+  props: [
+    "pinLat", "pinLong", "companion"
+  ],
   methods: {
     initializeMap() {
       var northEastBounds = L.latLng(24, -82);
       var southWestBounds = L.latLng(27, -79);
       var bounds = L.latLngBounds(northEastBounds, southWestBounds);
 
-      this.map = new L.map("underline-map").setView([25.7644, -80.1935], 17);
+      if(this.pinLat!=null) {
+        this.map = new L.map("underline-map").setView([this.pinLat, this.pinLong], 17);
+        var marker = L.marker([this.pinLat, this.pinLong]).addTo(this.map);
+      } else {
+        this.map = new L.map("underline-map").setView([25.7644, -80.1935], 17);
+      }
+      
       L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
         {

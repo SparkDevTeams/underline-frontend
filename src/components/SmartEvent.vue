@@ -52,9 +52,6 @@ export default {
 	methods: {
 		toggleShowError() {
 			if (this.user.isAdmin) {
-				console.log(`Event Name: ${this.event.eventName}`)
-				console.log(`Event Date: ${this.event.eventDate}`)
-				console.log(`Event Location: ${this.event.eventLocation}`)
 			} else {
 				this.showErrorMsg = true
 			}
