@@ -12,15 +12,17 @@
                </div>
                <div id="social-media">
                     <form>
-                         <label for="Insta">Instagram </label>
-                         <input type="text" id=" Instagram " class="form-control" value="Link your social media here!" size="21">
-                         <label for="Fb"> Facebook </label>
-                         <input type="text" id="Facebook" value="Link your social media here!" size="21">
-                         <label for="Fb"> Twitter </label>
-                         <input type="text" id="Twitter" value="Link your social media here!" size="21">
+                         <label> Instagram </label>
+                         <input type="text" v-model="tSocials" @keypress="addSocial">
+                         <label> Facebook </label>
+                         <input type="text" v-model="tSocials" @keypress="addSocial">
+                         <label> Twitter </label>
+                         <input type="text" v-model="tSocials" @keypress="addSocial">
                     </form>
                </div>
           </div> 
+
+          <p>Socials: {{socials}}</p>
 
           <div id="events-component">
                <h3 class="upcoming">Upcoming Events</h3>
@@ -50,7 +52,9 @@ export default {
                id: this.$route.params.id,
                firstName: "",
                lastName: "",
-               email: ""
+               email: "",
+               tSocials: '',
+               socials: []
           }
      },
      methods: {
@@ -71,8 +75,13 @@ export default {
                })
                .catch((error) => {
                });
-          }
-     },
+          },
+          addSocial(event){
+               if (event.key === ' ') {
+                    this.socials.push(this.tSocials)
+                    }
+                    }
+                    },
      created() {
           this.getProfile();
      },
@@ -106,6 +115,9 @@ export default {
                }
           }
           #profile-info{
+               #member-type{
+                    color:  #03bf4d;    
+               }
           }
           #social-media{
           }
