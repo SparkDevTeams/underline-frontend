@@ -6,6 +6,7 @@ import About from '../views/About.vue'
 import Signin from '../views/Signin.vue'
 import Profile from '../views/Profile.vue'
 import ViewEvent from '../views/ViewEvent.vue'
+import Events from '../views/Events.vue'
 
 Vue.use(VueRouter)
 
@@ -34,7 +35,12 @@ const routes = [
     path: '/event/:id',
     name: 'ViewEvent',
     component: ViewEvent
-  }
+  },
+  {
+    path: '/events',
+    name: 'Event',
+    component: Events
+  },
 ]
 
 const router = new VueRouter({

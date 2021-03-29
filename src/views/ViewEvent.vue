@@ -87,7 +87,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/global.scss";
-
 #event-component {
      height: 89vh;
      width: 100vw;
