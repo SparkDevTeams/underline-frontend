@@ -7,6 +7,8 @@
           <button id="support-button">Support</button>
           <button v-if="!signedIn" @click="login">Sign in</button>
           <button v-if="signedIn" @click="logout">Sign out</button>
+		  <router-link id = "admin-portal" to = "admin">Admin Portal</router-link>
+		  <router-link id = "profile-page" to = "/user/ + id">Profile Page</router-link>
      </div>
 </template>
 
@@ -15,6 +17,7 @@ export default {
      data() {
           return {
                signedIn: false,
+			   id: ''
           };
      },
      props: ["loggedIn"],
