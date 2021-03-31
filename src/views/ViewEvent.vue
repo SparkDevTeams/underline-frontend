@@ -51,7 +51,7 @@ export default {
                axios({
                     method: "get",
                     url:
-                         "https://sparkdev-underline.herokuapp.com/get/" +
+                         "https://sparkdev-underline.herokuapp.com/events/get/" +
                          this.id,
                })
                     .then((response) => {
