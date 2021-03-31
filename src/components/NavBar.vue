@@ -2,22 +2,25 @@
      <div id="nav-container">
           <img id="logo" src="../assets/grn-and-wht-u-logo.png" />
           <router-link to="/">Explore</router-link>
-          <router-link to="Events">Events</router-link>
           <router-link to="About">About</router-link>
-          <button id="support-button">Support</button>
+          <a href = "https://www.theunderline.org/support/" id="support-button">Support</a>
+          <router-link v-if="isAdmin" id = "admin-portal" to = "admin">Admin Portal</router-link>
+		<router-link v-if="signedIn" id = "profile-page" to = "/user/ + id">Profile Page</router-link>
           <button v-if="!signedIn" @click="login">Sign in</button>
           <button v-if="signedIn" @click="logout">Sign out</button>
-		  <router-link id = "admin-portal" to = "admin">Admin Portal</router-link>
-		  <router-link id = "profile-page" to = "/user/ + id">Profile Page</router-link>
+
      </div>
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode'
+import axios from 'axios'
 export default {
      data() {
           return {
                signedIn: false,
-			   id: ''
+			id: '',
+               isAdmin: false
           };
      },
      props: ["loggedIn"],
@@ -32,10 +35,30 @@ export default {
           },
           checkUserSignedIn() {
                const token = window.localStorage.getItem("token");
+			   this.id = jwt_decode(token).user_id;
                if (token != "") {
                     this.signedIn = true;
+                    this.checkUserAdmin();
                }
           },
+
+          checkUserAdmin(){
+               axios({
+                    method: "post",
+                    url: "https://sparkdev-underline.herokuapp.com/users/find",
+                    data: {
+                         user_id:this.id
+                    },
+               })
+               .then((response) => {
+                    if(response.data.user_type == 'ADMIN'){
+                         this.isAdmin=true;
+                    }
+
+               })
+               .catch((error) => {
+               });
+          }
      },
      mounted() {
           this.checkUserSignedIn();
