@@ -10,20 +10,39 @@
 			</ul>
 		</div>
 
-		<div class="input-wrapper">
-			<label>Event image: </label>
-			<div class="dropbox" @click="$refs.uploadImg.click()">
+		<div class="image">
+			<label>Event image:</label>
+			<div
+				v-if="imageURL"
+				class="image__container"
+				@click="$refs.imgUpload.click()"
+			>
+				<img :src="imageURL" class="image__preview" />
 				<input
 					type="file"
-					accept="image/*"
+					ref="imgUpload"
+					class="image__input"
 					@change="uploadImage"
-					ref="uploadImg"
 					multiple
 				/>
-				<p v-if="imageURL.length == 0">
-					Have an event image? Click here to upload one
-				</p>
-				<img v-if="imageURL" class="preview" :src="imageURL" />
+				<div class="image__overlay">
+					<div class="image__title">Browse...</div>
+				</div>
+			</div>
+			<div v-if="!imageURL" class="image__container-before">
+				<button @click="$refs.imgUpload.click()" class="image__button-before">
+					Upload Image
+				</button>
+				<input
+					type="file"
+					ref="imgUpload"
+					class="image__input-before"
+					@change="uploadImage"
+					multiple
+				/>
+			</div>
+			<div class="image__container-multiple" v-if="imageURL.length > 1">
+				<p class="image__multiple-count">+{{ imageCounter - 1 }}</p>
 			</div>
 		</div>
 
@@ -103,10 +122,30 @@
 		<div class="input-wrapper">
 			<label>Please enter any website or social media link(s):</label>
 			<div id="link-inputs">
-				<input type="text" id="event-link-1" v-model="eventData.links[0]" />
-				<input type="text" id="event-link-2" v-model="eventData.links[1]" />
-				<input type="text" id="event-link-3" v-model="eventData.links[2]" />
-				<input type="text" id="event-link-4" v-model="eventData.links[3]" />
+				<input
+					placeholder="https://example.com"
+					type="text"
+					id="event-link-1"
+					@change="addLink"
+				/>
+				<input
+					placeholder="https://example.com"
+					type="text"
+					id="event-link-2"
+					@change="addLink"
+				/>
+				<input
+					placeholder="https://example.com"
+					type="text"
+					id="event-link-3"
+					@change="addLink"
+				/>
+				<input
+					placeholder="https://example.com"
+					type="text"
+					id="event-link-4"
+					@change="addLink"
+				/>
 			</div>
 		</div>
 
@@ -133,7 +172,6 @@
 import axios from 'axios'
 import { DateTime as dt } from 'luxon'
 import { Datetime } from 'vue-datetime'
-import EditEvent from '../components/EditEvent'
 import 'vue-datetime/dist/vue-datetime.css'
 import jwt_decode from 'jwt-decode'
 export default {
@@ -172,19 +210,65 @@ export default {
 			],
 			imageData: null,
 			imageURL: '',
+			imageCounter: 0,
 			errorMessages: [],
 			errors: {
 				titleError: false,
 				descriptionError: false,
 				tagsError: false,
 				locationError: false,
-				maxCapacityError: false
+				maxCapacityError: false,
+				linksError: false
 			},
 			hasErrors: false,
 			token: ''
 		}
 	},
 	methods: {
+		addLink(e) {
+			const text = e.target.value
+			this.validateLinks(text)
+		},
+		validateLinks(text) {
+			let errorMessage = 'Make sure your website(s) starts with "https://" '
+			let duplicateMessage = 'Make sure your website(s) are not repeated'
+			if (text.trim().length > 0) {
+				if (
+					!text.match(
+						/^(https:\/\/)+?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+					)
+				) {
+					if (!this.errorMessages.includes(errorMessage)) {
+						this.errorMessages.push(errorMessage)
+					}
+
+					this.errors.linksError = true
+				} else if (this.eventData.links.includes(text)) {
+					if (!this.errorMessages.includes(errorMessage)) {
+						this.errorMessages.push(duplicateMessage)
+					}
+
+					this.errors.linksError = true
+				} else {
+					this.eventData.links.push(text)
+					this.errorMessages = this.errorMessages.filter(
+						msg => msg !== errorMessage
+					)
+					this.errorMessages = this.errorMessages.filter(
+						msg => msg !== duplicateMessage
+					)
+					this.errors.linksError = false
+				}
+			} else {
+				this.errorMessages = this.errorMessages.filter(
+					msg => msg !== errorMessage
+				)
+				this.errorMessages = this.errorMessages.filter(
+					msg => msg !== duplicateMessage
+				)
+				this.errors.linksError = false
+			}
+		},
 		checkToken() {
 			this.token = window.localStorage.getItem('token')
 			if (this.token != '') {
@@ -196,16 +280,17 @@ export default {
 		uploadImage(e) {
 			this.imageData = null
 			this.imageURL = ''
-			const file = e.target.files[0]
-			this.imageData = file
-			this.imageURL = URL.createObjectURL(file)
+			this.imageCounter = e.target.files.length
+			this.imageData = e.target.files
+			this.imageURL = URL.createObjectURL(e.target.files[0])
 		},
-		onSubmit() {
+		async onSubmit() {
 			this.validateTitle()
 			this.validateDescription()
 			this.validateTags()
 			this.validateLocation()
 			this.validateMaxCapacity()
+
 			for (const key in this.errors) {
 				if (this.errors[key] == true) {
 					this.hasErrors = true
@@ -213,17 +298,25 @@ export default {
 			}
 			if (!this.hasErrors) {
 				if (this.imageData) {
-					axios({
-						method: 'post',
-						url: '/images/upload',
-						data: this.imageData
-					})
-						.then(response => {
-							console.log(response)
+					for (let i = 0; i < this.imageCounter; i++) {
+						let fd = new FormData()
+						fd.append('name', this.imageData[i].name)
+						fd.append('file', this.imageData[i])
+						await axios({
+							method: 'post',
+							url: '/images/upload',
+							data: fd,
+							headers: {
+								token: this.token
+							}
 						})
-						.catch(error => {
-							console.log(error)
-						})
+							.then(response => {
+								this.eventData.image_ids.push(response.data.image_id)
+							})
+							.catch(error => {
+								console.log(error)
+							})
+					}
 				}
 				axios({
 					method: 'post',
@@ -256,7 +349,10 @@ export default {
 		validateTitle() {
 			let errorMessage = 'Please make sure this event has a title'
 			if (this.eventData.title == '') {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
+
 				this.errors.titleError = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -268,7 +364,9 @@ export default {
 		validateDescription() {
 			let errorMessage = 'Please make sure this event has a description'
 			if (this.eventData.description == '') {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.descriptionError = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -280,7 +378,9 @@ export default {
 		validateTags() {
 			let errorMessage = 'Please make sure this event has a tag'
 			if (this.eventData.tags.length == 0) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.tagsError = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -292,7 +392,9 @@ export default {
 		validateLocation() {
 			let errorMessage = 'Please make sure you select a location for this event'
 			if (!this.eventData.location) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.locationError = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -305,7 +407,9 @@ export default {
 			let errorMessage =
 				'Please make sure you allow at least 1 person to attend'
 			if (this.eventData.max_capacity <= 0) {
-				this.errorMessages.push(errorMessage)
+				if (!this.errorMessages.includes(errorMessage)) {
+					this.errorMessages.push(errorMessage)
+				}
 				this.errors.maxCapacityError = true
 			} else {
 				this.errorMessages = this.errorMessages.filter(
@@ -317,7 +421,6 @@ export default {
 	},
 	mounted() {
 		this.checkToken()
-		this.eventData.creator_id = window.localStorage.getItem('token')
 	},
 	components: {
 		datetime: Datetime
@@ -364,38 +467,98 @@ export default {
 		background: rgba(255, 0, 0, 0.8);
 	}
 
+	.image {
+		@extend .flex-row;
+		width: 80%;
+		justify-content: space-around;
+
+		label {
+			margin-right: 20%;
+			padding: 0px;
+			text-align: left;
+			width: 90%;
+			font-size: 26px;
+			letter-spacing: 1.5px;
+		}
+		.image__container {
+			position: relative;
+			border: 1px solid black;
+			border-radius: 5.5px;
+			cursor: pointer;
+			width: 500px;
+
+			.image__input {
+				display: none;
+			}
+
+			.image__preview {
+				display: block;
+				width: 100%;
+				border-radius: 5px;
+			}
+
+			.image__overlay {
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 100%;
+				width: 100%;
+				background: rgba(0, 0, 0, 0.6);
+				color: white;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-content: center;
+				opacity: 0;
+				transition: opacity 0.25s ease;
+				.image__title {
+					width: 100%;
+					height: auto;
+					text-align: center;
+					font-size: 2em;
+					font-weight: bold;
+				}
+			}
+
+			.image__overlay:hover {
+				opacity: 1;
+			}
+		}
+
+		.image__container-before {
+			width: 500px;
+			display: flex;
+			justify-content: center;
+			.image__button-before {
+				background: color(green);
+			}
+			.image__input-before {
+				display: none;
+			}
+		}
+		.image__container-multiple {
+			border-radius: 50%;
+			width: 125px;
+			margin-left: 10px;
+			background: color(green);
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			color: white;
+			border: 2px solid black;
+
+			.image__multiple-count {
+				text-align: center;
+				cursor: default;
+			}
+		}
+	}
+
 	.input-wrapper {
 		@extend .flex-row;
 		width: 80%;
 		justify-content: space-around;
 		margin: 10px 0;
-
-		.dropbox {
-			border-radius: 5px;
-			background: rgba(color(green), 0.8);
-			color: black;
-			width: 500px;
-			cursor: pointer;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-content: center;
-
-			img.preview {
-				width: 100%;
-				border-radius: 5px;
-				transition: all 0.5s ease;
-			}
-
-			input {
-				display: none;
-			}
-
-			.dropbox p {
-				font-size: 1.2em;
-				text-align: center;
-			}
-		}
 
 		label {
 			padding: 0px;
@@ -413,7 +576,7 @@ export default {
 		}
 
 		input#event-max {
-			width: 50px;
+			width: 40px;
 		}
 
 		textarea {

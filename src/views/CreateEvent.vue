@@ -1,5 +1,5 @@
 <template>
-	<editEvent componentTitle="Create" />
+	<editEvent />
 </template>
 
 <script>
