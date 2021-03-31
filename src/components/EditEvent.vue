@@ -133,8 +133,9 @@
 import axios from 'axios'
 import { DateTime as dt } from 'luxon'
 import { Datetime } from 'vue-datetime'
+import EditEvent from '../components/EditEvent'
 import 'vue-datetime/dist/vue-datetime.css'
-
+import jwt_decode from 'jwt-decode'
 export default {
 	data() {
 		return {
@@ -179,10 +180,19 @@ export default {
 				locationError: false,
 				maxCapacityError: false
 			},
-			hasErrors: false
+			hasErrors: false,
+			token: ''
 		}
 	},
 	methods: {
+		checkToken() {
+			this.token = window.localStorage.getItem('token')
+			if (this.token != '') {
+				this.eventData.creator_id = jwt_decode(this.token).user_id
+			} else {
+				this.onCancel()
+			}
+		},
 		uploadImage(e) {
 			this.imageData = null
 			this.imageURL = ''
@@ -190,13 +200,12 @@ export default {
 			this.imageData = file
 			this.imageURL = URL.createObjectURL(file)
 		},
-		async onSubmit() {
+		onSubmit() {
 			this.validateTitle()
 			this.validateDescription()
 			this.validateTags()
 			this.validateLocation()
 			this.validateMaxCapacity()
-
 			for (const key in this.errors) {
 				if (this.errors[key] == true) {
 					this.hasErrors = true
@@ -204,7 +213,7 @@ export default {
 			}
 			if (!this.hasErrors) {
 				if (this.imageData) {
-					await axios({
+					axios({
 						method: 'post',
 						url: '/images/upload',
 						data: this.imageData
@@ -216,14 +225,20 @@ export default {
 							console.log(error)
 						})
 				}
-
-				await axios({
+				axios({
 					method: 'post',
 					url: '/events/register',
-					data: this.eventData
+					data: this.eventData,
+					headers: {
+						token: this.token
+					}
 				})
 					.then(response => {
-						console.log(response)
+						const eventId = response.data.event_id
+						this.$router.push({
+							path: `/event/${eventId}`,
+							params: { id: eventId }
+						})
 					})
 					.catch(error => {
 						console.log(error)
@@ -276,7 +291,7 @@ export default {
 		},
 		validateLocation() {
 			let errorMessage = 'Please make sure you select a location for this event'
-			if (this.eventData.location == '') {
+			if (!this.eventData.location) {
 				this.errorMessages.push(errorMessage)
 				this.errors.locationError = true
 			} else {
@@ -301,6 +316,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.checkToken()
 		this.eventData.creator_id = window.localStorage.getItem('token')
 	},
 	components: {
