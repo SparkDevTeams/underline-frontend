@@ -1,6 +1,6 @@
 <template>
 	<div id="edit-event-container">
-		<h1>{{ componentTitle }} your event</h1>
+		<h1>Create your event</h1>
 		<div class="error-message-container" v-if="errorMessages.length > 0">
 			<p>The following errors occurred:</p>
 			<ul>
@@ -9,6 +9,24 @@
 				</li>
 			</ul>
 		</div>
+
+		<div class="input-wrapper">
+			<label>Event image: </label>
+			<div class="dropbox" @click="$refs.uploadImg.click()">
+				<input
+					type="file"
+					accept="image/*"
+					@change="uploadImage"
+					ref="uploadImg"
+					multiple
+				/>
+				<p v-if="imageURL.length == 0">
+					Have an event image? Click here to upload one
+				</p>
+				<img v-if="imageURL" class="preview" :src="imageURL" />
+			</div>
+		</div>
+
 		<div class="input-wrapper">
 			<label>Event name:</label>
 			<input
@@ -115,8 +133,8 @@
 import axios from 'axios'
 import { DateTime as dt } from 'luxon'
 import { Datetime } from 'vue-datetime'
-import EditEvent from '../components/EditEvent'
 import 'vue-datetime/dist/vue-datetime.css'
+
 export default {
 	data() {
 		return {
@@ -131,7 +149,7 @@ export default {
 				max_capacity: 0,
 				links: [],
 				image_ids: [],
-				creator_id: window.localStorage.getItem('token')
+				creator_id: ''
 			},
 			minDateTime: dt.now().toString(),
 			locationList: [
@@ -151,6 +169,8 @@ export default {
 					longitude: 15
 				}
 			],
+			imageData: null,
+			imageURL: '',
 			errorMessages: [],
 			errors: {
 				titleError: false,
@@ -162,55 +182,48 @@ export default {
 			hasErrors: false
 		}
 	},
-	props: ['componentTitle', 'eventId'],
 	methods: {
-		onSubmit() {
+		uploadImage(e) {
+			this.imageData = null
+			this.imageURL = ''
+			const file = e.target.files[0]
+			this.imageData = file
+			this.imageURL = URL.createObjectURL(file)
+		},
+		async onSubmit() {
 			this.validateTitle()
 			this.validateDescription()
 			this.validateTags()
 			this.validateLocation()
 			this.validateMaxCapacity()
+
 			for (const key in this.errors) {
 				if (this.errors[key] == true) {
 					this.hasErrors = true
 				}
 			}
 			if (!this.hasErrors) {
-				axios({
+				if (this.imageData) {
+					await axios({
+						method: 'post',
+						url: '/images/upload',
+						data: this.imageData
+					})
+						.then(response => {
+							console.log(response)
+						})
+						.catch(error => {
+							console.log(error)
+						})
+				}
+
+				await axios({
 					method: 'post',
 					url: '/events/register',
 					data: this.eventData
 				})
 					.then(response => {
-						const eventId = response.data.event_id
-						this.$router.push({
-							path: `/event/${eventId}`,
-							params: { id: eventId }
-						})
-					})
-					.catch(error => {
-						console.log(error)
-					})
-			}
-		},
-		getEventData() {
-			if (this.eventId !== undefined) {
-				axios({
-					method: 'get',
-					url: `/events/get/${this.eventId}`
-				})
-					.then(response => {
-						this.eventData.title = response.data.title
-						this.eventData.description = response.data.description
-						this.eventData.date_time_start = response.data.date_time_start
-						this.eventData.date_time_end = response.data.date_time_end
-						this.eventData.tags = response.data.tags
-						this.eventData.public = response.data.public
-						this.eventData.location = response.data.location
-						this.eventData.max_capacity = response.data.max_capacity
-						this.eventData.links = response.data.links
-						this.eventData.image_ids = response.data.image_ids
-						this.eventData.creator_id = response.data.creator_id
+						console.log(response)
 					})
 					.catch(error => {
 						console.log(error)
@@ -263,7 +276,7 @@ export default {
 		},
 		validateLocation() {
 			let errorMessage = 'Please make sure you select a location for this event'
-			if (this.eventData.location) {
+			if (this.eventData.location == '') {
 				this.errorMessages.push(errorMessage)
 				this.errors.locationError = true
 			} else {
@@ -288,17 +301,10 @@ export default {
 		}
 	},
 	mounted() {
-		this.getEventData()
 		this.eventData.creator_id = window.localStorage.getItem('token')
 	},
 	components: {
-		datetime: Datetime,
-		editEvent: EditEvent
-	},
-	watch: {
-		$route(to, from) {
-			this.eventData.id = this.$route.params.id
-		}
+		datetime: Datetime
 	}
 }
 </script>
@@ -347,6 +353,33 @@ export default {
 		width: 80%;
 		justify-content: space-around;
 		margin: 10px 0;
+
+		.dropbox {
+			border-radius: 5px;
+			background: rgba(color(green), 0.8);
+			color: black;
+			width: 500px;
+			cursor: pointer;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-content: center;
+
+			img.preview {
+				width: 100%;
+				border-radius: 5px;
+				transition: all 0.5s ease;
+			}
+
+			input {
+				display: none;
+			}
+
+			.dropbox p {
+				font-size: 1.2em;
+				text-align: center;
+			}
+		}
 
 		label {
 			padding: 0px;
