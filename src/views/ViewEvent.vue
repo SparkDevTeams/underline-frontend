@@ -1,24 +1,32 @@
 <template>
      <div id="event-component">
-          <h1>{{ title }}</h1>
-          <span class="tag" v-for="tag in tags">{{ tag }}</span>
-          <img />
-          <h2>Located at {{ location.title }}</h2>
-          <span id="max">Max capacity: {{ max_capacity }}</span>
+          <div id="private" v-if="!eventData.public">This event is private. Only those with this link can view. {{url}}</div>
+          <h1>{{ eventData.title }}</h1>
+          
+          <img v-for="id in eventData.image_ids" src="https://sparkdev-underline.herokuapp.com/events/get/ + id"/>
+          <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
+          <span id="description">{{eventData.description}}</span>
+
+          <span>Starts at {{eventData.date_time_start}}</span>
+          <span>Ends at {{eventData.date_time_end}}</span>
+          <span>Created by {{}}</span>
+          
+          <h2>Located at {{ eventData.location.title }}</h2>
+          
 
           <div id="dates">
-               <span id="date-start">{{ dateTimeStart }}</span>
-               <span id="date-end">{{ dateTimeEnd }}</span>
+               <span id="date-start">{{ eventData.dateTimeStart }}</span>
+               <span id="date-end">{{ eventData.dateTimeEnd }}</span>
           </div>
 
           <div id="links">
-               <span class="link" v-for="link in links">{{ link }}</span>
+               <a class="link" v-for="link in eventData.links" :href="link">{{ link }}</a>
           </div>
 
           <div id="map_container">
                <MapView
-                    :pinLat="location.lat"
-                    :pinLong="location.long"
+                    :pinLat="eventData.location.latitude"
+                    :pinLong="eventData.location.longitude"
                ></MapView>
           </div>
      </div>
@@ -31,19 +39,11 @@ export default {
      data() {
           return {
                id: this.$route.params.id,
-               title: "",
-               description: "",
-               dateTimeStart: "",
-               dateTimeEnd: "",
-               tags: [],
-               location: {
-                    title: "",
-                    lat: 0,
-                    long: 0,
+               url: window.location,
+               eventData: {
+                    location: {}
                },
-               max_capacity: 0,
-               links: [],
-               creator_id: "",
+               creator: {}
           };
      },
      methods: {
@@ -51,23 +51,27 @@ export default {
                axios({
                     method: "get",
                     url:
-                         "https://sparkdev-underline.herokuapp.com/get/" +
-                         this.id,
+                         "https://sparkdev-underline.herokuapp.com/events/get/" + this.id,
                })
-                    .then((response) => {
-                         this.title = response.data.title;
-                         this.description = response.data.description;
-                         this.dateTimeStart = response.data.dateTimeStart;
-                         this.dateTimeEnd = response.data.dateTimeEnd;
-                         this.tags = response.data.tags;
-                         this.location = response.data.location;
-                         this.max_capacity = response.data.max_capacity;
-                         this.links = response.data.links;
-                         this.creator_id = response.data.creator_id;
+               .then((response) => {
+                    this.eventData = response.data;
+                    this.eventData.date_time_start = (new Date(this.eventData.date_time_start)).toLocaleString();
+                    this.eventData.date_time_end = (new Date(this.eventData.date_time_end)).toLocaleString();
+                    axios({
+                         method: "get",
+                         url:
+                              "https://sparkdev-underline.herokuapp.com/users/find/",
+                         data: {
+                              user_id: this.eventData.creator_id
+                         }
                     })
-                    .catch((error) => {
-                         this.title = "This event could not be found"
-                    });
+                    .then((response) => {
+                         this.creator = response.data;
+                    })
+               })
+               .catch((error) => {
+                    this.eventData.title = "This event could not be found"
+               });
           },
      },
      mounted() {
@@ -92,9 +96,13 @@ export default {
      width: 100vw;
      @extend .flex-column;
      justify-content: flex-start;
+     padding: 15px;
 
      h1 {
           font-size: 10vh;
+          text-align: center;
+          @extend .clear;
+          padding: 0px 20px;
      }
 
      h2 {
