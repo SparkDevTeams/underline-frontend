@@ -5,7 +5,7 @@
                     <img id="icon" src="http://placehold.it/180" /> 
                </div> 
                <div id="profile-info">
-                    <h1 id="name"> First: {{firstName}} Last:{{lastName}}</h1>
+                    <h1 id="name"> first: {{firstName}} last: {{lastName}}</h1>
                     <div id="member-type">
                          <h3>Member Type</h3>
                     </div>
@@ -13,21 +13,21 @@
                <div id="social-media">
                     <form>
                          <label> Instagram </label>
-                         <input type="text" v-model="tSocials" @keypress="addSocial">
+                         <input type="text" name="socials[]" v-model="socials[0]" >
                          <label> Facebook </label>
-                         <input type="text" v-model="tSocials" @keypress="addSocial">
+                         <input type="text" name="socials[]" v-model="socials[1]" >
                          <label> Twitter </label>
-                         <input type="text" v-model="tSocials" @keypress="addSocial">
+                         <input type="text" name="socials[]" v-model="socials[2]" >
                     </form>
                </div>
           </div> 
 
-          <p>Socials: {{socials}}</p>
+          <p>Socials {{ socials }}</p>
 
           <div id="events-component">
                <h3 class="upcoming">Upcoming Events</h3>
                <ul>
-                    <li><b> Event</b></li>
+                    <li><b>Event</b></li>
                     <div class="events-description">
                          <p>Description of Event</p>
                     </div>
@@ -53,7 +53,6 @@ export default {
                firstName: "",
                lastName: "",
                email: "",
-               tSocials: '',
                socials: []
           }
      },
@@ -75,13 +74,8 @@ export default {
                })
                .catch((error) => {
                });
+          }, 
           },
-          addSocial(event){
-               if (event.key === ' ') {
-                    this.socials.push(this.tSocials)
-                    }
-                    }
-                    },
      created() {
           this.getProfile();
      },
@@ -99,10 +93,16 @@ export default {
 
 #profile-view-container{
      width: 100%;
+     height: 100%;
 
      #user-profile-bar{
-          margin-top: 50px;
-          height: 42%;
+          
+          border-top: 5px solid #03bf4d;
+          margin-top: 60px;
+          height: 44%;
+          border-bottom: 1px solid #6e6e6e;
+ 
+
           #profile-pic{
                margin-left: 90px;
                margin-right: 90px;
@@ -110,21 +110,31 @@ export default {
 
                #icon{
                     border-radius: 100%;
-                    width: 230px;
-                    height: 230px;    
+                    margin-top: 20px;
+                    //width: 230px;
+                    //height: 230px;    
                }
           }
           #profile-info{
+               margin-top: 30px;
                #member-type{
-                    color:  #03bf4d;    
+                    margin-top: -20px;
+                    color:  #03bf4d;
+                    font-size: 14px;    
                }
           }
           #social-media{
+               margin-top: 40px;
+               margin-left: 30px;
           }
      }
      #events-component{
           margin-left: 70px;
-          margin-top: 50px;
+          margin-top: 40px;
+
+          .upcoming, .past{
+               color:#03bf4d;
+          }
      }
      /*
      #member-type{
