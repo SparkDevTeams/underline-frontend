@@ -54,6 +54,7 @@ export default {
      -moz-osx-font-smoothing: grayscale;
      height: auto;
      width: 100vw;
+     max-width: 100vw;
      @extend .flex-column;
      justify-content: flex-start;
 }

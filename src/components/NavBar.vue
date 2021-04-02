@@ -1,12 +1,12 @@
 <template>
      <div id="nav-container">
-          <img id="logo" src="../assets/grn-and-wht-u-logo.png" />
+          <img id="logo" @click="redirectUnderline" src="../assets/grn-and-wht-u-logo.png" />
           <router-link to="/">Explore</router-link>
           <router-link to="About">About</router-link>
           <a href = "https://www.theunderline.org/support/" id="support-button">Support</a>
           <router-link v-if="isAdmin" id = "admin-portal" to = "admin">Admin Portal</router-link>
 		<router-link v-if="signedIn" id = "profile-page" to = "/user/ + id">Profile Page</router-link>
-          <button v-if="!signedIn" @click="login">Sign in</button>
+          <router-link v-if="!signedIn" to="/signin">Sign in</router-link>
           <button v-if="signedIn" @click="logout">Sign out</button>
 
      </div>
@@ -35,7 +35,7 @@ export default {
           },
           checkUserSignedIn() {
                const token = window.localStorage.getItem("token");
-			   this.id = jwt_decode(token).user_id;
+			this.id = jwt_decode(token).user_id;
                if (token != "") {
                     this.signedIn = true;
                     this.checkUserAdmin();
@@ -58,6 +58,10 @@ export default {
                })
                .catch((error) => {
                });
+          },
+
+          redirectUnderline() {
+               location.replace("https://www.theunderline.org/");
           }
      },
      mounted() {
@@ -83,12 +87,12 @@ export default {
      min-height: 11vh;
      max-height: 11vh;
      width: 100vw;
-     background-color: rgb(0, 0, 0);
      padding: 0px 20px;
      box-sizing: border-box;
 
      #logo {
           height: 60%;
+          cursor: pointer;
      }
 
      button,
@@ -100,12 +104,16 @@ export default {
           background-color: transparent;
           font-size: 19px;
           font-weight: 600;
-          color: gray;
+          color: color(grey);
           margin: 0px 25px;
           cursor: pointer;
 
           &:hover {
-               color: rgb(255, 255, 255);
+               color: black;
+          }
+
+          &.router-link-exact-active {
+               color: color(green);
           }
      }
 

@@ -58,7 +58,7 @@ export default {
                     this.eventData.date_time_start = (new Date(this.eventData.date_time_start)).toLocaleString();
                     this.eventData.date_time_end = (new Date(this.eventData.date_time_end)).toLocaleString();
                     axios({
-                         method: "get",
+                         method: "post",
                          url:
                               "https://sparkdev-underline.herokuapp.com/users/find/",
                          data: {

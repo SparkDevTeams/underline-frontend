@@ -1,6 +1,6 @@
 <template>
 	<div id="event-browser-component">
-		<h3>Explore more free activities and events in your community</h3>
+		<h3>{{title}}</h3>
 
 		<div id="event-browser-container">
 			<EventDisplay
@@ -28,9 +28,12 @@ export default {
 					img: '',
 					id: 'event ID'
 				}
-			]
+			],
 		}
 	},
+	props: [
+		"title"
+	],
 	methods: {},
 	created() {},
 	watch: {},

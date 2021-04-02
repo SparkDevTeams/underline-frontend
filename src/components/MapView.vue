@@ -1,6 +1,6 @@
 <template>
   <div id="map-container">
-    <MapCompanion v-if="companion"></MapCompanion>
+    <h1>Explore today's events</h1>
     <div id="underline-map"></div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
     };
   },
   props: [
-    "pinLat", "pinLong", "companion"
+    "pinLat", "pinLong"
   ],
   methods: {
     initializeMap() {
@@ -30,7 +30,7 @@ export default {
       } else {
         this.map = new L.map("underline-map").setView([25.7644, -80.1935], 17);
       }
-      
+      this.map.attributionControl.setPrefix(false)
       L.tileLayer(
         "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
         {
@@ -68,14 +68,27 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 #map-container {
-  height: max(64vh,500px);
-  width: 96vw;
+  height: 60vh;
+  width: max(54vw,380px);
+  min-width: 300px;
+  h1 {
+    @extend .clear;
+    font-size: max(5vmin,35px);
+    margin-bottom: 1vh;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+#underline-map {
+  height: 52.8vh;
+  margin-top: 0px;
+  border-radius: 15px;
   @extend .shadow;
 }
-#underline-map {
-  height: 100%;
-  margin-top: 0px;
-  border-radius: 15px 15px 0 0;
-  margin:2vw 0;
+
+
+@media screen and (max-width:1000px) {
+  #map-container { flex-basis: 90%  }
 }
 </style>
