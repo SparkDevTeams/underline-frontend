@@ -20,9 +20,8 @@
 				v-model="event.eventLocation"
 				@click="clearEventLocationText"
 			/>
-			<button @click="toggleShowError">
-				Create Event
-			</button>
+
+			<button @click="onSubmit">Create Event</button>
 		</div>
 		<div id="smart-event-error" v-if="showErrorMsg">
 			<p>{{ errorMsg }}</p>
@@ -43,15 +42,18 @@ export default {
 				eventLocation: 'Brickell, FL'
 			},
 			user: {
-				isAdmin: false
+				isAdmin: true
 			},
 			showErrorMsg: false,
 			errorMsg: 'You must be an admin to create an event'
 		}
 	},
 	methods: {
-		toggleShowError() {
+		onSubmit() {
 			if (this.user.isAdmin) {
+				this.$router.push({
+					path: '/event/create'
+				})
 			} else {
 				this.showErrorMsg = true
 			}
