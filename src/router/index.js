@@ -8,6 +8,7 @@ import Profile from '../views/Profile.vue'
 import Admin from '../views/Admin.vue'
 import ViewEvent from '../views/ViewEvent.vue'
 import CreateEvent from '../views/CreateEvent'
+import Admin from '../views/Admin.vue'
 
 Vue.use(VueRouter)
 
