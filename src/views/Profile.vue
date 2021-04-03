@@ -2,10 +2,8 @@
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
                <div id="profile-pic">
-                    <img :src="imageUrl" height="150">
-                    <input 
-                    type="file" 
-                    @change="onFilePicked">
+                    <!-- <img :src="imageUrl" height="150"> -->
+                    <input type="file" @change="onFilePicked">
                     <button @click="uploadFile">Upload</button> 
                </div> 
                <div id="profile-info">
@@ -22,7 +20,6 @@
                          <input type="text" name="socials[]" v-model="socials[1]" >
                          <label> Twitter </label>
                          <input type="text" name="socials[]" v-model="socials[2]" >
-
                     </form>
                </div>
           </div> 
@@ -58,7 +55,7 @@ export default {
                lastName: "",
                email: "",
                socials: [],
-               selectedFile: ""
+               image_id: ""
           }
      },
      methods: {
@@ -80,28 +77,22 @@ export default {
                .catch((error) => {
                });
           },
-          onFilePicked(event) { 
-               this.selectedFile = event.target.files[0]
-          }, 
+          onFilePicked(event){
+               this.selectedFile = event.target.files[0];
+          },
           uploadFile() {
-
                var formData = {
-                    image_id : this.selectedFile
+                    image_id: this.image_id
                };
 
                axios({
-                         method: "post",
-                         url: "https://sparkdev-underline.herokuapp.com/image/upload",
-                         data: formData,
-                    })
-                    .then((response) => {
-                         // route to user's profile
-                         router.push({ path: '/image/', params: { id: 'response.data.image_id' } });
-                    })
-                    .catch((error) => {
-                         // display error message
-                         this.showErrorMessage = true;
-                    });
+                    method: 'post',
+                    url: 'ttps://sparkdev-underline.herokuapp.com/image/upload',
+                    data: formData
+               })
+               .then((response) => {
+                    console.log(response);
+               })
           },
           },
      created() {
@@ -148,7 +139,7 @@ export default {
                #member-type{
                     margin-top: -20px;
                     color:  #03bf4d;
-                    font-size: 14px;    
+                    font-size: 13px;    
                }
           }
           #social-media{
