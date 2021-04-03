@@ -1,11 +1,66 @@
 <template>
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
-               <div id="profile-pic">
-                    <!-- <img :src="imageUrl" height="150"> -->
-                    <input type="file" @change="onFilePicked">
-                    <button @click="uploadFile">Upload</button> 
-               </div> 
+               <div class="image">
+			<div
+				v-if="imageURL"
+				class="image__container"
+				@click="$refs.imgUpload.click()"
+			>
+				<img :src="imageURL" class="image__preview" />
+				<input
+					type="file"
+					ref="imgUpload"
+					class="image__input"
+                         style="display: none"
+					@change="uploadImage"
+					multiple
+				/>
+               
+				<div class="image__overlay">
+					<div class="image__title">Browse</div>
+				</div> 
+			</div>
+               
+			<div v-if="!imageURL" class="image__container-before">
+				<button @click="$refs.imgUpload.click()" class="image__button-before">
+					Upload Image
+				</button>
+				<input
+					type="file"
+					ref="imgUpload"
+					class="image__input-before"
+					@change="uploadImage"
+					multiple
+				/>
+			</div> 
+		</div>
+          <div id="upload-button">
+               <button @click="onUpload" id="upload-btn">Upload</button>
+          </div>
+               <!--<div id="profile-pic">
+                    <div v-if="imageURL" class="image__container" @click="$refs.imgUpload.click()" >
+                         <input type="file" @change="uploadImage" />
+                              
+                              <div class="image__overlay">
+					          <div class="image__title">Browse...</div>
+                              </div>
+                    </div>
+                    
+                    <div v-if="!imageURL" class="image__container-before">
+				     <button @click="$refs.imgUpload.click()" class="image__button-before">
+					     Upload Image
+				     </button>
+				     <input
+                              type="file"
+                              ref="imgUpload"
+                              class="image__input-before"
+                              @change="uploadImage"
+                              multiple
+				     />
+			     </div>
+
+               </div> -->
                <div id="profile-info">
                     <h1 id="name"> first: {{firstName}} last: {{lastName}}</h1>
                     <div id="member-type">
@@ -55,7 +110,11 @@ export default {
                lastName: "",
                email: "",
                socials: [],
-               image_id: ""
+               imageData: null,
+			imageURL: '',
+               eventData:{
+                    image_ids: []
+               }
           }
      },
      methods: {
@@ -77,23 +136,12 @@ export default {
                .catch((error) => {
                });
           },
-          onFilePicked(event){
-               this.selectedFile = event.target.files[0];
-          },
-          uploadFile() {
-               var formData = {
-                    image_id: this.image_id
-               };
-
-               axios({
-                    method: 'post',
-                    url: 'ttps://sparkdev-underline.herokuapp.com/image/upload',
-                    data: formData
-               })
-               .then((response) => {
-                    console.log(response);
-               })
-          },
+		uploadImage(e) {
+			this.imageData = null
+			this.imageURL = ''
+			this.imageData = e.target.files
+			this.imageURL = URL.createObjectURL(e.target.files[0])
+		},
           },
      created() {
           this.getProfile();
