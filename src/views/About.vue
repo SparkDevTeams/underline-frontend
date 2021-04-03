@@ -38,7 +38,7 @@ export default {
 @import "../assets/global.scss";
 
 h1{
-     color: green;
+     color: color(green);
 }
 
 p{

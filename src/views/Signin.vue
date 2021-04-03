@@ -32,7 +32,7 @@ export default {
 @import "../assets/global.scss";
 #signin-component {
      height: 89vh;
-     width: 100vw;
+     width: 100%;
      @extend .flex-row;
      flex-wrap: wrap;
 }

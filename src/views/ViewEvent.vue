@@ -3,7 +3,7 @@
           <div id="private" v-if="!eventData.public">This event is private. Only those with this link can view. {{url}}</div>
           <h1>{{ eventData.title }}</h1>
           
-          <img v-for="id in eventData.image_ids" src="https://sparkdev-underline.herokuapp.com/events/get/ + id"/>
+          <img v-for="id in eventData.image_ids" :src="imageurl + id"/>
           <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
           <span id="description">{{eventData.description}}</span>
 
@@ -40,6 +40,7 @@ export default {
           return {
                id: this.$route.params.id,
                url: window.location,
+               imageurl: "https://sparkdev-underline.herokuapp.com/events/get/",
                eventData: {
                     location: {}
                },
@@ -93,10 +94,11 @@ export default {
 @import "../assets/global.scss";
 #event-component {
      height: 89vh;
-     width: 100vw;
+     width: 100%;
      @extend .flex-column;
      justify-content: flex-start;
      padding: 15px;
+     
 
      h1 {
           font-size: 10vh;

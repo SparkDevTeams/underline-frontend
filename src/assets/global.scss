@@ -1,6 +1,6 @@
 $colors: (
 	green: #03bf4d,
-	grey: #6e6e6e
+	grey: #535353
 );
 
 $font: 'LLCircularWeb-Black';
@@ -67,9 +67,9 @@ body {
 
      &:hover {
           transform: scale(1.1);
-     transition: background 0.07s linear;
-     transition: transform 0.07s;
-     transition-timing-function: ease-out;
+		transition: background 0.07s linear;
+		transition: transform 0.07s;
+		transition-timing-function: ease-out;
      }
 }
 

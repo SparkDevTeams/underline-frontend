@@ -217,7 +217,7 @@ export default {
                if (this.validate()) {
                     await axios({
                          method: "post",
-                         url: "/users/register",
+                         url: "https://sparkdev-underline.herokuapp.com/users/register",
                          data: userData,
                     })
                          .then((response) => {

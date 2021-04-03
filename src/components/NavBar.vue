@@ -35,8 +35,8 @@ export default {
           },
           checkUserSignedIn() {
                const token = window.localStorage.getItem("token");
-			this.id = jwt_decode(token).user_id;
                if (token != "") {
+                    this.id = jwt_decode(token).user_id;
                     this.signedIn = true;
                     this.checkUserAdmin();
                }
@@ -86,7 +86,8 @@ export default {
      height: 11vh;
      min-height: 11vh;
      max-height: 11vh;
-     width: 100vw;
+     width: 100%;
+     max-width: 100%;
      padding: 0px 20px;
      box-sizing: border-box;
 
