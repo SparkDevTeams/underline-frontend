@@ -2,7 +2,11 @@
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
                <div id="profile-pic">
-                    <img id="icon" src="http://placehold.it/180" /> 
+                    <img :src="imageUrl" height="150">
+                    <input 
+                    type="file" 
+                    @change="onFilePicked">
+                    <button @click="uploadFile">Upload</button> 
                </div> 
                <div id="profile-info">
                     <h1 id="name"> first: {{firstName}} last: {{lastName}}</h1>
@@ -18,11 +22,11 @@
                          <input type="text" name="socials[]" v-model="socials[1]" >
                          <label> Twitter </label>
                          <input type="text" name="socials[]" v-model="socials[2]" >
+
                     </form>
                </div>
           </div> 
 
-          <p>Socials {{ socials }}</p>
 
           <div id="events-component">
                <h3 class="upcoming">Upcoming Events</h3>
@@ -53,7 +57,8 @@ export default {
                firstName: "",
                lastName: "",
                email: "",
-               socials: []
+               socials: [],
+               selectedFile: ""
           }
      },
      methods: {
@@ -74,7 +79,30 @@ export default {
                })
                .catch((error) => {
                });
+          },
+          onFilePicked(event) { 
+               this.selectedFile = event.target.files[0]
           }, 
+          uploadFile() {
+
+               var formData = {
+                    image_id : this.selectedFile
+               };
+
+               axios({
+                         method: "post",
+                         url: "https://sparkdev-underline.herokuapp.com/image/upload",
+                         data: formData,
+                    })
+                    .then((response) => {
+                         // route to user's profile
+                         router.push({ path: '/image/', params: { id: 'response.data.image_id' } });
+                    })
+                    .catch((error) => {
+                         // display error message
+                         this.showErrorMessage = true;
+                    });
+          },
           },
      created() {
           this.getProfile();
@@ -97,8 +125,7 @@ export default {
 
      #user-profile-bar{
           
-          border-top: 5px solid #03bf4d;
-          margin-top: 60px;
+          border-top: 12px solid #03bf4d;
           height: 44%;
           border-bottom: 1px solid #6e6e6e;
  
@@ -106,6 +133,7 @@ export default {
           #profile-pic{
                margin-left: 90px;
                margin-right: 90px;
+               margin-top: 20px;
                float: left;
 
                #icon{

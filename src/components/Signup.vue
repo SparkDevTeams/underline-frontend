@@ -217,9 +217,7 @@ export default {
 				})
 					.then(response => {
 						console.log(response)
-						router.push({
-							path: '/user/',
-							params: { id: response.data.user_id }
+						router.push({ path: '/user/', params: { id: response.data.user_id }
 						})
 					})
 					.catch(e => {
