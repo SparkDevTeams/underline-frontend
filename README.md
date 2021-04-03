@@ -1,6 +1,6 @@
 # The Underline Front End
 
-*** [Backend Repo](https://github.com/SparkDevTeams/underline-backend)
+[Backend Repo](https://github.com/SparkDevTeams/underline-backend)
 
 ## Project setup
 
