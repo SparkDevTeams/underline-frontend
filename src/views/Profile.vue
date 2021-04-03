@@ -2,12 +2,12 @@
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
                <div class="image">
-			<div
+                    <div
 				v-if="imageURL"
 				class="image__container"
 				@click="$refs.imgUpload.click()"
-			>
-				<img :src="imageURL" class="image__preview" />
+                    >
+                    <img :src="imageURL" class="image__preview" />
 				<input
 					type="file"
 					ref="imgUpload"
@@ -16,51 +16,22 @@
 					@change="uploadImage"
 					multiple
 				/>
-               
-				<div class="image__overlay">
-					<div class="image__title">Browse</div>
-				</div> 
-			</div>
-               
-			<div v-if="!imageURL" class="image__container-before">
-				<button @click="$refs.imgUpload.click()" class="image__button-before">
-					Upload Image
-				</button>
-				<input
-					type="file"
-					ref="imgUpload"
-					class="image__input-before"
-					@change="uploadImage"
-					multiple
-				/>
-			</div> 
-		</div>
-          <div id="upload-button">
-               <button @click="onUpload" id="upload-btn">Upload</button>
-          </div>
-               <!--<div id="profile-pic">
-                    <div v-if="imageURL" class="image__container" @click="$refs.imgUpload.click()" >
-                         <input type="file" @change="uploadImage" />
-                              
-                              <div class="image__overlay">
-					          <div class="image__title">Browse...</div>
-                              </div>
-                    </div>
-                    
+                    </div> 
                     <div v-if="!imageURL" class="image__container-before">
-				     <button @click="$refs.imgUpload.click()" class="image__button-before">
-					     Upload Image
-				     </button>
-				     <input
+                         <button @click="$refs.imgUpload.click()" class="image__button-before">
+                              Select Image
+                         </button>
+                         <input
                               type="file"
                               ref="imgUpload"
                               class="image__input-before"
                               @change="uploadImage"
                               multiple
-				     />
+                         />
 			     </div>
+		     </div>
+		     
 
-               </div> -->
                <div id="profile-info">
                     <h1 id="name"> first: {{firstName}} last: {{lastName}}</h1>
                     <div id="member-type">
@@ -77,6 +48,10 @@
                          <input type="text" name="socials[]" v-model="socials[2]" >
                     </form>
                </div>
+
+               <div id="submitButton">
+			     <button @click="onSubmit" id="submit-btn">Submit All</button>
+		     </div>
           </div> 
 
 
@@ -113,7 +88,8 @@ export default {
                imageData: null,
 			imageURL: '',
                eventData:{
-                    image_ids: []
+                    links: [],
+				image_ids: []
                }
           }
      },
@@ -142,6 +118,25 @@ export default {
 			this.imageData = e.target.files
 			this.imageURL = URL.createObjectURL(e.target.files[0])
 		},
+          onSubmit(){
+               let fd = new FormData()
+			fd.append('name', this.imageData[i].name)
+			fd.append('file', this.imageData[i])
+			axios({
+                    method: 'post',
+                    url: '/images/upload',
+                    data: fd,
+                    headers: {
+                         token: this.token
+                         }
+                         })
+                         .then(response => {
+                              this.eventData.image_ids.push(response.data.image_id)
+                              })
+                              .catch(error => {
+                                   console.log(error)
+                                   })
+          },
           },
      created() {
           this.getProfile();
@@ -167,21 +162,37 @@ export default {
           border-top: 12px solid #03bf4d;
           height: 44%;
           border-bottom: 1px solid #6e6e6e;
- 
 
-          #profile-pic{
-               margin-left: 90px;
-               margin-right: 90px;
+          .image{
+               position: relative;
+			border: 1px solid rgb(255, 255, 255);
                margin-top: 20px;
+               margin-left: 10px;
+			border-radius: 5.5px;
+			width: 400px;
+               height: 200px;
                float: left;
-
-               #icon{
-                    border-radius: 100%;
-                    margin-top: 20px;
-                    //width: 230px;
-                    //height: 230px;    
-               }
           }
+ 
+          .image__container {
+			position: relative;
+			border: 1px solid black;
+               margin-left: 50px;
+			border-radius: 5.5px;
+			cursor: pointer;
+			width: 300px;
+
+			.image__input {
+				display: none;
+			}
+
+			.image__preview {
+				display: block;
+				width: 100%;
+				border-radius: 5px;
+			}
+          }
+
           #profile-info{
                margin-top: 30px;
                #member-type{
@@ -194,6 +205,10 @@ export default {
                margin-top: 40px;
                margin-left: 30px;
           }
+          #submitButton{
+               text-align: right;
+               margin-right: 30px;
+          }
      }
      #events-component{
           margin-left: 70px;
@@ -203,49 +218,5 @@ export default {
                color:#03bf4d;
           }
      }
-     /*
-     #member-type{
-          color:  #03bf4d;
-     }
-     #social-media{
-          position: absolute;
-          top: 150px;
-     }
-} 
-
-#events-component{
-     position: absolute;
-     top: 320px;
-     width: 95%;
-     height: 300px;
-     padding: 2%;
-     box-sizing: border-box;
-     
-
-     background: #fcfafa;
-     border-radius: 10px;
-     @extend .shadow;
-     @extend .flex-column; 
-
-     .upcoming{
-          position: absolute;
-          top: 0px;
-          left: 30px;
-     }
-     .past{
-          position: absolute;
-          top: 105px;
-          left: 30px;
-     }
-
-     ul{
-          list-style: none;
-          width: 100%;
-          clear:both;
-          
-     }
-     h3{
-          color: #03bf4d;
-     }*/
      }
 </style>
