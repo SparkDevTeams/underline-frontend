@@ -1,7 +1,7 @@
 <template>
   <div id="signin-component">
-       <Login></Login>
-       <Signup></Signup>
+       <Login v-on:signedIn="$emit('signedIn')"></Login>
+       <Signup v-on:signedIn="$emit('signedIn')"></Signup>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 @import "../assets/global.scss";
 #signin-component {
      height: 89vh;
-     width: 100vw;
+     width: 100%;
      @extend .flex-row;
      flex-wrap: wrap;
 }

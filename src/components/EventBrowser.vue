@@ -1,30 +1,105 @@
 <template>
     <div id="event-browser-component">
-        <h3>Explore more free activities and events in your community</h3>
-
+        <h3>{{ title }}</h3>
+        <div id="tags-container" v-if="enableTags">
+            <div v-for="tag in tags" @click="tag.active=!tag.active" :class="{active:tag.active}" :key="tag.id">{{tag.title}}</div>
+        </div>
         <div id="event-browser-container">
-          <EventDisplay v-for="event in eventList" :title="event.title" :eventImage="event.img" :eventDescription = "event.description" :eventID = "event.id"></EventDisplay>
+            <div id="left-arrow" @click="displayNewEvents(false)"></div>
+            <EventDisplay
+                v-for="event in events"
+                :title="event.title"
+                :eventImage="event.img"
+                :tags="event.tags"
+                :id="event.id"
+                :key="event.id"
+            ></EventDisplay>
+            <div id="right-arrow" @click="displayNewEvents(true)"></div>
         </div>
     </div>
-        
 </template>
 
 <script>
-import EventDisplay from './EventDisplay.vue';
+import EventDisplay from "./EventDisplay.vue";
+import axios from "axios";
 export default {
-  name: "EventBrowser",
-  data() {
-    return {
-        eventList: [{title:"Title 1", description: "description of event", img: "", id:"event ID"}],
-        
-    };
-  },
-  methods: {},
-  created() {},
-  watch: {},
-  components: {
-      EventDisplay
-  },
+    name: "EventBrowser",
+    data() {
+        return {
+            events: [],
+            eventsDiplayed: [],
+            numberOfEvents: 0,
+            tags: [
+                    {title: "Sports", id: "sport_event", active: false},
+                    {title: "Food", id: "food_event", active: false},
+                    {title: "Art", id: "art_event", active: false},
+                    {title: "Music", id: "music_event", active: false},
+                    {title: "Meeting", id: "meeting_event", active: false},
+                    {title: "Class", id: "class_event", active: false},
+                    {title: "Paid", id: "paid_event", active: false},
+            ],
+            index: 0
+        };
+    },
+    props: ["title", "options", "enableTags"],
+    methods: {
+        computeNumberOfEvents() {
+            let containerWidth = document.getElementById(
+                "event-browser-container"
+            ).offsetWidth;
+            this.numberOfEvents = 4;
+        },
+        getEvents() {
+            this.options.limit = this.numberOfEvents;
+            this.options.index = this.index;
+            if(this.enableTags){
+                this.options.event_tag_filter = []
+                for (const tag of this.tags) {
+                    if(tag.active==true) {
+                        console.log(tag)
+                        this.options.event_tag_filter.push(tag.id)
+                    }
+                }
+            }
+            
+            axios({
+                method: "post",
+                url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
+                data: this.options,
+            })
+                .then((response) => {
+                    this.events = response.data.events;
+                })
+                .catch((e) => {});
+        },
+        displayNewEvents(directionIsRight) {
+            if (directionIsRight) {
+                this.index++;
+                this.getEvents();
+            } else {
+                this.index--;
+                if(this.index<0){
+                    this.index = 0
+                }
+                this.getEvents();
+            }
+        },
+    },
+    mounted() {
+        this.computeNumberOfEvents();
+        this.getEvents();
+    },
+    watch: {
+        tags: {
+            handler(){
+                this.getEvents();
+            },
+            deep: true
+        }
+    },
+    components: {
+        EventDisplay,
+    },
 };
 </script>
 
@@ -33,25 +108,73 @@ export default {
 @import "../assets/fonts.css";
 
 #event-browser-component {
-  font-family: $font;
-  @extend .clear;
-  height: 48vh;
-  width: 100%;
-  margin-top: 4vw;
-  box-sizing: border-box;
-  @extend .flex-column;
-
-  h3 {
-    font-size: 30px;
+    font-family: $font;
     @extend .clear;
-    text-align: center;
-    margin-bottom: 1vw;
-  }
-
-  #event-browser-container{
-    @extend .flex-row;
-    justify-content: space-around;
     width: 100%;
-  }
+    box-sizing: border-box;
+    @extend .flex-column;
+    flex-wrap: wrap;
+
+    h3 {
+        font-size: max(3vmin,35px);
+        @extend .clear;
+        text-align: center;
+        margin-bottom: 1vw;
+        max-width: 90vw;
+    }
+
+    #tags-container {
+        @extend .flex-row;
+        flex-wrap: wrap;
+        max-width: 90vw;
+        
+
+        > div {
+            user-select: none;
+            margin: 10px;
+            cursor: pointer;
+            background-color: color(grey);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        .active {
+            background-color: color(green);
+            color: white;
+        }
+    }
+
+    #event-browser-container {
+        @extend .flex-row;
+        justify-content: space-around;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+
+        #left-arrow {
+            height: 30px;
+            width: 30px;
+            border-radius: 30px 30px 30px 13px;
+            rotate: 45deg;
+            background: color(grey);
+            cursor: pointer;
+            @extend .button;
+            &:hover {
+                background: black;
+                transform: color;
+                transform: scale(1.2);
+                transition: background 0.04s linear;
+                transition: transform 0.04s;
+                transition-timing-function: ease-in-out;
+            }
+        }
+
+        #right-arrow {
+            @extend #left-arrow;
+            rotate: 225deg;
+        }
+    }
 }
 </style>

@@ -1,21 +1,41 @@
 <template>
 	<div id="app">
-		<NavBar></NavBar>
-		<router-view></router-view>
+		<NavBar :loggedIn="signedIn"></NavBar>
+		<router-view v-on:signedIn="signedIn = true"></router-view>
 	</div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
+import axios from 'axios'
 export default {
+	data() {
+		return {
+			signedIn: false
+		}
+	},
 	components: {
 		NavBar
 	},
 	created() {
 		if (window.localStorage.getItem('token')) {
-			//if localstorage variable exists, make request to validate token end point
+			let token = window.localStorage.getItem('token')
+			if (token != '') {
+				axios({
+					method: 'get',
+					url: '/auth/validate',
+					headers: {
+						token: token
+					}
+				})
+					.then(response => {
+						//console.log(window.localStorage.getItem("token"))
+					})
+					.catch(error => {
+						window.localStorage.setItem('token', '')
+					})
+			}
 		} else {
-			//if doesnt exist make the the token variable empty
 			window.localStorage.setItem('token', '')
 		}
 	}
@@ -27,13 +47,14 @@ export default {
 @import './assets/fonts.css';
 
 #app {
-	@extend .clear;
-	font-family: $font;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	height: 100vh;
-	width: 100vw;
-	@extend .flex-column;
-	justify-content: flex-start;
+     @extend .clear;
+     font-family: $font;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     height: auto;
+     width: 100%;
+     max-width: 100%;
+     @extend .flex-column;
+     justify-content: flex-start;
 }
 </style>
