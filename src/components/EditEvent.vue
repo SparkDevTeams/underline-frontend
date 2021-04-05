@@ -309,7 +309,6 @@ export default {
 			if (!this.hasErrors) {
 				for (const tag of this.tags) {
                     if(tag.active==true) {
-                        console.log(tag)
                         this.eventData.tags.push(tag.id)
                     }
                 }

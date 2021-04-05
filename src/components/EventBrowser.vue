@@ -11,8 +11,8 @@
                 :title="event.title"
                 :eventImage="event.img"
                 :tags="event.tags"
-                :id="event.id"
-                :key="event.id"
+                :id="event._id"
+                :key="event._id"
             ></EventDisplay>
             <div id="right-arrow" @click="displayNewEvents(true)"></div>
         </div>
@@ -47,7 +47,8 @@ export default {
             let containerWidth = document.getElementById(
                 "event-browser-container"
             ).offsetWidth;
-            this.numberOfEvents = 4;
+            console.log(containerWidth)
+            this.numberOfEvents = containerWidth / 240;
         },
         getEvents() {
             this.options.limit = this.numberOfEvents;
@@ -56,7 +57,6 @@ export default {
                 this.options.event_tag_filter = []
                 for (const tag of this.tags) {
                     if(tag.active==true) {
-                        console.log(tag)
                         this.options.event_tag_filter.push(tag.id)
                     }
                 }
