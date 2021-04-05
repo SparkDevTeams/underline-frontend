@@ -33,10 +33,8 @@
 		     
 
                <div id="profile-info">
-                    <h1 id="name"> first:  last: </h1>
-                    <div id="member-type">
-                         <h3>Member Type</h3>
-                    </div>
+                    <img src="https://sparkdev-underline.herokuapp.com/ user.image_id" alt="">
+                    <h1 id="name"> {{user.first_name + " " + user.last_name}}</h1>
                </div>
                <div v-if="ownerOnPage" id="social-media">
                     <form>
@@ -78,6 +76,7 @@
 
 <script>
 import axios from "axios";
+import jwt_decode from 'jwt-decode'
 export default {
      data () {
           return {
@@ -101,7 +100,7 @@ export default {
                     data: formData,
                })
                .then((response) => {
-                    this.profile=response.data;
+                    this.user=response.data;
                })
                .catch((error) => {
                });
