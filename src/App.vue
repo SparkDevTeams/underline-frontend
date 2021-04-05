@@ -81,11 +81,12 @@ export default {
 		} else {
 			window.localStorage.setItem('token', '')
 		}
-		//checks window size
+		//checks window size on created
 		window.addEventListener('resize', this.handleResize)
 		this.handleResize()
 	},
 	destroyed() {
+		//Cleanup
 		window.removeEventListener('resize', this.handleResize)
 	},
 	methods: {
