@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="about-component">
        <h1>About Us</h1>
           <p>The Underline is a 10-mile linear park, urban trail, and public art destination below 
             Miami's Metrorail. Our mission is to fully transform the underutilized <br> land below
@@ -37,8 +37,13 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 
+#about-component {
+     padding: 20px;
+}
+
 h1{
      color: color(green);
+     @extend .clear;
 }
 
 p{

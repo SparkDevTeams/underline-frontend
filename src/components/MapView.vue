@@ -8,15 +8,20 @@
 <script>
 import leaflet from "leaflet";
 import router from "../router/";
+import axios from 'axios';
 import MapCompanion from "./MapCompanion.vue";
 export default {
     data() {
         return {
             map: null,
             events: [],
+            pins: [],
         };
     },
-    props: ["pinLat", "pinLong"],
+    props: {
+        pinLat: null,
+        pinLong: null,
+    },
     methods: {
         initializeMap() {
             var northEastBounds = L.latLng(24, -82);
@@ -33,7 +38,7 @@ export default {
                 );
             } else {
                 this.map = new L.map("underline-map").setView(
-                    [25.7644, -80.1935],
+                    [25.764368, -80.195448],
                     17
                 );
             }
@@ -61,9 +66,35 @@ export default {
                 [25.753, -80.18],
             ]);
         },
+        getEvents() {
+            axios({
+                method: "post",
+                url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
+                data: {},
+            })
+                .then((response) => {
+                    this.events = response.data.events;
+                    this.renderEvents();
+                })
+                .catch((e) => {});
+        },
+        renderEvents(){
+            this.pins = [];
+            for(var event of this.events) {
+                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event._id);
+            }
+        },
+        createPin(latitude,longitude,location,title,eventID) {
+            var marker = L.marker([latitude, longitude]).addTo(this.map);
+            marker.bindPopup("<b>" + title + "</b><br>Located at " + location + "<br><br><a href='#/event/" + eventID + "'>Click here for event details</a><br>");
+            this.pins.push(marker);
+        }
     },
     mounted() {
         this.initializeMap();
+        if(this.pinLat==null){
+            this.getEvents();
+        }
     },
     watch: {},
     components: {

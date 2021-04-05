@@ -1,5 +1,5 @@
 <template>
-    <div id="event-display-container">
+    <div id="event-display-container" @click="route">
         <img :src="eventImage" />
         <h1>{{ title }}</h1>
         <div id="tags-container">
@@ -22,7 +22,13 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    methods: {
+        route(){
+            this.$router.push({
+                path:"/event/" + this.id
+            })
+        }
+    },
     created() {},
     watch: {},
     components: {},
@@ -46,6 +52,16 @@ export default {
     @extend .shadow;
     @extend .flex-column;
     justify-content: flex-start;
+    transform: (scale(1.0));
+    transition: transform 0.07s;
+    transition-timing-function: ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: (scale(1.1));
+        transition: transform 0.07s;
+        transition-timing-function: ease-out;
+    }
 
     h1 {
         color: black;

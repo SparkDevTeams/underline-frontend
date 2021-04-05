@@ -4,12 +4,15 @@
           <h1>{{ eventData.title }}</h1>
           
           <img v-for="id in eventData.image_ids" :src="imageurl + id"/>
-          <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
+          <div id="tags">
+               <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
+          </div>
+          
           <span id="description">{{eventData.description}}</span>
 
           <span>Starts at {{eventData.date_time_start}}</span>
           <span>Ends at {{eventData.date_time_end}}</span>
-          <span>Created by {{}}</span>
+          <span>Created by <router-link :to="/user/ + id">user</router-link></span>
           
           <h2>Located at {{ eventData.location.title }}</h2>
           
@@ -25,6 +28,7 @@
 
           <div id="map_container">
                <MapView
+                    v-if="eventData.location.latitude"
                     :pinLat="eventData.location.latitude"
                     :pinLong="eventData.location.longitude"
                ></MapView>
@@ -107,18 +111,26 @@ export default {
           padding: 0px 20px;
      }
 
-     h2 {
-
+     #description {
+          text-align: center;
      }
 
-     .tag {
-          border-radius: 10px;
-          height: 6vh;
-          color: white;
-          background-color: color(green);
-          padding: 5px;
-          box-sizing:border-box;
+     #tags {
+          @extend .flex-row;
+          width: 80%;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          .tag {
+               user-select: none;
+               margin: 10px;
+               background-color: color(green);
+               color: white;
+               padding: 5px 15px;
+               border-radius: 30px;
+               font-size: 12px;
+          }
      }
+     
 
      img {
           height: 30vh;
@@ -132,7 +144,9 @@ export default {
           }
      }
      #links {
-          span {
+          @extend .flex-column;
+          a {
+               text-align: center;
           }
      }
      #map_container {
