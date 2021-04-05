@@ -1,7 +1,7 @@
 <template>
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
-               <div class="image">
+               <div v-if="ownerOnPage" class="image">
                     <div
 				v-if="imageURL"
 				class="image__container"
@@ -33,12 +33,12 @@
 		     
 
                <div id="profile-info">
-                    <h1 id="name"> first: {{firstName}} last: {{lastName}}</h1>
+                    <h1 id="name"> first:  last: </h1>
                     <div id="member-type">
                          <h3>Member Type</h3>
                     </div>
                </div>
-               <div id="social-media">
+               <div v-if="ownerOnPage" id="social-media">
                     <form>
                          <label> Instagram </label>
                          <input type="text" name="socials[]" v-model="socials[0]" >
@@ -47,11 +47,12 @@
                          <label> Twitter </label>
                          <input type="text" name="socials[]" v-model="socials[2]" >
                     </form>
+                    <div id="submitButton">
+			          <button @click="onSubmit" id="submit-btn">Submit All</button>
+		           </div>
                </div>
 
-               <div id="submitButton">
-			     <button @click="onSubmit" id="submit-btn">Submit All</button>
-		     </div>
+               
           </div> 
 
 
@@ -81,16 +82,11 @@ export default {
      data () {
           return {
                id: this.$route.params.id,
-               firstName: "",
-               lastName: "",
-               email: "",
+               ownerOnPage: false,
+               user: {},
                socials: [],
                imageData: null,
 			imageURL: '',
-               eventData:{
-                    links: [],
-				image_ids: []
-               }
           }
      },
      methods: {
@@ -105,9 +101,7 @@ export default {
                     data: formData,
                })
                .then((response) => {
-                    this.firstName=response.data.first_name;
-                    this.lastName=response.data.last_name;
-                    this.email=response.data.email;
+                    this.profile=response.data;
                })
                .catch((error) => {
                });
@@ -118,6 +112,15 @@ export default {
 			this.imageData = e.target.files
 			this.imageURL = URL.createObjectURL(e.target.files[0])
 		},
+          checkToken(){
+			let token = window.localStorage.getItem('token')
+			if (token != '') {
+				let userID = jwt_decode(token).user_id
+                    if (userID == this.id){
+                         this.ownerOnPage = true;
+                    }
+			}
+          },
           onSubmit(){
                let fd = new FormData()
 			fd.append('name', this.imageData[i].name)
@@ -140,6 +143,7 @@ export default {
           },
      created() {
           this.getProfile();
+          this.checkToken();
      },
      watch: {
           $route(to, from) {
