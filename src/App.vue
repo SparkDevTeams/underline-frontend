@@ -25,12 +25,11 @@
 					to="/user/ + id"
 					>Profile Page</router-link
 				>
-				<router-link class="menu-item" v-if="!signedIn" to="/signin"
-					>Sign in</router-link
-				>
-				<router-link class="menu-item" to="/" v-if="signedIn" @click="logout"
-					>Sign out</router-link
-				>
+
+				<button id="signout-btn" v-if="!signedIn">Sign in</button>
+				<button id="signin-btn" v-if="signedIn" @click="logout">
+					Sign out
+				</button>
 			</Slide>
 		</div>
 
@@ -167,6 +166,33 @@ export default {
 		#logo {
 			height: 100px;
 		}
+
+		button {
+			@extend .button;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100px;
+			height: 40px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-left: 10%;
+			color: white;
+			font-size: 18px;
+			letter-spacing: 2px;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		button#signin-btn {
+			background: rgba(255, 0, 0, 0.8);
+		}
+
+		button#signout-btn {
+			background: color(green);
+		}
+
 		.menu-item {
 			color: white;
 			text-decoration: none;
