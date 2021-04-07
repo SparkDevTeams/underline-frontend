@@ -47,7 +47,6 @@ export default {
             let containerWidth = document.getElementById(
                 "event-browser-container"
             ).offsetWidth;
-            console.log(containerWidth)
             this.numberOfEvents = containerWidth / 240;
         },
         getEvents() {

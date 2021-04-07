@@ -4,7 +4,7 @@
           <router-link to="/">Explore</router-link>
           <router-link to="About">About</router-link>
           <a href = "https://www.theunderline.org/support/" id="support-button">Support</a>
-          <router-link v-if="isAdmin" id = "admin-portal" to = "admin">Admin Portal</router-link>
+          <router-link v-if="isAdmin" id = "admin-portal" to = "/admin">Admin Portal</router-link>
 		<router-link v-if="signedIn" id = "profile-page" to = "/user/ + id">Profile Page</router-link>
           <router-link v-if="!signedIn" to="/signin">Sign in</router-link>
           <button v-if="signedIn" @click="logout">Sign out</button>

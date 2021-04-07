@@ -3,8 +3,8 @@
       <img :src ="eventImage">
       <h2>{{title}}</h2>
       <p>{{eventDescription}}</p>
-      <button id = "remove-button">Remove</button>
-      <button id ="accept-button">Accept</button>
+      <button id = "remove-button" @click="acceptEvent(false)">Remove</button>
+      <button id ="accept-button" @click="acceptEvent(true)">Accept</button>
   </div>
 </template>
 
@@ -25,7 +25,24 @@ export default {
           }
      },
      methods: {
-  
+       async acceptEvent(arg) {
+              await axios({
+                  method: "get",
+                  url: "https://sparkdev-underline.herokuapp.com/admin/decide_event",
+                  headers: {
+                    token: window.localStorage.getItem("token")
+                  },
+                  parameters: {
+                    approve_bool: arg,
+                    event_id: this.eventID
+                  }
+                })
+              .then((response) => {
+                this.events = response.data.events;
+              })
+              .catch((e) => {
+              });
+          }
      },
      mounted() {
   
