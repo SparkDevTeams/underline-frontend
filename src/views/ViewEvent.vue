@@ -3,7 +3,7 @@
           <div id="private" v-if="!eventData.public">This event is private. Only those with this link can view. {{url}}</div>
           <h1>{{ eventData.title }}</h1>
           
-          <img v-for="id in eventData.image_ids" :src="imageurl + id"/>
+          <img v-for="id in eventData.image_ids" :src="'https://sparkdev-underline.herokuapp.com/images/get?image_id=' + id"/>
           <div id="tags">
                <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
           </div>
@@ -133,8 +133,10 @@ export default {
      
 
      img {
-          height: 30vh;
-          width: 90vw;
+          max-width:530px;
+          max-height:505px;
+          width: auto;
+          height: auto;
      }
 
      #max {

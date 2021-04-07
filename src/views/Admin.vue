@@ -3,12 +3,12 @@
 		Admin
 		<h2>Events for Review</h2>
 		<AdminEvent
-			v-for="event in eventList"
+			v-for="event in events"
 			:title="event.title"
 			:eventImage="event.img"
 			:eventDescription="event.description"
-			:eventID="event.id"
-			:key="event.id"
+			:eventID="event.event_id"
+			:key="event.event_id"
 		></AdminEvent>
 	</div>
 </template>
@@ -20,18 +20,29 @@ export default {
 	name: 'Admin',
 	data() {
 		return {
-			eventList: [
-				{
-					title: 'Title 1',
-					description: 'description of event',
-					img: '',
-					id: 'event ID'
-				}
-			]
+			events: []
 		}
 	},
-	methods: {},
-	mounted() {},
+	methods: {
+		async getEvents(){
+			await axios({
+					method: "get",
+					url: "https://sparkdev-underline.herokuapp.com/admin/events_queue",
+					headers: {
+						token: window.localStorage.getItem("token")
+					}
+			   })
+			.then((response) => {
+				this.events = response.data.events;
+			})
+			.catch((e) => {
+			});
+		},
+
+	},
+	mounted() {
+		this.getEvents();
+	},
 	components: {
 		AdminEvent
 	}

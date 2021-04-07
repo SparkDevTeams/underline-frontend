@@ -1,6 +1,6 @@
 <template>
     <div id="event-display-container" @click="route">
-        <img :src="eventImage" />
+        <img :src="image" />
         <h1>{{ title }}</h1>
         <div id="tags-container">
             <div
@@ -18,9 +18,11 @@
 <script>
 export default {
     name: "EventDisplay",
-    props: ["title", "eventImage", "tags", "id"],
+    props: ["title", "imageID", "tags", "id"],
     data() {
-        return {};
+        return {
+            image: "https://sparkdev-underline.herokuapp.com/images/get?image_id=" + this.imageID,
+        };
     },
     methods: {
         route(){
@@ -51,7 +53,7 @@ export default {
     border-radius: 10px;
     @extend .shadow;
     @extend .flex-column;
-    justify-content: flex-start;
+    justify-content: space-between;
     transform: (scale(1.0));
     transition: transform 0.07s;
     transition-timing-function: ease-out;
@@ -93,7 +95,7 @@ export default {
     }
 
     img {
-        width: 100px;
+        width: 170px;
         height: 100px;
         border-radius: 15px;
     }

@@ -1,112 +1,105 @@
 <template>
-	<div id="event-browser-component">
-		<h3>{{ title }}</h3>
-		<div id="tags-container" v-if="enableTags">
-			<div
-				v-for="tag in tags"
-				@click="tag.active = !tag.active"
-				:class="{ active: tag.active }"
-				:key="tag.id"
-			>
-				{{ tag.title }}
-			</div>
-		</div>
-		<div id="event-browser-container">
-			<div id="left-arrow" @click="displayNewEvents(false)"></div>
-			<EventDisplay
-				v-for="event in events"
-				:title="event.title"
-				:eventImage="event.img"
-				:tags="event.tags"
-				:id="event._id"
-				:key="event._id"
-			></EventDisplay>
-			<div id="right-arrow" @click="displayNewEvents(true)"></div>
-		</div>
-	</div>
+    <div id="event-browser-component">
+        <h3>{{ title }}</h3>
+        <div id="tags-container" v-if="enableTags">
+            <div v-for="tag in tags" @click="tag.active=!tag.active" :class="{active:tag.active}" :key="tag.id">{{tag.title}}</div>
+        </div>
+        <div id="event-browser-container">
+            <div id="left-arrow" @click="displayNewEvents(false)"></div>
+            <EventDisplay
+                v-for="event in events"
+                :title="event.title"
+                :imageID="event.image_ids[0]"
+                :tags="event.tags"
+                :id="event.event_id"
+                :key="event.event_id"
+            ></EventDisplay>
+            <div id="right-arrow" @click="displayNewEvents(true)"></div>
+        </div>
+    </div>
 </template>
 
 <script>
 import EventDisplay from './EventDisplay.vue'
 import axios from 'axios'
 export default {
-	name: 'EventBrowser',
-	data() {
-		return {
-			events: [],
-			eventsDiplayed: [],
-			numberOfEvents: 0,
-			tags: [
-				{ title: 'Sports', id: 'sport_event', active: false },
-				{ title: 'Food', id: 'food_event', active: false },
-				{ title: 'Art', id: 'art_event', active: false },
-				{ title: 'Music', id: 'music_event', active: false },
-				{ title: 'Meeting', id: 'meeting_event', active: false },
-				{ title: 'Class', id: 'class_event', active: false },
-				{ title: 'Paid', id: 'paid_event', active: false }
-			],
-			index: 0
-		}
-	},
-	props: ['title', 'options', 'enableTags'],
-	methods: {
-		computeNumberOfEvents() {
-			let containerWidth = document.getElementById('event-browser-container')
-				.offsetWidth
-
-			this.numberOfEvents = containerWidth / 240
-		},
-		getEvents() {
-			this.options.limit = this.numberOfEvents
-			this.options.index = this.index
-			if (this.enableTags) {
-				this.options.event_tag_filter = []
-				for (const tag of this.tags) {
-					if (tag.active == true) {
-						this.options.event_tag_filter.push(tag.id)
-					}
-				}
-			}
-
-			axios({
-				method: 'post',
-				url: 'https://sparkdev-underline.herokuapp.com/events/find/batch',
-				data: this.options
-			})
-				.then(response => {
-					this.events = response.data.events
-				})
-				.catch(e => {})
-		},
-		displayNewEvents(directionIsRight) {
-			if (directionIsRight) {
-				this.index++
-				this.getEvents()
-			} else {
-				this.index--
-				if (this.index < 0) {
-					this.index = 0
-				}
-				this.getEvents()
-			}
-		}
-	},
-	mounted() {
-		this.computeNumberOfEvents()
-		this.getEvents()
-	},
-	watch: {
-		tags: {
-			handler() {
-				this.getEvents()
-			},
-			deep: true
-		}
-	},
-	components: {
-		EventDisplay
-	}
-}
+    name: "EventBrowser",
+    data() {
+        return {
+            events: [],
+            eventsDiplayed: [],
+            numberOfEvents: 0,
+            tags: [
+                    {title: "Sports", id: "sport_event", active: false},
+                    {title: "Food", id: "food_event", active: false},
+                    {title: "Art", id: "art_event", active: false},
+                    {title: "Music", id: "music_event", active: false},
+                    {title: "Meeting", id: "meeting_event", active: false},
+                    {title: "Class", id: "class_event", active: false},
+                    {title: "Paid", id: "paid_event", active: false},
+            ],
+            index: 0
+        };
+    },
+    props: ["title", "options", "enableTags"],
+    methods: {
+        computeNumberOfEvents() {
+            let containerWidth = document.getElementById(
+                "event-browser-container"
+            ).offsetWidth;
+            this.numberOfEvents = containerWidth / 240;
+        },
+        getEvents() {
+            this.options.limit = this.numberOfEvents;
+            this.options.index = this.index;
+            if(this.enableTags){
+                this.options.event_tag_filter = []
+                for (const tag of this.tags) {
+                    if(tag.active==true) {
+                        this.options.event_tag_filter.push(tag.id)
+                    }
+                }
+            }
+            
+            axios({
+                method: "post",
+                url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
+                data: this.options,
+            })
+                .then((response) => {
+                    this.events = response.data.events;
+                })
+                .catch((e) => {});
+        },
+        displayNewEvents(directionIsRight) {
+            if (directionIsRight) {
+                this.index++;
+                this.getEvents();
+            } else {
+                this.index--;
+                if(this.index<0){
+                    this.index = 0
+                }
+                this.getEvents();
+            }
+        },
+    },
+    mounted() {
+        this.computeNumberOfEvents();
+        this.getEvents();
+    },
+    watch: {
+        tags: {
+            handler(){
+                this.getEvents();
+            },
+            deep: true
+        }
+    },
+    components: {
+        EventDisplay,
+    },
+};
 </script>
 
 <style lang="scss" scoped>

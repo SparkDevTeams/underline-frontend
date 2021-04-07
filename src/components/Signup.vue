@@ -14,6 +14,7 @@
                v-model="signUpData.firstName"
                @change="validateName(signUpData.firstName, 'first')"
                :class="{ error: errors.firstName }"
+               @keypress.13.prevent="signup"
           />
 
           <label>Last Name</label>
@@ -21,6 +22,7 @@
                v-model="signUpData.lastName"
                @change="validateName(signUpData.lastName, 'last')"
                :class="{ error: errors.lastName }"
+               @keypress.13.prevent="signup"
           />
 
           <label>Email</label>
@@ -28,6 +30,7 @@
                v-model="signUpData.email"
                @change="validateEmail"
                :class="{ error: errors.email }"
+               @keypress.13.prevent="signup"
           />
 
           <label>Password</label>
@@ -36,6 +39,7 @@
                type="password"
                @change="validatePassword"
                :class="{ error: errors.password }"
+               @keypress.13.prevent="signup"
           />
 
           <label>Confirm Password</label>
@@ -44,6 +48,7 @@
                type="password"
                @change="validatePasswordsAreSame"
                :class="{ error: errors.confirmPassword }"
+               @keypress.13.prevent="signup"
           />
 
           <button @click="signup">Submit</button>
