@@ -3,12 +3,12 @@
           <h1>Login</h1>
 
           <label>Email address</label>
-          <input v-model="email" type="email" />
+          <input v-model="email" type="email" @keypress.13.prevent="login"/>
 
           <label>Password</label>
-          <input v-model="password" type="password" />
+          <input v-model="password" type="password" @keypress.13.prevent="login"/>
 
-          <button @click="login">Submit</button>
+          <button @click="login" @enter="login">Submit</button>
 
           <span v-if="showErrorMessage"> Incorrect email or password</span>
      </div>

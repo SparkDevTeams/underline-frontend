@@ -70,7 +70,9 @@ export default {
             axios({
                 method: "post",
                 url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
-                data: {},
+                data: {
+                    limit: 30,
+                },
             })
                 .then((response) => {
                     this.events = response.data.events;
@@ -81,7 +83,7 @@ export default {
         renderEvents(){
             this.pins = [];
             for(var event of this.events) {
-                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event._id);
+                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event.event_id);
             }
         },
         createPin(latitude,longitude,location,title,eventID) {
