@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import EventDisplay from "./EventDisplay.vue";
-import axios from "axios";
+import EventDisplay from './EventDisplay.vue'
+import axios from 'axios'
 export default {
     name: "EventBrowser",
     data() {
@@ -103,77 +103,76 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/global.scss";
-@import "../assets/fonts.css";
+@import '../assets/global.scss';
+@import '../assets/fonts.css';
 
 #event-browser-component {
-    font-family: $font;
-    @extend .clear;
-    width: 100%;
-    box-sizing: border-box;
-    @extend .flex-column;
-    flex-wrap: wrap;
+	font-family: $font;
+	@extend .clear;
+	width: 100%;
+	box-sizing: border-box;
+	@extend .flex-column;
+	flex-wrap: wrap;
 
-    h3 {
-        font-size: max(3vmin,35px);
-        @extend .clear;
-        text-align: center;
-        margin-bottom: 1vw;
-        max-width: 90vw;
-    }
+	h3 {
+		font-size: max(3vmin, 35px);
+		@extend .clear;
+		text-align: center;
+		margin-bottom: 1vw;
+		max-width: 90vw;
+	}
 
-    #tags-container {
-        @extend .flex-row;
-        flex-wrap: wrap;
-        max-width: 90vw;
-        
+	#tags-container {
+		@extend .flex-row;
+		flex-wrap: wrap;
+		max-width: 90vw;
 
-        > div {
-            user-select: none;
-            margin: 10px;
-            cursor: pointer;
-            background-color: color(grey);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 30px;
-        }
+		> div {
+			user-select: none;
+			margin: 10px;
+			cursor: pointer;
+			background-color: color(grey);
+			color: white;
+			padding: 5px 15px;
+			border-radius: 30px;
+		}
 
-        .active {
-            background-color: color(green);
-            color: white;
-        }
-    }
+		.active {
+			background-color: color(green);
+			color: white;
+		}
+	}
 
-    #event-browser-container {
-        @extend .flex-row;
-        justify-content: space-around;
-        max-width: 100%;
-        width: 100%;
-        height: 100%;
-        min-height: 300px;
+	#event-browser-container {
+		@extend .flex-row;
+		justify-content: space-around;
+		max-width: 100%;
+		width: 100%;
+		height: 100%;
+		min-height: 300px;
 
-        #left-arrow {
-            height: 30px;
-            width: 30px;
-            border-radius: 30px 30px 30px 13px;
-            rotate: 45deg;
-            background: color(grey);
-            cursor: pointer;
-            @extend .button;
-            &:hover {
-                background: black;
-                transform: color;
-                transform: scale(1.2);
-                transition: background 0.04s linear;
-                transition: transform 0.04s;
-                transition-timing-function: ease-in-out;
-            }
-        }
+		#left-arrow {
+			height: 30px;
+			width: 30px;
+			border-radius: 30px 30px 30px 13px;
+			rotate: 45deg;
+			background: color(grey);
+			cursor: pointer;
+			@extend .button;
+			&:hover {
+				background: black;
+				transform: color;
+				transform: scale(1.2);
+				transition: background 0.04s linear;
+				transition: transform 0.04s;
+				transition-timing-function: ease-in-out;
+			}
+		}
 
-        #right-arrow {
-            @extend #left-arrow;
-            rotate: 225deg;
-        }
-    }
+		#right-arrow {
+			@extend #left-arrow;
+			rotate: 225deg;
+		}
+	}
 }
 </style>
