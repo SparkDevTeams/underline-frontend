@@ -9,10 +9,10 @@
             <EventDisplay
                 v-for="event in events"
                 :title="event.title"
-                :eventImage="event.img"
+                :imageID="event.image_ids[0]"
                 :tags="event.tags"
-                :id="event._id"
-                :key="event._id"
+                :id="event.event_id"
+                :key="event.event_id"
             ></EventDisplay>
             <div id="right-arrow" @click="displayNewEvents(true)"></div>
         </div>

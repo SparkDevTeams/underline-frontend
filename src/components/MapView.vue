@@ -83,7 +83,7 @@ export default {
         renderEvents(){
             this.pins = [];
             for(var event of this.events) {
-                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event._id);
+                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event.event_id);
             }
         },
         createPin(latitude,longitude,location,title,eventID) {

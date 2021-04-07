@@ -7,8 +7,8 @@
 			:title="event.title"
 			:eventImage="event.img"
 			:eventDescription="event.description"
-			:eventID="event.id"
-			:key="event.id"
+			:eventID="event.event_id"
+			:key="event.event_id"
 		></AdminEvent>
 	</div>
 </template>

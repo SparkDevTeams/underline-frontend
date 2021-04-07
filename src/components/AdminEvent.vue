@@ -32,9 +32,9 @@ export default {
                   headers: {
                     token: window.localStorage.getItem("token")
                   },
-                  parameters: {
+                  params: {
                     approve_bool: arg,
-                    event_id: this.eventID
+                    event_id: this.eventID,
                   }
                 })
               .then((response) => {
@@ -83,6 +83,7 @@ export default {
     font-size: 17px;
     font-weight: 250;
     margin-right: auto;
+    max-width: 60%;
   }
   #accept-button {
     @extend .button;
