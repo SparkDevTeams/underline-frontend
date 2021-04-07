@@ -2,52 +2,56 @@
      <div id="profile-view-container"> 
           <div id="user-profile-bar">
                <div v-if="ownerOnPage" class="image">
-                    <div
-				v-if="imageURL"
-				class="image__container"
-				@click="$refs.imgUpload.click()"
-                    >
-                    <img :src="imageURL" class="image__preview" />
-				<input
-					type="file"
-					ref="imgUpload"
-					class="image__input"
-                         style="display: none"
-					@change="uploadImage"
-					multiple
-				/>
-                    </div> 
-                    <div v-if="!ownerOnPage" class="image__container-before">
-                         <h1>hey whats up</h1>
-			     </div>
-                    <!--
-                    <div v-if="!imageURL" class="image__container-before">
-                         <button @click="$refs.imgUpload.click()" class="image__button-before">
-                              Select Image
-                         </button>
-                         <input
-                              type="file"
-                              ref="imgUpload"
-                              class="image__input-before"
-                              @change="uploadImage"
-                              multiple
-                         />
-			     </div> -->
-		     </div>
+                    <div class=image>
+                         <div
+                              v-if="imageURL"
+                              class="image__container"
+                              @click="$refs.imgUpload.click()"
+                              >
+                              <img :src="imageURL" class="image__preview" />
+                              <input
+                                   type="file"
+                                   ref="imgUpload"
+                                   class="image__input"
+                                   style="display: none"
+                                   @change="uploadImage"
+                                   multiple
+                              />
+                         </div> 
+                         <div v-if="!ownerOnPage" class="image__container-before">
+                              <h1>hey whats up</h1>
+			          </div>
+                    
+                         <div v-if="!imageURL" class="image__container-before">
+                              <button @click="$refs.imgUpload.click()" class="image__button-before">
+                                   Select Image
+                              </button>
+                              <input
+                                   type="file"
+                                   ref="imgUpload"
+                                   class="image__input-before"
+                                   @change="uploadImage"
+                                   multiple
+                              />
+			          </div> 
+		          </div>
+               </div>
+          </div>
+   
 		     
 
                <div id="profile-info">
-                    <img src="https://sparkdev-underline.herokuapp.com/ user.image_id" alt="">
+                    <img :src="'https://sparkdev-underline.herokuapp.com/images/get/' + user.image_id" alt="">
                     <h1 id="name"> {{user.first_name + " " + user.last_name}}</h1>
                </div>
                <div v-if="ownerOnPage" id="social-media">
                     <form>
                          <label> Instagram </label>
-                         <input type="text" name="socials[]" v-model="socials[0]" @change=addLink>
+                         <input type="text" name="socials[]" v-model="socials[0]" >
                          <label> Facebook </label>
-                         <input type="text" name="socials[]" v-model="socials[1]" @change=addLink>
+                         <input type="text" name="socials[]" v-model="socials[1]" >
                          <label> Twitter </label>
-                         <input type="text" name="socials[]" v-model="socials[2]" @change=addLink>
+                         <input type="text" name="socials[]" v-model="socials[2]" >
                     </form>
                     <div id="submitButton">
 			          <button @click="onSubmit" id="submit-btn">Submit All</button>
@@ -55,10 +59,6 @@
 		           </div>
                     
                </div>
-
-               
-          </div> 
-
 
           <div id="events-component">
                <h3 class="upcoming">Upcoming Events</h3>
@@ -68,7 +68,7 @@
                          <p>Description of Event</p>
                     </div>
                </ul>
-               <h3 class="past">Past Events</h3>
+               <h3 class="past">Your Private Events</h3>
                <ul>
                     <li><b> Event </b></li>
                     <div class="events-description">
@@ -92,6 +92,7 @@ export default {
                socials: [],
                imageData: null,
 			imageURL: '',
+               imageID: ''
           }
      },
      methods: {
@@ -126,7 +127,6 @@ export default {
                     }
 			}
           },
-
           deleteUser(){
                axios({
                     method: 'delete',
@@ -144,28 +144,54 @@ export default {
                     console.log(error)
                     })
           },
-
           addLink(e){
                this.socials.push(text)
           },
           onSubmit(){
-               let fd = new FormData()
-               fd.append('name', this.imageData[i].name)
-               fd.append('file', this.imageData[i])
-               axios({
-                    method: 'post',
-                    url: '/images/upload',
-                    data: fd,
-                    headers: {
-                         token: this.token
-                         }
-                    })
-                    .then(response => {
-                         this.eventData.image_ids.push(response.data.image_id)
+               if (this.imageData != null){
+                    let fd = new FormData()
+                    fd.append('file', this.imageData[0])
+                    axios({
+                         method: 'post',
+                         url: '/images/upload',
+                         data: fd,
+                         headers: {
+                              token: window.localStorage.getItem('token')
+                              }
                          })
-                    .catch(error => {
-                         console.log(error)
-                    })
+                         .then(response => {
+                              this.imageID = response.data.image_id;
+                              this.updateUser();
+                              })
+                         .catch(error => {
+                              console.log(error)
+                         })
+               }   
+               else{
+                    this.updateUser()
+               }
+               },
+               updateUser(){
+                    axios({
+                         method: 'patch',
+                         url: '/users/update',
+                         data: {
+                              user_links: this.socials,
+                              image_id:  this.imageID,
+                              identifier: {
+                                   user_id: this.id
+                              } 
+                         },
+                         headers: {
+                              token: window.localStorage.getItem('token')
+                              }
+                         })
+                         .then(response => {
+                              this.getProfile();
+                              })
+                         .catch(error => {
+                              console.log(error)
+                         })
                }
           },
      created() {
@@ -201,7 +227,7 @@ export default {
                margin-left: 10px;
 			border-radius: 5.5px;
 			width: 400px;
-               height: 200px;
+               max-height: 200px;
                float: left;
           }
  
