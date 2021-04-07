@@ -17,6 +17,10 @@
 					multiple
 				/>
                     </div> 
+                    <div v-if="!ownerOnPage" class="image__container-before">
+                         <h1>hey whats up</h1>
+			     </div>
+                    <!--
                     <div v-if="!imageURL" class="image__container-before">
                          <button @click="$refs.imgUpload.click()" class="image__button-before">
                               Select Image
@@ -28,7 +32,7 @@
                               @change="uploadImage"
                               multiple
                          />
-			     </div>
+			     </div> -->
 		     </div>
 		     
 
@@ -39,11 +43,11 @@
                <div v-if="ownerOnPage" id="social-media">
                     <form>
                          <label> Instagram </label>
-                         <input type="text" name="socials[]" v-model="socials[0]" >
+                         <input type="text" name="socials[]" v-model="socials[0]" @change=addLink>
                          <label> Facebook </label>
-                         <input type="text" name="socials[]" v-model="socials[1]" >
+                         <input type="text" name="socials[]" v-model="socials[1]" @change=addLink>
                          <label> Twitter </label>
-                         <input type="text" name="socials[]" v-model="socials[2]" >
+                         <input type="text" name="socials[]" v-model="socials[2]" @change=addLink>
                     </form>
                     <div id="submitButton">
 			          <button @click="onSubmit" id="submit-btn">Submit All</button>
@@ -120,25 +124,28 @@ export default {
                     }
 			}
           },
+          addLink(e){
+               this.socials.push(text)
+          },
           onSubmit(){
                let fd = new FormData()
-			fd.append('name', this.imageData[i].name)
-			fd.append('file', this.imageData[i])
-			axios({
+               fd.append('name', this.imageData[i].name)
+               fd.append('file', this.imageData[i])
+               axios({
                     method: 'post',
                     url: '/images/upload',
                     data: fd,
                     headers: {
                          token: this.token
                          }
+                    })
+                    .then(response => {
+                         this.eventData.image_ids.push(response.data.image_id)
                          })
-                         .then(response => {
-                              this.eventData.image_ids.push(response.data.image_id)
-                              })
-                              .catch(error => {
-                                   console.log(error)
-                                   })
-          },
+                    .catch(error => {
+                         console.log(error)
+                    })
+               }
           },
      created() {
           this.getProfile();
@@ -194,15 +201,19 @@ export default {
 				width: 100%;
 				border-radius: 5px;
 			}
+               .image__container-before{
+			position: relative;
+			border: 1px solid black;
+               margin-left: 50px;
+			border-radius: 5.5px;
+			cursor: pointer;
+			width: 300px;
+
+               }
           }
 
           #profile-info{
                margin-top: 30px;
-               #member-type{
-                    margin-top: -20px;
-                    color:  #03bf4d;
-                    font-size: 13px;    
-               }
           }
           #social-media{
                margin-top: 40px;
@@ -214,11 +225,12 @@ export default {
           }
      }
      #events-component{
-          margin-left: 70px;
-          margin-top: 40px;
+          margin-left: 40px;
+          margin-top: 30px;
 
           .upcoming, .past{
                color:#03bf4d;
+               font-size: 23px;
           }
      }
      }
