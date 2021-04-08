@@ -22,16 +22,20 @@ import EventBrowser from "../components/EventBrowser.vue"
 export default {
      data () {
           return {
+               day: (new Date()).getUTCDate(),
+               month: (new Date()).getUTCMonth(),
+               year: (new Date()).getUTCFullYear(),
+
                options: [
                     {
                          //intentionally left blank
                     },
                     {
-                         query_date: (new Date()).setDate(new Date().getDate()+1),
+                         query_date: new Date((new Date()).getUTCFullYear(),(new Date()).getUTCMonth(),new Date().getDate()+1,0,0,0),
                     },
                     {
                          query_date_range: {
-                              start_date: new Date(),
+                              start_date: (new Date()).getUTCDate(),
                               end_date: (new Date()).setDate(new Date().getDate()+6)
                          },
                     },
@@ -48,7 +52,6 @@ export default {
   
      },
      mounted() {
-  
      },
      components: {
           MapView,

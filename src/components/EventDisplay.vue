@@ -1,5 +1,5 @@
 <template>
-    <div id="event-display-container" @click="route">
+    <div id="event-display-container" class="intro" @click="route">
         <img :src="image" />
         <h1>{{ title }}</h1>
         <div id="tags-container">
@@ -41,12 +41,23 @@ export default {
 @import "../assets/global.scss";
 @import "../assets/fonts.css";
 
+
+.intro {
+   -webkit-animation: fadeIn 1s forwards;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0; transform: translateX(40%);}
+    100% {opacity: 1;transform: translateX(0%);}
+}
+
 #event-display-container {
     font-family: $font;
     @extend .clear;
     width: 240px;
     height: 90%;
-    padding: 6px;
+    padding: 21px;
     box-sizing: border-box;
     height: 240px;
     background: white;
@@ -55,14 +66,14 @@ export default {
     @extend .flex-column;
     justify-content: space-between;
     transform: (scale(1.0));
-    transition: transform 0.07s;
+    transition: all 0.07s;
     transition-timing-function: ease-out;
+    opacity: 1;
 
     &:hover {
         cursor: pointer;
-        transform: (scale(1.1));
-        transition: transform 0.07s;
-        transition-timing-function: ease-out;
+        
+        -webkit-filter: drop-shadow(0px 0px 10px rgba(156, 156, 156, 0.9));
     }
 
     h1 {

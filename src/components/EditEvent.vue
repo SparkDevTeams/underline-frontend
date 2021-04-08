@@ -448,7 +448,7 @@ export default {
 #edit-event-container {
 	@extend .flex-column;
 	box-shadow: 6px 9px 0px 1px #000000;
-	width: 80vw;
+	width: max(80vw,360px);
 	height: auto;
 	border-radius: 5px;
 	border: 1px solid black;
@@ -489,7 +489,7 @@ export default {
 		margin-top: 20px;
 
 		border-radius: 5px;
-		width: 200px;
+		width: min(200px,28vw);
 		height: 50px;
 		font-size: 20px;
 		font-weight: 300;

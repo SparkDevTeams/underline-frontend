@@ -1,14 +1,14 @@
 <template>
      <div id="nav-container">
-          <img id="logo" @click="redirectUnderline" src="../assets/grn-and-wht-u-logo.png" />
+          <img id="logo" @click="redirectUnderline" src="../assets/ulogo.svg" />
           <router-link to="/">Explore</router-link>
           <router-link to="About">About</router-link>
           <a href = "https://www.theunderline.org/support/" id="support-button">Support</a>
-          <router-link v-if="isAdmin" id = "admin-portal" to = "/admin">Admin Portal</router-link>
-		<router-link v-if="signedIn" id = "profile-page" to = "/user/ + id">Profile Page</router-link>
-          <router-link v-if="signedIn" id = "create-event" to = "/event/create">Create Event</router-link>
-          <router-link v-if="!signedIn" to="/signin">Sign in</router-link>
-          <button v-if="signedIn" @click="logout">Sign out</button>
+          <router-link v-if="isAdmin"   id = "admin-portal" to="/admin">Admin Portal</router-link>
+		<router-link v-if="signedIn"  id = "profile-page" :to="'/user/' + id">Profile Page</router-link>
+          <router-link v-if="signedIn"  id = "create-event" to="/event/create">Create Event</router-link>
+          <router-link v-if="!signedIn" id="signin-button"  to="/signin">Sign in</router-link>
+          <button      v-if="signedIn"  id="signout-button" @click="logout">Sign out</button>
 
      </div>
 </template>
@@ -93,8 +93,10 @@ export default {
      box-sizing: border-box;
 
      #logo {
-          height: 60%;
+          height: 37%;
           cursor: pointer;
+          margin-right: 2vw;
+          margin-left: 1.6vw;
      }
 
      button,

@@ -152,9 +152,9 @@ export default {
 		min-height: 300px;
 
 		#left-arrow {
-			height: 30px;
-			width: 30px;
-			border-radius: 30px 30px 30px 13px;
+			height: 25px;
+			width: 25px;
+			border-radius: 30px 30px 30px 4px;
 			rotate: 45deg;
 			background: color(grey);
 			cursor: pointer;
