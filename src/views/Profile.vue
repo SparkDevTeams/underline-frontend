@@ -1,270 +1,404 @@
 <template>
-     <div id="profile-view-container"> 
-          <div id="user-profile-bar">
-               <div v-if="ownerOnPage" class="image">
-                    <div
-				v-if="imageURL"
-				class="image__container"
-				@click="$refs.imgUpload.click()"
-                    >
-                    <img :src="imageURL" class="image__preview" />
-				<input
-					type="file"
-					ref="imgUpload"
-					class="image__input"
-                         style="display: none"
-					@change="uploadImage"
-					multiple
-				/>
-                    </div> 
-                    <div v-if="!ownerOnPage" class="image__container-before">
-                         <h1>hey whats up</h1>
-			     </div>
-                    <!--
-                    <div v-if="!imageURL" class="image__container-before">
-                         <button @click="$refs.imgUpload.click()" class="image__button-before">
-                              Select Image
-                         </button>
-                         <input
-                              type="file"
-                              ref="imgUpload"
-                              class="image__input-before"
-                              @change="uploadImage"
-                              multiple
-                         />
-			     </div> -->
-		     </div>
-		     
+	<div id="profile-container">
+		<div class="edit-profile" v-if="ownerOnPage">
+			<div class="image">
+				<div
+					v-if="imageURL"
+					class="image__container"
+					@click="$refs.imgUpload.click()"
+				>
+					<img :src="imageURL" class="image__preview" />
+					<input
+						type="file"
+						ref="imgUpload"
+						class="image__input"
+						style="display: none"
+						@change="uploadImage"
+					/>
+					<div class="image__overlay">
+						<div class="image__title">Change Profile Pic</div>
+					</div>
+				</div>
 
-               <div id="profile-info">
-                    <img src="https://sparkdev-underline.herokuapp.com/ user.image_id" alt="">
-                    <h1 id="name"> {{user.first_name + " " + user.last_name}}</h1>
-               </div>
-               <div v-if="ownerOnPage" id="social-media">
-                    <form>
-                         <label> Instagram </label>
-                         <input type="text" name="socials[]" v-model="socials[0]" @change=addLink>
-                         <label> Facebook </label>
-                         <input type="text" name="socials[]" v-model="socials[1]" @change=addLink>
-                         <label> Twitter </label>
-                         <input type="text" name="socials[]" v-model="socials[2]" @change=addLink>
-                    </form>
-                    <div id="submitButton">
-			          <button @click="onSubmit" id="submit-btn">Submit All</button>
-                         <button v-if="ownerOnPage" @click="deleteUser" id="delete-button">Delete user</button>
-		           </div>
-                    
-               </div>
+				<div v-if="!imageURL" class="image__container-before">
+					<div
+						v-if="!image_id"
+						@click="$refs.imgUpload.click()"
+						class="image__button-before"
+					>
+						<div class="image__overlay">
+							<div class="image__title">Change Profile Pic</div>
+						</div>
+					</div>
 
-               
-          </div> 
+					<div
+						v-if="image_id"
+						@click="$refs.imgUpload.click()"
+						class="image__button-before"
+					>
+						<img
+							v-if="image_id"
+							:src="
+								'https://sparkdev-underline.herokuapp.com/images/get?image_id=' +
+									image_id
+							"
+							@click="$refs.imgUpload.click()"
+						/>
+						<div class="image__overlay">
+							<div class="image__title">Change Profile Pic</div>
+						</div>
+					</div>
 
+					<input
+						type="file"
+						ref="imgUpload"
+						class="image__input-before"
+						@change="uploadImage"
+					/>
+				</div>
+			</div>
+			<div class="profile-name">
+				<h1>{{ `${this.firstName} ${this.lastName}` }}</h1>
+			</div>
 
-          <div id="events-component">
-               <h3 class="upcoming">Upcoming Events</h3>
-               <ul>
-                    <li><b>Event</b></li>
-                    <div class="events-description">
-                         <p>Description of Event</p>
-                    </div>
-               </ul>
-               <h3 class="past">Past Events</h3>
-               <ul>
-                    <li><b> Event </b></li>
-                    <div class="events-description">
-                         <p>Description of Event</p>
-                    </div>
-               </ul>
-          </div>  
+			<div class="profile-links">
+				<label> Instagram </label>
+				<input type="text" v-model="userLinks[0]" />
+				<label> Facebook </label>
+				<input type="text" v-model="userLinks[1]" />
+				<label> Twitter </label>
+				<input type="text" v-model="userLinks[2]" />
+				<div class="buttons">
+					<button @click="onSubmit" class="submit-btn">Submit All</button>
+					<button @click="deleteUser" class="delete-btn">
+						Delete user
+					</button>
+				</div>
+			</div>
+		</div>
 
-     </div> 
+		<div v-if="!ownerOnPage" id="profile-info">
+			<img src="" />
+			<p>Website Links</p>
+			<h1 id="name">{{ user.first_name + ' ' + user.last_name }}</h1>
+		</div>
+
+		<div id="events-component">
+			<h3 class="upcoming">Upcoming Events</h3>
+			<ul>
+				<li><b>Event</b></li>
+				<div class="events-description">
+					<p>Description of Event</p>
+				</div>
+			</ul>
+			<h3 class="past">Your Private Events</h3>
+			<ul>
+				<li><b> Event </b></li>
+				<div class="events-description">
+					<p>Description of Event</p>
+				</div>
+			</ul>
+		</div>
+	</div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 export default {
-     data () {
-          return {
-               id: this.$route.params.id,
-               ownerOnPage: false,
-               user: {},
-               socials: [],
-               imageData: null,
+	data() {
+		return {
+			id: this.$route.params.id,
+			ownerOnPage: false,
+			firstName: '',
+			lastName: '',
+			userLinks: [],
+			imageData: null,
 			imageURL: '',
-          }
-     },
-     methods: {
-          getProfile(){
-               var formData = {
-                    user_id: this.id
-               };
-
-               axios({
-                    method: "post",
-                    url: "https://sparkdev-underline.herokuapp.com/users/find",
-                    data: formData,
-               })
-               .then((response) => {
-                    this.user=response.data;
-               })
-               .catch((error) => {
-               });
-          },
+			image_id: ''
+		}
+	},
+	methods: {
+		getProfile() {
+			var formData = {
+				user_id: this.id
+			}
+			axios({
+				method: 'post',
+				url: '/users/find',
+				data: formData
+			})
+				.then(response => {
+					this.firstName = response.data.first_name
+					this.lastName = response.data.last_name
+					this.image_id = response.data.image_id
+					this.userLinks = response.data.user_links
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		},
 		uploadImage(e) {
 			this.imageData = null
 			this.imageURL = ''
 			this.imageData = e.target.files
 			this.imageURL = URL.createObjectURL(e.target.files[0])
 		},
-          checkToken(){
+		checkToken() {
 			let token = window.localStorage.getItem('token')
 			if (token != '') {
 				let userID = jwt_decode(token).user_id
-                    if (userID == this.id){
-                         this.ownerOnPage = true;
-                    }
+				if (userID == this.id) {
+					this.ownerOnPage = true
+				}
 			}
-          },
-
-          deleteUser(){
-               axios({
-                    method: 'delete',
-                    url: 'https://sparkdev-underline.herokuapp.com/users/delete',
-                    data: {user_id:this.id},
-                    headers: {
-                         token: window.localStorage.getItem("token")
-                         }
-               })
-               .then(response => {
-                    window.localStorage.setItem("token", "");
-                    this.$router.push("/signin");
-                    })
-               .catch(error => {
-                    console.log(error)
-                    })
-          },
-
-          addLink(e){
-               this.socials.push(text)
-          },
-          onSubmit(){
-               let fd = new FormData()
-               fd.append('name', this.imageData[i].name)
-               fd.append('file', this.imageData[i])
-               axios({
-                    method: 'post',
-                    url: '/images/upload',
-                    data: fd,
-                    headers: {
-                         token: this.token
-                         }
-                    })
-                    .then(response => {
-                         this.eventData.image_ids.push(response.data.image_id)
-                         })
-                    .catch(error => {
-                         console.log(error)
-                    })
-               }
-          },
-     created() {
-          this.getProfile();
-          this.checkToken();
-     },
-     watch: {
-          $route(to, from) {
-               this.id = this.$route.params.id;
-               this.getProfile();
-          },
-     },
+		},
+		deleteUser() {
+			axios({
+				method: 'delete',
+				url: 'https://sparkdev-underline.herokuapp.com/users/delete',
+				data: { user_id: this.id },
+				headers: {
+					token: window.localStorage.getItem('token')
+				}
+			})
+				.then(response => {
+					window.localStorage.setItem('token', '')
+					this.$router.push('/signin')
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		},
+		addLink(e) {
+			this.socials.push(text)
+		},
+		async onSubmit() {
+			if (this.imageData != null) {
+				let fd = new FormData()
+				fd.append('file', this.imageData[0])
+				await axios({
+					method: 'post',
+					url: '/images/upload',
+					data: fd,
+					headers: {
+						token: window.localStorage.getItem('token')
+					}
+				})
+					.then(response => {
+						this.image_id = response.data.image_id
+						this.updateUser()
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			}
+		},
+		async updateUser() {
+			await axios({
+				method: 'patch',
+				url: '/users/update',
+				data: {
+					user_links: this.socials,
+					image_id: this.image_id,
+					identifier: {
+						user_id: this.id
+					}
+				},
+				headers: {
+					token: window.localStorage.getItem('token')
+				}
+			})
+				.then(response => {
+					this.getProfile()
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		}
+	},
+	created() {
+		this.getProfile()
+		this.checkToken()
+	},
+	watch: {
+		$route(to, from) {
+			this.id = this.$route.params.id
+			this.getProfile()
+		}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/global.scss";
+@import '../assets/global.scss';
 
-#profile-view-container{
-     width: 100%;
-     height: 100%;
+#profile-container {
+	width: 100%;
+	height: 100%;
+	@extend .flex-column;
+	border-top: 12px solid color(green);
+	padding-top: 10px;
 
-     #user-profile-bar{
-          
-          border-top: 12px solid #03bf4d;
-          height: 44%;
-          border-bottom: 1px solid #6e6e6e;
+	button {
+		@extend .button;
+		margin-top: 20px;
 
-          .image{
-               position: relative;
-			border: 1px solid rgb(255, 255, 255);
-               margin-top: 20px;
-               margin-left: 10px;
-			border-radius: 5.5px;
-			width: 400px;
-               height: 200px;
-               float: left;
-          }
- 
-          .image__container {
-			position: relative;
-			border: 1px solid black;
-               margin-left: 50px;
-			border-radius: 5.5px;
-			cursor: pointer;
-			width: 300px;
+		border-radius: 5px;
+		width: 200px;
+		height: 50px;
+		font-size: 20px;
+		font-weight: 300;
+		margin-bottom: 30px;
+	}
 
-			.image__input {
-				display: none;
+	.edit-profile {
+		@extend .flex-column;
+
+		.image {
+			@extend .flex-row;
+			width: 80%;
+			justify-content: space-around;
+
+			.image__container {
+				position: relative;
+				border-radius: 5.5px;
+				cursor: pointer;
+				width: 300px;
+				height: 300px;
+				border-radius: 50%;
+
+				.image__input {
+					display: none;
+				}
+
+				.image__preview {
+					display: block;
+					width: 300px;
+					height: 300px;
+					border-radius: 50%;
+				}
+
+				.image__overlay {
+					position: absolute;
+					top: 0;
+					right: 0;
+					height: 100%;
+					width: 100%;
+					border-radius: 50%;
+					background: rgba(0, 0, 0, 0.6);
+					color: white;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-content: center;
+					opacity: 0;
+					transition: opacity 0.25s ease;
+					.image__title {
+						width: 100%;
+						height: auto;
+						text-align: center;
+						font-size: 2em;
+						font-weight: bold;
+					}
+				}
+
+				.image__overlay:hover {
+					opacity: 1;
+				}
 			}
 
-			.image__preview {
-				display: block;
-				width: 100%;
+			.image__container-before {
+				display: flex;
+				position: relative;
+				justify-content: center;
+
+				img {
+					width: 300px;
+					height: 300px;
+					border-radius: 50%;
+				}
+
+				.image__button-before {
+					background: color(green);
+					width: 300px;
+					height: 300px;
+					border-radius: 50%;
+					cursor: pointer;
+
+					.image__overlay {
+						position: absolute;
+						top: 0;
+						right: 0;
+						height: 100%;
+						width: 100%;
+						border-radius: 50%;
+
+						background: rgba(0, 0, 0, 0.6);
+						color: white;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-content: center;
+						opacity: 0;
+						transition: opacity 0.25s ease;
+						.image__title {
+							width: 100%;
+							height: auto;
+							text-align: center;
+							font-size: 2em;
+							font-weight: bold;
+						}
+					}
+
+					.image__overlay:hover {
+						opacity: 1;
+					}
+				}
+				.image__input-before {
+					display: none;
+				}
+			}
+		}
+
+		.profile-name {
+			text-align: center;
+		}
+		.profile-links {
+			@extend .flex-column;
+			width: 100%;
+
+			input {
+				width: 200px;
+				border: 2px solid black;
 				border-radius: 5px;
 			}
-               .image__container-before{
-			position: relative;
-			border: 1px solid black;
-               margin-left: 50px;
-			border-radius: 5.5px;
-			cursor: pointer;
-			width: 300px;
 
-               }
-          }
+			.buttons {
+				@extend .flex-row;
+				width: 500px;
+				justify-content: space-evenly;
+			}
+			.submit-btn {
+				background: color(green);
+				font-weight: bold;
+			}
+			.delete-btn {
+				background: rgba(255, 0, 0, 0.8);
+				font-weight: bold;
+			}
+		}
+	}
+	#events-component {
+		width: 100%;
+		text-align: center;
+		border-top: 5px solid black;
 
-          #profile-info{
-               margin-top: 30px;
-          }
-          #social-media{
-               margin-top: 40px;
-               margin-left: 30px;
-          }
-          #submitButton{
-               text-align: right;
-               margin-right: 30px;
-          }
-     }
-     #events-component{
-          margin-left: 40px;
-          margin-top: 30px;
-
-          .upcoming, .past{
-               color:#03bf4d;
-               font-size: 23px;
-          }
-     }
-
-     #delete-button{
-          
-          margin-left: auto;
-          margin-top: 20px;
-          background-color: red;
-          color: white;
-          @extend .button;
-          padding: 5px;
-          border-radius: 5px;
-     }
-
-     }
+		.upcoming,
+		.past {
+			color: #03bf4d;
+			font-size: 23px;
+		}
+	}
+}
 </style>
