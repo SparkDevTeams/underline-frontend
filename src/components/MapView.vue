@@ -8,7 +8,7 @@
 <script>
 import leaflet from "leaflet";
 import router from "../router/";
-import axios from 'axios';
+import axios from "axios";
 import MapCompanion from "./MapCompanion.vue";
 export default {
     data() {
@@ -69,7 +69,7 @@ export default {
         getEvents() {
             axios({
                 method: "post",
-                url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
+                url: "/events/find/batch",
                 data: {
                     limit: 30,
                 },
@@ -80,21 +80,35 @@ export default {
                 })
                 .catch((e) => {});
         },
-        renderEvents(){
+        renderEvents() {
             this.pins = [];
-            for(var event of this.events) {
-                this.createPin(event.location.latitude,event.location.longitude,event.location.title,event.title,event.event_id);
+            for (var event of this.events) {
+                this.createPin(
+                    event.location.latitude,
+                    event.location.longitude,
+                    event.location.title,
+                    event.title,
+                    event.event_id
+                );
             }
         },
-        createPin(latitude,longitude,location,title,eventID) {
+        createPin(latitude, longitude, location, title, eventID) {
             var marker = L.marker([latitude, longitude]).addTo(this.map);
-            marker.bindPopup("<b>" + title + "</b><br>Located at " + location + "<br><br><a href='#/event/" + eventID + "'>Click here for event details</a><br>");
+            marker.bindPopup(
+                "<b>" +
+                    title +
+                    "</b><br>Located at " +
+                    location +
+                    "<br><br><a href='#/event/" +
+                    eventID +
+                    "'>Click here for event details</a><br>"
+            );
             this.pins.push(marker);
-        }
+        },
     },
     mounted() {
         this.initializeMap();
-        if(this.pinLat==null){
+        if (this.pinLat == null) {
             this.getEvents();
         }
     },

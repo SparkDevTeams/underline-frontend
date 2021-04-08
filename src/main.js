@@ -4,7 +4,7 @@ import router from './router'
 import axios from 'axios'
 
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'https://sparkdev-underline.herokuapp.com'
+axios.defaults.baseURL = 'https://sparkdev-underline-testing.herokuapp.com/'
 
 new Vue({
 	router,

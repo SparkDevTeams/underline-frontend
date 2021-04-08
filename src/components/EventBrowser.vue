@@ -63,7 +63,7 @@ export default {
             
             axios({
                 method: "post",
-                url: "https://sparkdev-underline.herokuapp.com/events/find/batch",
+                url: "/events/find/batch",
                 data: this.options,
             })
                 .then((response) => {

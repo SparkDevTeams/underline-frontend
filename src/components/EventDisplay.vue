@@ -1,10 +1,10 @@
 <template>
     <div id="event-display-container" class="intro" @click="route">
-        <img :src="image" />
+        <img :src="'https://sparkdev-underline.herokuapp.com/images/get?image_id=' + imageID" />
         <h1>{{ title }}</h1>
         <div id="tags-container">
             <div
-                v-for="tag in tags.slice(0, 2)"
+                v-for="tag in tags.slice(0, 1)"
                 @click="tag.active = !tag.active"
                 :class="{ active: tag.active }"
                 :key="tag.id"
@@ -21,15 +21,15 @@ export default {
     props: ["title", "imageID", "tags", "id"],
     data() {
         return {
-            image: "https://sparkdev-underline.herokuapp.com/images/get?image_id=" + this.imageID,
+            image: "/images/get?image_id=" + this.imageID,
         };
     },
     methods: {
-        route(){
+        route() {
             this.$router.push({
-                path:"/event/" + this.id
-            })
-        }
+                path: "/event/" + this.id,
+            });
+        },
     },
     created() {},
     watch: {},
@@ -41,15 +41,20 @@ export default {
 @import "../assets/global.scss";
 @import "../assets/fonts.css";
 
-
 .intro {
-   -webkit-animation: fadeIn 1s forwards;
+    -webkit-animation: fadeIn 1s forwards;
     animation: fadeIn 1s forwards;
 }
 
 @keyframes fadeIn {
-    0% {opacity: 0; transform: translateX(40%);}
-    100% {opacity: 1;transform: translateX(0%);}
+    0% {
+        opacity: 0;
+        transform: translateX(40%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
 
 #event-display-container {
@@ -65,14 +70,14 @@ export default {
     @extend .shadow;
     @extend .flex-column;
     justify-content: space-between;
-    transform: (scale(1.0));
+    transform: (scale(1));
     transition: all 0.07s;
     transition-timing-function: ease-out;
     opacity: 1;
 
     &:hover {
         cursor: pointer;
-        
+
         -webkit-filter: drop-shadow(0px 0px 10px rgba(156, 156, 156, 0.9));
     }
 
@@ -114,7 +119,6 @@ export default {
     #tags-container {
         @extend .flex-row;
         flex-wrap: wrap;
-        
 
         > div {
             user-select: none;
@@ -125,7 +129,6 @@ export default {
             border-radius: 30px;
             font-size: 12px;
         }
-
     }
 }
 </style>

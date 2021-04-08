@@ -513,7 +513,7 @@ export default {
 			margin-right: 20%;
 			padding: 0px;
 			text-align: left;
-			width: 90%;
+			width: 100%;
 			font-size: 26px;
 			letter-spacing: 1.5px;
 		}
@@ -600,7 +600,7 @@ export default {
 		label {
 			padding: 0px;
 			text-align: left;
-			width: 90%;
+			width: 100%;
 			font-size: 26px;
 			letter-spacing: 1.5px;
 		}
