@@ -91,7 +91,14 @@
         </div>
 
         <div v-if="ownerOnPage" id="events-component">
-            <h3 class="upcoming">Your saved events</h3>
+            <h3>Your saved events</h3>
+            <div id="events-container">
+                <EventDisplay v-for="event in events" :title="event.title"
+                :imageID="event.image_ids[0]"
+                :tags="event.tags"
+                :id="event.event_id"
+                :key="event.event_id"></EventDisplay>
+            </div>
         </div>
     </div>
 </template>
@@ -99,6 +106,7 @@
 <script>
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import EventDisplay from "../components/EventDisplay.vue";
 export default {
     data() {
         return {
@@ -110,6 +118,8 @@ export default {
             imageData: null,
             imageURL: "",
             image_id: "",
+            eventIDs: [],
+            events: []
         };
     },
     methods: {
@@ -127,6 +137,8 @@ export default {
                     this.lastName = response.data.last_name;
                     this.image_id = response.data.image_id;
                     this.userLinks = response.data.user_links;
+                    this.eventIDs = response.data.events_visible;
+                    this.getEvents();
                 })
                 .catch((error) => {
                     console.log(error);
@@ -137,6 +149,20 @@ export default {
             this.imageURL = "";
             this.imageData = e.target.files;
             this.imageURL = URL.createObjectURL(e.target.files[0]);
+        },
+        getEvents(){
+            for(const id in this.eventIDs){
+                axios({
+                    method: "get",
+                    url: "/events/get/" + this.eventIDs[id],
+                })
+                    .then((response) => {
+                        this.events.push(response.data)
+                    })
+                    .catch((e) => {
+                    });
+            }
+            
         },
         checkToken() {
             let token = window.localStorage.getItem("token");
@@ -214,6 +240,9 @@ export default {
     created() {
         this.getProfile();
         this.checkToken();
+    },
+    components: {
+        EventDisplay
     },
     watch: {
         $route(to, from) {
@@ -393,14 +422,19 @@ h1 {
         }
     }
     #events-component {
-        width: 100%;
-        text-align: center;
-
-        .upcoming,
-        .past {
+        h3 {
+            width: 100%;
+            text-align: center;
             color: #03bf4d;
             font-size: 23px;
         }
+    }
+    #events-container {
+        @extend .flex-row;
+        flex-wrap: wrap;
+        width: 100%;
+
+        
     }
 }
 </style>

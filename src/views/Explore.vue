@@ -34,7 +34,7 @@ export default {
                     },
                     {
                          query_date_range: {
-                              start_date: new Date((new Date()).getFullYear(),(new Date()).getMonth(),new Date().getDate(),-4,0,0),
+                              start_date: new Date((new Date()).getFullYear(),(new Date()).getMonth(),new Date().getDate(),new Date().getHours()-4,new Date().getMinutes(),0),
                               end_date: new Date((new Date()).getFullYear(),(new Date()).getMonth(),new Date().getDate()+6,-4,0,0)
                          },
                     },
