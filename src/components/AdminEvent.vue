@@ -31,7 +31,7 @@ export default {
                 },
             })
                 .then((response) => {
-                    this.events = response.data.events;
+                     location.reload(); 
                 })
                 .catch((e) => {});
         },
