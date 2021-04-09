@@ -1,94 +1,119 @@
 <template>
     <div id="profile-container">
-        <div class="edit-profile" v-if="ownerOnPage">
-            <div class="image">
-                <div
-                    v-if="imageURL"
-                    class="image__container"
-                    @click="$refs.imgUpload.click()"
-                >
-                    <img :src="imageURL" class="image__preview" />
-                    <input
-                        type="file"
-                        ref="imgUpload"
-                        class="image__input"
-                        style="display: none"
-                        @change="uploadImage"
-                    />
-                    <div class="image__overlay">
-                        <div class="image__title">Change Profile Pic</div>
-                    </div>
-                </div>
+		<div class="edit-profile" v-if="ownerOnPage">
+			<div class="image">
+				<div
+					v-if="imageURL"
+					class="image__container"
+					@click="$refs.imgUpload.click()"
+				>
+					<img :src="imageURL" class="image__preview" />
+					<input
+						type="file"
+						ref="imgUpload"
+						class="image__input"
+						style="display: none"
+						@change="uploadImage"
+					/>
+					<div class="image__overlay">
+						<div class="image__title">Change Profile Pic</div>
+					</div>
+				</div>
 
-                <div v-if="!imageURL" class="image__container-before">
-                    <div
-                        v-if="!image_id"
-                        @click="$refs.imgUpload.click()"
-                        class="image__button-before"
-                    >
-                        <div class="image__overlay">
-                            <div class="image__title">Change Profile Pic</div>
-                        </div>
-                    </div>
+				<div v-if="!imageURL" class="image__container-before">
+					<div
+						v-if="!image_id"
+						@click="$refs.imgUpload.click()"
+						class="image__button-before"
+					>
+						<div class="image__overlay">
+							<div class="image__title">Change Profile Pic</div>
+						</div>
+					</div>
 
-                    <div
-                        v-if="image_id"
-                        @click="$refs.imgUpload.click()"
-                        class="image__button-before"
-                    >
-                        <img
-                            v-if="image_id"
-                            :src="
-                                'https://sparkdev-underline.herokuapp.com/images/get?image_id=' +
-                                image_id
-                            "
-                            @click="$refs.imgUpload.click()"
-                        />
-                        <div class="image__overlay">
-                            <div class="image__title">Change Profile Pic</div>
-                        </div>
-                    </div>
+					<div
+						v-if="image_id"
+						@click="$refs.imgUpload.click()"
+						class="image__button-before"
+					>
+						<img
+							v-if="image_id"
+							:src="
+								'https://sparkdev-underline.herokuapp.com/images/get?image_id=' +
+									image_id
+							"
+							@click="$refs.imgUpload.click()"
+						/>
+						<div class="image__overlay">
+							<div class="image__title">Change Profile Pic</div>
+						</div>
+					</div>
 
-                    <input
-                        type="file"
-                        ref="imgUpload"
-                        class="image__input-before"
-                        @change="uploadImage"
-                    />
-                </div>
-            </div>
-            <div class="profile-name">
-                <h1>{{ `${this.firstName} ${this.lastName}` }}</h1>
-            </div>
+					<input
+						type="file"
+						ref="imgUpload"
+						class="image__input-before"
+						@change="uploadImage"
+					/>
+				</div>
+			</div>
+			<div class="profile-name">
+				<h1>{{ `${this.firstName} ${this.lastName}` }}</h1>
+			</div>
 
-            <div class="profile-links">
-                <label> Instagram </label>
-                <input type="text" v-model="userLinks[0]" />
-                <label> Facebook </label>
-                <input type="text" v-model="userLinks[1]" />
-                <label> Twitter </label>
-                <input type="text" v-model="userLinks[2]" />
-                <div class="buttons">
-                    <button @click="onSubmit" class="submit-btn">
-                        Submit All
-                    </button>
-                    <button @click="deleteUser" class="delete-btn">
-                        Delete user
-                    </button>
-                </div>
-            </div>
-        </div>
+			<div class="error-message-container" v-if="errorMessages.length > 0">
+				<p>The following errors occurred:</p>
+				<ul>
+					<li v-for="(message, index) in errorMessages" :key="index">
+						{{ message }}
+					</li>
+				</ul>
+			</div>
 
-        <div v-if="!ownerOnPage" id="profile-info">
-            <img
-                id="pic"
-                :src="
-                    'https://sparkdev-underline.herokuapp.com/images/get?image_id=' +
-                    image_id
-                "
-            />
-            <h1 id="name">{{ firstName + " " + lastName }}</h1>
-        </div>
+			<div class="profile-links">
+				<label> Social Media Links: </label>
+				<input
+					type="text"
+					v-model="userLinks[0]"
+					placeholder="https://instagram.com"
+					@change="validateLinks"
+				/>
+				<input
+					type="text"
+					v-model="userLinks[1]"
+					placeholder="https://facebook.com"
+					@change="validateLinks"
+				/>
+				<input
+					type="text"
+					v-model="userLinks[2]"
+					placeholder="https://twitter.com"
+					@change="validateLinks"
+				/>
+				<div class="buttons">
+					<button @click="onSubmit" class="submit-btn">
+						Submit All
+					</button>
+					<button @click="deleteUser" class="delete-btn">
+						Delete user
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div v-if="!ownerOnPage" id="profile-info">
+			<img
+				id="pic"
+				:src="
+					`https://sparkdev-underline.herokuapp.com/images/get?image_id=${image_id}`
+				"
+			/>
+			<h1>{{ `${firstName} ${lastName}` }}</h1>
+			<label> Social Media Links: </label>
+			<div class="links">
+				<a v-for="link in userLinks" :key="link" :href="link">{{ link }}</a>
+			</div>
+		</div>
 
         <div v-if="ownerOnPage" id="events-component">
             <h3>Your saved events</h3>
@@ -111,39 +136,47 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
-            ownerOnPage: false,
-            firstName: "",
-            lastName: "",
-            userLinks: [],
-            imageData: null,
-            imageURL: "",
-            image_id: "",
+			ownerOnPage: false,
+			firstName: '',
+			lastName: '',
+			userLinks: [],
+			imageData: null,
+			imageURL: '',
+			image_id: '',
+			errorMessages: [],
+			errors: {
+				firstLink: false,
+				secondLink: false,
+				thirdLink: false
+			},
             eventIDs: [],
             events: []
         };
     },
     methods: {
         getProfile() {
-            var formData = {
-                user_id: this.id,
-            };
-            axios({
-                method: "post",
-                url: "/users/find",
-                data: formData,
-            })
-                .then((response) => {
-                    this.firstName = response.data.first_name;
-                    this.lastName = response.data.last_name;
-                    this.image_id = response.data.image_id;
-                    this.userLinks = response.data.user_links;
+			var formData = {
+				user_id: this.id
+			}
+			axios({
+				method: 'post',
+				url: '/users/find',
+				data: formData
+			})
+				.then(response => {
+					this.firstName = response.data.first_name
+					this.lastName = response.data.last_name
+					this.image_id = response.data.image_id
+					this.userLinks[0] = response.data.user_links[0]
+					this.userLinks[1] = response.data.user_links[1]
+					this.userLinks[2] = response.data.user_links[2]
                     this.eventIDs = response.data.events_visible;
                     this.getEvents();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		},
         uploadImage(e) {
             this.imageData = null;
             this.imageURL = "";
@@ -193,52 +226,74 @@ export default {
                     console.log(error);
                 });
         },
-        addLink(e) {
-            this.socials.push(text);
-        },
+        validateLinks(e) {
+			let text = e.target.value
+			let errorMessage = 'Make sure your website(s) starts with "https://" '
+			if (text.trim().length > 0) {
+				if (
+					!text.match(
+						/^(https:\/\/)+?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+					)
+				) {
+					if (!this.errorMessages.includes(errorMessage)) {
+						this.errorMessages.push(errorMessage)
+					}
+				} else {
+					this.errorMessages = this.errorMessages.filter(
+						msg => msg !== errorMessage
+					)
+				}
+			}
+		},
         async onSubmit() {
-            if (this.imageData != null) {
-                let fd = new FormData();
-                fd.append("file", this.imageData[0]);
-                await axios({
-                    method: "post",
-                    url: "/images/upload",
-                    data: fd,
-                    headers: {
-                        token: window.localStorage.getItem("token"),
-                    },
-                })
-                    .then((response) => {
-                        this.image_id = response.data.image_id;
-                        this.updateUser();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
-        },
+			if (this.imageData != null) {
+				let fd = new FormData()
+				fd.append('file', this.imageData[0])
+				await axios({
+					method: 'post',
+					url: '/images/upload',
+					data: fd,
+					headers: {
+						token: window.localStorage.getItem('token')
+					}
+				})
+					.then(response => {
+						this.image_id = response.data.image_id
+						this.updateUser()
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			} else {
+				this.updateUser()
+			}
+		},
+
         async updateUser() {
-            await axios({
-                method: "patch",
-                url: "/users/update",
-                data: {
-                    user_links: this.socials,
-                    image_id: this.image_id,
-                    identifier: {
-                        user_id: this.id,
-                    },
-                },
-                headers: {
-                    token: window.localStorage.getItem("token"),
-                },
-            })
-                .then((response) => {
-                    this.getProfile();
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+			this.userLinks = this.userLinks.filter(link => {
+				return link !== undefined && link !== ''
+			})
+			await axios({
+				method: 'patch',
+				url: '/users/update',
+				data: {
+					user_links: this.userLinks,
+					image_id: this.image_id,
+					identifier: {
+						user_id: this.id
+					}
+				},
+				headers: {
+					token: window.localStorage.getItem('token')
+				}
+			})
+				.then(response => {
+					this.getProfile()
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		}
     },
     created() {
         this.getProfile();
