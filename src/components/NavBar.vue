@@ -2,7 +2,7 @@
     <div id="nav-container">
         <img id="logo" @click="redirectUnderline" src="../assets/ulogo.svg" />
         <router-link to="/">Explore</router-link>
-        <router-link to="About">About</router-link>
+        <router-link to="/About">About</router-link>
         <a href="https://www.theunderline.org/support/" id="support-button"
             >Support</a
         >

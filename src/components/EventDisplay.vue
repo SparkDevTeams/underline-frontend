@@ -4,7 +4,7 @@
         <h1>{{ title }}</h1>
         <div id="tags-container">
             <div
-                v-for="tag in newtags.slice(0, 1)"
+                v-for="tag in newtags.slice(0, 2)"
                 :key="tag.id"
             >
                 {{ tag }}
@@ -96,7 +96,6 @@ export default {
         text-align: center;
         @extend .clear;
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
     }
     #community {
