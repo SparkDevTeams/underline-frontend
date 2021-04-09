@@ -1,6 +1,6 @@
 <template>
     <div id="map-container">
-        <h1>Explore today's events</h1>
+        <h1 v-if="!pinLat">Explore today's events</h1>
         <div id="underline-map"></div>
     </div>
 </template>

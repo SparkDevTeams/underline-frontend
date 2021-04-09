@@ -21,7 +21,7 @@
         <span>Starts at {{ eventData.date_time_start }}</span>
         <span>Ends at {{ eventData.date_time_end }}</span>
         <span
-            >Created by <router-link :to="/user/ + id">user</router-link></span
+            >Created by <router-link :to="'/user/' + eventData.creator_id"> {{creator.first_name}} {{creator.last_name}}</router-link></span
         >
 
         <h2>Located at {{ eventData.location.title }}</h2>
@@ -89,15 +89,38 @@ export default {
                         },
                     }).then((response) => {
                         this.creator = response.data;
+                        this.putPrivateEvent();
                     });
                 })
                 .catch((error) => {
                     this.eventData.title = "This event could not be found";
                 });
         },
+        putPrivateEvent(){
+            if(this.eventData.public==false){
+                if(window.localStorage.getItem("token")!='') {
+                    axios({
+                            method: "put",
+                            url: "/users/add_event",
+                            data: {
+                                event_id: this.id
+                            },
+                            headers: {
+                                token: window.localStorage.getItem("token")
+                            }
+                       })
+                            .then((response) => {
+                            })
+                            .catch((e) => {
+                            });
+                }
+            }
+            
+        }
     },
     mounted() {
         this.getEventData();
+        
     },
     components: {
         MapView,
@@ -118,7 +141,7 @@ export default {
     width: 100%;
     @extend .flex-column;
     justify-content: flex-start;
-    padding: 15px;
+    box-sizing: border-box;
 
     h1 {
         font-size: 10vh;
@@ -156,9 +179,11 @@ export default {
 
     #private {
         width: 100%;
-        height: 5vh;
         background-color: color(green);
         color: white;
+        text-align: center;
+        padding: 5px;
+        box-sizing: border-box;
     }
 
     #max {
