@@ -80,6 +80,7 @@ export default {
     watch: {
         loggedIn: function (newVal, oldVal) {
             this.signedIn = newVal;
+            this.checkUserSignedIn();
         },
     },
 };
