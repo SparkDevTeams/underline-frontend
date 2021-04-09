@@ -26,7 +26,7 @@
                     >Profile Page</router-link
                 >
 
-                <button id="signout-btn" v-if="!signedIn">Sign in</button>
+                <button id="signout-btn" v-if="!signedIn" @click='login'>Sign in</button>
                 <button id="signin-btn" v-if="signedIn" @click="logout">
                     Sign out
                 </button>

@@ -1,6 +1,6 @@
 <template>
     <div id="nav-container">
-        <img id="logo" @click="redirectUnderline" src="../assets/ulogo.svg" />
+        <img id="logo" @click="redirectUnderline" src="../assets/ulogo.png" />
         <router-link to="/">Explore</router-link>
         <router-link to="/About">About</router-link>
         <a href="https://www.theunderline.org/support/" id="support-button"
@@ -44,6 +44,7 @@ export default {
             window.localStorage.setItem("token", "");
             this.signedIn = false;
             this.$router.push("/signin");
+            location.reload(); 
         },
         checkUserSignedIn() {
             const token = window.localStorage.getItem("token");
