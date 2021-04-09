@@ -155,6 +155,9 @@ export default {
                 axios({
                     method: "get",
                     url: "/events/get/" + this.eventIDs[id],
+                    headers: {
+                        token: window.localStorage.getItem('token')
+                    }
                 })
                     .then((response) => {
                         this.events.push(response.data)
