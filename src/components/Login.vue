@@ -105,7 +105,8 @@ export default {
         margin-top: 10px;
         background: color(green);
         width: 5vw;
-        height: 2vw;
+        min-width: 200px;
+        height: 4vw;
         border-radius: 5px;
         font-family: $font;
     }

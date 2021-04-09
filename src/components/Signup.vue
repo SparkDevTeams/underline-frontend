@@ -268,6 +268,7 @@ export default {
         margin-top: 10px;
         background: color(green);
         width: 10vw;
+        min-width: 200px;
         height: 4vh;
         border-radius: 5px;
         font-family: $font;
