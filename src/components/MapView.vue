@@ -44,7 +44,7 @@ export default {
             }
             this.map.attributionControl.setPrefix(false);
             L.tileLayer(
-                "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
+                "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=9977c290-73b0-478a-830d-d554ebc1bef9",
                 {
                     maxZoom: 20,
                     minZoom: 15,
