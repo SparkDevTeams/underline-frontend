@@ -172,7 +172,17 @@ export default {
 
 		#right-arrow {
 			@extend #left-arrow;
-			transform: rotate(225deg)
+			transform: rotate(225deg);
+            
+            &:hover {
+				background: black;
+				transform: color;
+				transform: scale(1.2);
+				transition: background 0.04s linear;
+				transition: transform 0.04s;
+				transition-timing-function: ease-in-out;
+                transform: rotate(225deg);
+			}
 		}
 	}
 }
