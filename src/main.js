@@ -6,7 +6,7 @@ import axios from 'axios'
 Vue.config.productionTip = false;
 assetsPublicPath: '',
 
-axios.defaults.baseURL = 'https://sparkdev-underline-testing.herokuapp.com/'
+axios.defaults.baseURL = 'https://sparkdev-underline.herokuapp.com/'
 
 new Vue({
 	router,
