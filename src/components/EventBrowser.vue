@@ -155,7 +155,7 @@ export default {
 			height: 25px;
 			width: 25px;
 			border-radius: 30px 30px 30px 4px;
-			rotate: 45deg;
+			transform: rotate(45deg);
 			background: color(grey);
 			cursor: pointer;
 			@extend .button;
@@ -171,7 +171,7 @@ export default {
 
 		#right-arrow {
 			@extend #left-arrow;
-			rotate: 225deg;
+			transform: rotate(225deg)
 		}
 	}
 }

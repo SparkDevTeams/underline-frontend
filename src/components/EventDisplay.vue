@@ -118,9 +118,11 @@ export default {
     }
 
     img {
-        width: 170px;
-        height: 100px;
+        max-width: 170px;
+        max-height: 100px;
         border-radius: 15px;
+        width: auto;
+        height: auto;
     }
 
     #tags-container {

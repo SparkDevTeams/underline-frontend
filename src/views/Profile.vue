@@ -317,8 +317,10 @@ export default {
 #profile-info {
     text-align: center;
     #pic {
-        width: 300px;
-        height: 300px;
+        max-width: 300px;
+        max-height: 300px;
+        width: auto;
+        height: auto;
         border-radius: 50%;
     }
 
