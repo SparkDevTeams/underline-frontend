@@ -13,7 +13,7 @@
             "
         />
         <div id="tags">
-            <span class="tag" v-for="tag in eventData.tags">{{ tag }}</span>
+            <span class="tag" v-for="tag in improvedTags">{{ tag }}</span>
         </div>
 
         <span id="description">{{ eventData.description }}</span>
@@ -60,6 +60,7 @@ export default {
                 location: {},
             },
             creator: {},
+            improvedTags: [],
         };
     },
     methods: {
@@ -81,6 +82,8 @@ export default {
                     this.eventData.date_time_end = new Date(this.eventData.date_time_end)
                     this.eventData.date_time_end = this.eventData.date_time_end.toLocaleString();
 
+                    this.improveTags();
+
                     axios({
                         method: "post",
                         url: "/users/find/",
@@ -95,6 +98,13 @@ export default {
                 .catch((error) => {
                     this.eventData.title = "This event could not be found";
                 });
+        },
+        improveTags(){
+            for (const tag of this.eventData.tags.values()) {
+                let newtag = tag.substr(0,(tag.indexOf('_')));
+                newtag = newtag.charAt(0).toUpperCase() + newtag.slice(1);
+                this.improvedTags.push(newtag);
+            }
         },
         putPrivateEvent(){
             if(this.eventData.public==false){

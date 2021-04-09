@@ -86,6 +86,9 @@ export default {
     @extend .flex-column;
     margin: 5vw;
 
+    h1 {
+        color: color(green);
+    }
     span {
         @extend .flex-column;
         border: 1px solid white;

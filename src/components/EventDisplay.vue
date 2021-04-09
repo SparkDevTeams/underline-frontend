@@ -4,9 +4,7 @@
         <h1>{{ title }}</h1>
         <div id="tags-container">
             <div
-                v-for="tag in tags.slice(0, 1)"
-                @click="tag.active = !tag.active"
-                :class="{ active: tag.active }"
+                v-for="tag in newtags.slice(0, 1)"
                 :key="tag.id"
             >
                 {{ tag }}
@@ -22,6 +20,7 @@ export default {
     data() {
         return {
             image: "/images/get?image_id=" + this.imageID,
+            newtags: [],
         };
     },
     methods: {
@@ -30,8 +29,17 @@ export default {
                 path: "/event/" + this.id,
             });
         },
+        improveTags(){
+            for (const tag of this.tags.values()) {
+                let newtag = tag.substr(0,(tag.indexOf('_')));
+                newtag = newtag.charAt(0).toUpperCase() + newtag.slice(1);
+                this.newtags.push(newtag);
+            }
+        }
     },
-    created() {},
+    created() {
+        this.improveTags();
+    },
     watch: {},
     components: {},
 };

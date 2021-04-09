@@ -259,6 +259,10 @@ export default {
     @extend .flex-column;
     margin: 5vw;
 
+    h1 {
+        color: color(green);
+    }
+
     button {
         @extend .button;
         margin-top: 10px;
