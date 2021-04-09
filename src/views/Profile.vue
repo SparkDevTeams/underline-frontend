@@ -314,15 +314,20 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/global.scss";
 
-#pic {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
+#profile-info {
+    text-align: center;
+    #pic {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
 }
 
-h1 {
-    text-align: center;
-}
 
 #profile-container {
     width: 100%;
