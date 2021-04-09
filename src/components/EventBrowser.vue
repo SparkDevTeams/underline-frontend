@@ -166,6 +166,7 @@ export default {
 				transition: background 0.04s linear;
 				transition: transform 0.04s;
 				transition-timing-function: ease-in-out;
+                transform: rotate(45deg);
 			}
 		}
 
