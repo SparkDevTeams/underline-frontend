@@ -75,19 +75,19 @@
 				<input
 					type="text"
 					v-model="userLinks[0]"
-					placeholder="https://instagram.com"
+					placeholder="EX: https://instagram.com"
 					@change="validateLinks"
 				/>
 				<input
 					type="text"
 					v-model="userLinks[1]"
-					placeholder="https://facebook.com"
+					placeholder="EX: https://facebook.com"
 					@change="validateLinks"
 				/>
 				<input
 					type="text"
 					v-model="userLinks[2]"
-					placeholder="https://twitter.com"
+					placeholder="EX: https://twitter.com"
 					@change="validateLinks"
 				/>
 				<div class="buttons">
@@ -110,7 +110,7 @@
 			/>
 			<h1>{{ `${firstName} ${lastName}` }}</h1>
 			<label> Social Media Links: </label>
-			<div class="links">
+			<div id="links">
 				<a v-for="link in userLinks" :key="link" :href="link">{{ link }}</a>
 			</div>
 		</div>
@@ -322,6 +322,9 @@ export default {
         width: auto;
         height: auto;
         border-radius: 50%;
+    }
+    #links {
+        @extend .flex-column;
     }
 
     h1 {
